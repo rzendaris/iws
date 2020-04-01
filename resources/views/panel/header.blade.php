@@ -1,7 +1,8 @@
 <div class="page-header-inner ">
     <div class="page-logo">
         <a href="index.html">
-            <img src="" alt="" width="100" style="margin-left: 40%; margin-top: 10%;" class="logo-default" />
+            <h4 class="logo-default">IWS</h4>
+            <!-- <img src="" alt="" width="100" style="margin-left: 40%; margin-top: 10%;" class="logo-default" /> -->
         </a>
         <div class="menu-toggler sidebar-toggler">
            

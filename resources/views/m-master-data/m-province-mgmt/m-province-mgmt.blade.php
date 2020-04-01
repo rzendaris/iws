@@ -11,7 +11,7 @@
 <div class="content-body-white">
     <div class="page-head">
         <div class="page-title">
-            <h1>Gelar Adat Management</h1>
+            <h1>Province Management</h1>
         </div>
     </div>
     <div class="row">
@@ -21,18 +21,18 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Nama Gelar</th>
+                            <th>Nama Provinsi</th>
                             <th class="text-center">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>1</td>
-                            <td>Rajo Mudo 1</td>
+                            <td>DKI Jakarta</td>
                             <td class="text-center">
-                                <a href="#" data-toggle="modal" data-target="#modal-detail-gelar-m"><i class="fa fa-eye fa-lg custom--1"></i></a>
-                                <a href="#" data-toggle="modal" data-target="#modal-edit-gelar-m"><i class="fa fa-edit fa-lg custom--1"></i></a>
-                                <a href="#" data-toggle="modal" data-target="#modal-delete-gelar-m"><i class="fa fa-close fa-lg custom--1"></i></a>
+                                <a href="#" data-toggle="modal" data-target="#modal-detail-province-m"><i class="fa fa-eye fa-lg custom--1"></i></a>
+                                <a href="#" data-toggle="modal" data-target="#modal-edit-province-m"><i class="fa fa-edit fa-lg custom--1"></i></a>
+                                <a href="#" data-toggle="modal" data-target="#modal-delete-province-m"><i class="fa fa-close fa-lg custom--1"></i></a>
                             </td>
                         </tr>
                     </tbody>
@@ -44,11 +44,11 @@
 </div>
 
 <!-- Modal Delete -->
-<div id="modal-delete-gelar-m" class="modal fade">
+<div id="modal-delete-province-m" class="modal fade">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body text-center">
-                <h2>Hapus Gelar</h2>
+                <h2>Hapus Provinsi</h2>
                 <p>Apakah anda yakin ingin menghapus data?</p>
             </div>
             <div class="modal-footer">
@@ -60,14 +60,14 @@
 </div>
 
 <!-- Modal Tambah -->
-<div id="modal-tambah-gelar-m" class="modal fade">
+<div id="modal-tambah-province-m" class="modal fade">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body">
-                <h2 class="text-center">Tambah Gelar</h2>
+                <h2 class="text-center">Tambah Provinsi</h2>
                 <div class="row">
                     <div class="col-xl-12 col-md-12 m-b-10px">
-                        <label class="form-control-label">Nama Gelar *</label>
+                        <label class="form-control-label">Nama Provinsi *</label>
                         <input name="" type="text" value="" class="form-control">
                     </div>
                 </div>
@@ -81,15 +81,15 @@
 </div>
 
 <!-- Modal Edit -->
-<div id="modal-edit-gelar-m" class="modal fade">
+<div id="modal-edit-province-m" class="modal fade">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
         <div class="modal-body">
-                <h2 class="text-center">Ubah Gelar</h2>
+                <h2 class="text-center">Ubah Provinsi</h2>
                 <div class="row">
                     <div class="col-xl-12 col-md-12 m-b-10px">
-                        <label class="form-control-label">Nama Gelar *</label>
-                        <input name="" type="text" value="Rajo Mudo 1" class="form-control">
+                        <label class="form-control-label">Nama Provinsi *</label>
+                        <input name="" type="text" value="DKI Jakarta" class="form-control">
                     </div>
                 </div>
             </div>
@@ -102,15 +102,15 @@
 </div>
 
 <!-- Modal Detail -->
-<div id="modal-detail-gelar-m" class="modal fade">
+<div id="modal-detail-province-m" class="modal fade">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body">
-                <h2 class="text-center">Detail Gelar</h2>
+                <h2 class="text-center">Detail Provinsi</h2>
                 <div class="row">
                     <div class="col-xl-12 col-md-12 m-b-10px">
-                        <label class="form-control-label">Name Gelar</label>
-                        <input name="" disabled type="text" value="Rajo Muda 1" class="form-control">
+                        <label class="form-control-label">Name Provinsi</label>
+                        <input name="" disabled type="text" value="DKI Jakarta" class="form-control">
                     </div>
                     <div class="col-xl-6 col-md-6 m-b-10px">
                         <label class="form-control-label">Dibuat Pada:</label>
@@ -151,7 +151,7 @@
             language: { search: "", searchPlaceholder: "Pencarian"  },
         } );
     
-        $("div.toolbar").html('<a class="float-right btn btn-success" href="#" data-toggle="modal" data-target="#modal-tambah-gelar-m">Tambah</a>');
+        $("div.toolbar").html('<a class="float-right btn btn-success" href="#" data-toggle="modal" data-target="#modal-tambah-province-m">Tambah</a>');
     });
     </script>
 @endsection

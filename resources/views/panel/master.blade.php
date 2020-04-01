@@ -33,7 +33,7 @@
     <!-- BEGIN THEME LAYOUT STYLES -->
     <link href="{{ asset('assets/layouts/layout4/css/layout.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/layouts/layout4/css/themes/light.min.css') }}" rel="stylesheet" type="text/css" id="style_color" />
-    <link href="{{ asset('assets/layouts/layout4/css/custom.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/layouts/layout4/css/custom.css') }}" rel="stylesheet" type="text/css" />
     <style>
         [data-tooltip] {
             position: relative;
@@ -124,14 +124,14 @@
         </div>
     </div>
     
-    <div class="page-footer">
+    <!-- <div class="page-footer">
         <div class="page-footer-inner"> 2020 &copy; Rafi Zendaris.
             <a href="#" title="#" target="_blank" rel="noopener noreferrer">Visit Site!</a>
         </div>
         <div class="scroll-to-top">
             <i class="icon-arrow-up"></i>
         </div>
-    </div>
+    </div> -->
 
     @include('panel.scripts')
     @yield('myscript')

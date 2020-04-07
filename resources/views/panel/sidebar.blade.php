@@ -3,20 +3,20 @@
         <li class="heading">
             <h3 class="uppercase">Menu</h3>
         </li>
-        <li class="nav-item  ">
-            <a href="{{ url('under-construction') }}" class="nav-link nav-toggle">
+        <li class="nav-item start active">
+            <a href="{{ url('dashboard-fe') }}" class="nav-link nav-toggle">
                 <i class="icon-home"></i>
                 <span class="title">Dashboard</span>
             </a>
         </li>
         <li class="nav-item  ">
-            <a href="{{ url('under-construction') }}" class="nav-link nav-toggle">
+            <a href="{{ url('family-management-fe') }}" class="nav-link nav-toggle">
                 <i class="icon-user"></i>
                 <span class="title">Family Management </span>
             </a>
         </li>
         <li class="nav-item  ">
-            <a href="{{ url('under-construction') }}" class="nav-link nav-toggle">
+            <a href="{{ url('family-tree-fe') }}" class="nav-link nav-toggle">
                 <i class="icon-user"></i>
                 <span class="title">Family Tree </span>
             </a>
@@ -29,43 +29,43 @@
             </a>
             <ul class="sub-menu">
                 <li class="nav-item  ">
-                    <a href="{{ url('under-construction') }}" class="nav-link ">
+                    <a href="{{ url('ethnic-fe') }}" class="nav-link ">
                         <i class="icon-bar-chart"></i>
                         <span class="title">Etnis</span>
                     </a>
                 </li>
                 <li class="nav-item  ">
-                    <a href="{{ url('under-construction') }}" class="nav-link ">
+                    <a href="{{ url('degree-fe') }}" class="nav-link ">
                         <i class="icon-bar-chart"></i>
                         <span class="title">Gelar</span>
                     </a>
                 </li>
                 <li class="nav-item  ">
-                    <a href="{{ url('under-construction') }}" class="nav-link ">
+                    <a href="{{ url('job-fe') }}" class="nav-link ">
                         <i class="icon-bar-chart"></i>
                         <span class="title">Pekerjaan</span>
                     </a>
                 </li>
                 <li class="nav-item  ">
-                    <a href="{{ url('under-construction') }}" class="nav-link ">
+                    <a href="{{ url('village-fe') }}" class="nav-link ">
                         <i class="icon-bar-chart"></i>
                         <span class="title">Kelurahan</span>
                     </a>
                 </li>
                 <li class="nav-item  ">
-                    <a href="{{ url('under-construction') }}" class="nav-link ">
+                    <a href="{{ url('district-fe') }}" class="nav-link ">
                         <i class="icon-bar-chart"></i>
                         <span class="title">Kecamatan</span>
                     </a>
                 </li>
                 <li class="nav-item  ">
-                    <a href="{{ url('under-construction') }}" class="nav-link ">
+                    <a href="{{ url('city-fe') }}" class="nav-link ">
                         <i class="icon-bar-chart"></i>
                         <span class="title">Kabupaten</span>
                     </a>
                 </li>
                 <li class="nav-item  ">
-                    <a href="{{ url('under-construction') }}" class="nav-link ">
+                    <a href="{{ url('province-fe') }}" class="nav-link ">
                         <i class="icon-bar-chart"></i>
                         <span class="title">Provinsi</span>
                     </a>
@@ -73,7 +73,7 @@
             </ul>
         </li>
         <li class="nav-item  ">
-            <a href="{{ url('under-construction') }}" class="nav-link nav-toggle">
+            <a href="{{ url('user-management-fe') }}" class="nav-link nav-toggle">
                 <i class="icon-user"></i>
                 <span class="title">User Management </span>
             </a>

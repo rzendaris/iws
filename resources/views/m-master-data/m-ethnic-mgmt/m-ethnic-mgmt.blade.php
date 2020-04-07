@@ -16,6 +16,18 @@
     </div>
     <div class="row">
         <div class="col-md-12">
+        @if(session()->has('err_message'))
+            <div class="alert alert-danger alert-dismissible" role="alert" auto-close="10000">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                {{ session()->get('err_message') }}
+            </div>
+        @endif
+        @if(session()->has('suc_message'))
+            <div class="alert alert-success alert-dismissible" role="alert" auto-close="10000">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                {{ session()->get('suc_message') }}
+            </div>
+        @endif
             <div class="table-responsive custom--2">
                 <table id="sorting-table" class="table">
                     <thead>
@@ -26,15 +38,17 @@
                         </tr>
                     </thead>
                     <tbody>
+                    @foreach($data['ethnic'] as $ethnic)
                         <tr>
-                            <td>1</td>
-                            <td>Payobada</td>
+                            <td>{{ $ethnic->no }}</td>
+                            <td>{{ $ethnic->name }}</td>
                             <td class="text-center">
-                                <a href="#" data-toggle="modal" data-target="#modal-detail-ethnic-m"><i class="fa fa-eye fa-lg custom--1"></i></a>
-                                <a href="#" data-toggle="modal" data-target="#modal-edit-ethnic-m"><i class="fa fa-edit fa-lg custom--1"></i></a>
-                                <a href="#" data-toggle="modal" data-target="#modal-delete-ethnic-m"><i class="fa fa-close fa-lg custom--1"></i></a>
+                                <a href="#" data-toggle="modal" data-target="#modal-detail-ethnic-m-{{ $ethnic->id }}"><i class="fa fa-eye fa-lg custom--1"></i></a>
+                                <a href="#" data-toggle="modal" data-target="#modal-edit-ethnic-m-{{ $ethnic->id }}"><i class="fa fa-edit fa-lg custom--1"></i></a>
+                                <a href="#" data-toggle="modal" data-target="#modal-delete-ethnic-m-{{ $ethnic->id }}"><i class="fa fa-close fa-lg custom--1"></i></a>
                             </td>
                         </tr>
+                    @endforeach
                     </tbody>
                 </table>
             </div>
@@ -43,99 +57,113 @@
 
 </div>
 
-<!-- Modal Delete -->
-<div id="modal-delete-ethnic-m" class="modal fade">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-body text-center">
-                <h2>Hapus Suku</h2>
-                <p>Apakah anda yakin ingin menghapus data?</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal">Batal</button>
-                <button type="button" class="btn btn-danger">Hapus</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 <!-- Modal Tambah -->
 <div id="modal-tambah-ethnic-m" class="modal fade">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-body">
-                <h2 class="text-center">Tambah Suku</h2>
-                <div class="row">
-                    <div class="col-xl-12 col-md-12 m-b-10px">
-                        <label class="form-control-label">Nama Suku *</label>
-                        <input name="" type="text" value="" class="form-control">
+    <form method="post" action="{{url('ethnic-fe/insert')}}" enctype="multipart/form-data">
+        {{csrf_field()}}
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h2 class="text-center">Tambah Suku</h2>
+                    <div class="row">
+                        <div class="col-xl-12 col-md-12 m-b-10px">
+                            <label class="form-control-label">Nama Suku *</label>
+                            <input name="name" type="text" value="" class="form-control">
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-                <button type="button" class="btn btn-primary">Tambah</button>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary">Tambah</button>
+                </div>
             </div>
         </div>
-    </div>
+    </form>
 </div>
 
-<!-- Modal Edit -->
-<div id="modal-edit-ethnic-m" class="modal fade">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-        <div class="modal-body">
-                <h2 class="text-center">Ubah Suku</h2>
-                <div class="row">
-                    <div class="col-xl-12 col-md-12 m-b-10px">
-                        <label class="form-control-label">Nama Suku *</label>
-                        <input name="" type="text" value="Suku Payobada" class="form-control">
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-                <button type="button" class="btn btn-primary">Update</button>
-            </div>
-        </div>
-    </div>
-</div>
 
-<!-- Modal Detail -->
-<div id="modal-detail-ethnic-m" class="modal fade">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-body">
-                <h2 class="text-center">Detail Suku</h2>
-                <div class="row">
-                    <div class="col-xl-12 col-md-12 m-b-10px">
-                        <label class="form-control-label">Name Suku</label>
-                        <input name="" disabled type="text" value="Suku Payobada" class="form-control">
+@foreach($data['ethnic'] as $ethnic)
+    <!-- Modal Delete -->
+    <div id="modal-delete-ethnic-m-{{ $ethnic->id }}" class="modal fade">
+        <form method="post" action="{{url('ethnic-fe/delete')}}" enctype="multipart/form-data">
+            {{csrf_field()}}
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body text-center">
+                        <h2>Hapus Suku</h2>
+                        <p>Apakah anda yakin ingin menghapus data?</p>
                     </div>
-                    <div class="col-xl-6 col-md-6 m-b-10px">
-                        <label class="form-control-label">Dibuat Pada:</label>
-                        <input name="" disabled type="text" value="01/01/20202 19:00:00" class="form-control">
-                    </div>
-                    <div class="col-xl-6 col-md-6 m-b-10px">
-                        <label class="form-control-label">Dibuat Oleh:</label>
-                        <input name="" disabled type="text" value="admin@gmail.com" class="form-control">
-                    </div>
-                    <div class="col-xl-6 col-md-6 m-b-10px">
-                        <label class="form-control-label">Terakhir Diubah Pada:</label>
-                        <input name="" disabled type="text" value="01/01/20202 20:00:00" class="form-control">
-                    </div>
-                    <div class="col-xl-6 col-md-6 m-b-10px">
-                        <label class="form-control-label">Terakhir Diubah Oleh:</label>
-                        <input name="" disabled type="text" value="admin@gmail.com" class="form-control">
+                    <input type="hidden" name="id" value="{{ $ethnic->id }}">
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" data-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-danger">Hapus</button>
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger float-right w-100" data-dismiss="modal">Tutup</button>
+        </form>
+    </div>
+
+    <!-- Modal Edit -->
+    <div id="modal-edit-ethnic-m-{{ $ethnic->id }}" class="modal fade">
+        <form method="post" action="{{url('ethnic-fe/update')}}" enctype="multipart/form-data">
+            {{csrf_field()}}
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                <div class="modal-body">
+                        <h2 class="text-center">Ubah Suku</h2>
+                        <div class="row">
+                            <div class="col-xl-12 col-md-12 m-b-10px">
+                                <label class="form-control-label">Nama Suku *</label>
+                                <input name="name" type="text" value="{{ $ethnic->name }}" class="form-control">
+                            </div>
+                            <input type="hidden" name="id" value="{{ $ethnic->id }}">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Modal Detail -->
+    <div id="modal-detail-ethnic-m-{{ $ethnic->id }}" class="modal fade">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h2 class="text-center">Detail Suku</h2>
+                    <div class="row">
+                        <div class="col-xl-12 col-md-12 m-b-10px">
+                            <label class="form-control-label">Name Suku</label>
+                            <input name="" disabled type="text" value="{{ $ethnic->name }}" class="form-control">
+                        </div>
+                        <div class="col-xl-6 col-md-6 m-b-10px">
+                            <label class="form-control-label">Dibuat Pada:</label>
+                            <input name="" disabled type="text" value="{{ $ethnic->created_at }}" class="form-control">
+                        </div>
+                        <div class="col-xl-6 col-md-6 m-b-10px">
+                            <label class="form-control-label">Dibuat Oleh:</label>
+                            <input name="" disabled type="text" value="{{ $ethnic->created_by }}" class="form-control">
+                        </div>
+                        <div class="col-xl-6 col-md-6 m-b-10px">
+                            <label class="form-control-label">Terakhir Diubah Pada:</label>
+                            <input name="" disabled type="text" value="{{ $ethnic->updated_at }}" class="form-control">
+                        </div>
+                        <div class="col-xl-6 col-md-6 m-b-10px">
+                            <label class="form-control-label">Terakhir Diubah Oleh:</label>
+                            <input name="" disabled type="text" value="{{ $ethnic->updated_by }}" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger float-right w-100" data-dismiss="modal">Tutup</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
+@endforeach
 
 @endsection
 
@@ -152,6 +180,15 @@
         } );
     
         $("div.toolbar").html('<a class="float-right btn btn-success" href="#" data-toggle="modal" data-target="#modal-tambah-ethnic-m">Tambah</a>');
+
+        var alert = $('div.alert[auto-close]');
+        alert.each(function() {
+            var that = $(this);
+            var time_period = that.attr('auto-close');
+            setTimeout(function() {
+                that.alert('close');
+            }, time_period);
+        });
     });
     </script>
 @endsection

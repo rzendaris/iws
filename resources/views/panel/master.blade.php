@@ -124,14 +124,14 @@
         </div>
     </div>
     
-    <!-- <div class="page-footer">
+    <div class="page-footer">
         <div class="page-footer-inner"> 2020 &copy; Rafi Zendaris.
             <a href="#" title="#" target="_blank" rel="noopener noreferrer">Visit Site!</a>
         </div>
         <div class="scroll-to-top">
             <i class="icon-arrow-up"></i>
         </div>
-    </div> -->
+    </div>
 
     @include('panel.scripts')
     @yield('myscript')

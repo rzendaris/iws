@@ -16,6 +16,18 @@
     </div>
     <div class="row">
         <div class="col-md-12">
+        @if(session()->has('err_message'))
+            <div class="alert alert-danger alert-dismissible" role="alert" auto-close="10000">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                {{ session()->get('err_message') }}
+            </div>
+        @endif
+        @if(session()->has('suc_message'))
+            <div class="alert alert-success alert-dismissible" role="alert" auto-close="10000">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                {{ session()->get('suc_message') }}
+            </div>
+        @endif
             <div class="table-responsive custom--2">
                 <table id="sorting-table" class="table">
                     <thead>
@@ -29,18 +41,20 @@
                         </tr>
                     </thead>
                     <tbody>
+                    @foreach($data['village'] as $village)
                         <tr>
-                            <td>1</td>
-                            <td>DKI Jakarta</td>
-                            <td>Jakarta Pusat</td>
-                            <td>Gambir</td>
-                            <td>Gambir</td>
+                            <td>{{ $village->no }}</td>
+                            <td>{{ $village->district->city->province->name }}</td>
+                            <td>{{ $village->district->city->name }}</td>
+                            <td>{{ $village->district->name }}</td>
+                            <td>{{ $village->name }}</td>
                             <td class="text-center">
-                                <a href="#" data-toggle="modal" data-target="#modal-detail-village-m"><i class="fa fa-eye fa-lg custom--1"></i></a>
-                                <a href="#" data-toggle="modal" data-target="#modal-edit-village-m"><i class="fa fa-edit fa-lg custom--1"></i></a>
-                                <a href="#" data-toggle="modal" data-target="#modal-delete-village-m"><i class="fa fa-close fa-lg custom--1"></i></a>
+                                <a href="#" data-toggle="modal" data-target="#modal-detail-village-m-{{ $village->id }}"><i class="fa fa-eye fa-lg custom--1"></i></a>
+                                <a href="#" data-toggle="modal" data-target="#modal-edit-village-m-{{ $village->id }}"><i class="fa fa-edit fa-lg custom--1"></i></a>
+                                <a href="#" data-toggle="modal" data-target="#modal-delete-village-m-{{ $village->id }}"><i class="fa fa-close fa-lg custom--1"></i></a>
                             </td>
                         </tr>
+                    @endforeach
                     </tbody>
                 </table>
             </div>
@@ -49,147 +63,163 @@
 
 </div>
 
-<!-- Modal Delete -->
-<div id="modal-delete-village-m" class="modal fade">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-body text-center">
-                <h2>Hapus Kelurahan</h2>
-                <p>Apakah anda yakin ingin menghapus data?</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal">Batal</button>
-                <button type="button" class="btn btn-danger">Hapus</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 <!-- Modal Tambah -->
 <div id="modal-tambah-village-m" class="modal fade">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-body">
-                <h2 class="text-center">Tambah Kelurahan</h2>
-                <div class="row">
-                    <div class="col-xl-12 col-md-12 m-b-10px">
-                        <label class="form-control-label">Pilih Provinsi *</label>
-                        <select name="" class="custom-select form-control">
-                            <option value="">Pilih Provinsi</option>
-                        </select>
-                    </div>
-                    <div class="col-xl-12 col-md-12 m-b-10px">
-                        <label class="form-control-label">Pilih Kota *</label>
-                        <select name="" class="custom-select form-control">
-                            <option value="">Pilih Kota</option>
-                        </select>
-                    </div>
-                    <div class="col-xl-12 col-md-12 m-b-10px">
-                        <label class="form-control-label">Pilih Kecamatan *</label>
-                        <select name="" class="custom-select form-control">
-                            <option value="">Pilih Kecamatan</option>
-                        </select>
-                    </div>
-                    <div class="col-xl-12 col-md-12 m-b-10px">
-                        <label class="form-control-label">Nama Kelurahan *</label>
-                        <input name="" type="text" value="" class="form-control">
+    <form method="post" action="{{url('village-fe/insert')}}" enctype="multipart/form-data">
+        {{csrf_field()}}
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h2 class="text-center">Tambah Kelurahan</h2>
+                    <div class="row">
+                        <div class="col-xl-12 col-md-12 m-b-10px">
+                            <label class="form-control-label">Pilih Provinsi *</label>
+                            <select name="" id="province-selected" class="custom-select form-control" required>
+                                <option value="">Pilih Provinsi</option>
+                                @foreach($data['list_province'] as $province)
+                                    <option value="{{ $province->id }}">{{ $province->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-xl-12 col-md-12 m-b-10px">
+                            <label class="form-control-label">Pilih Kota *</label>
+                            <select name="" id="city-selected" class="custom-select form-control" disabled required>
+                                <option value="">Pilih Kota</option>
+                            </select>
+                        </div>
+                        <div class="col-xl-12 col-md-12 m-b-10px">
+                            <label class="form-control-label">Pilih Kecamatan *</label>
+                            <select name="district_id" id="district-selected" class="custom-select form-control" disabled required>
+                                <option value="">Pilih Kecamatan</option>
+                            </select>
+                        </div>
+                        <div class="col-xl-12 col-md-12 m-b-10px">
+                            <label class="form-control-label">Nama Kelurahan *</label>
+                            <input name="name" type="text" value="" class="form-control" required>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-                <button type="button" class="btn btn-primary">Tambah</button>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary">Tambah</button>
+                </div>
             </div>
         </div>
-    </div>
+    </form>
 </div>
 
-<!-- Modal Edit -->
-<div id="modal-edit-village-m" class="modal fade">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-        <div class="modal-body">
-                <h2 class="text-center">Ubah Kelurahan</h2>
-                <div class="row">
-                    <div class="col-xl-12 col-md-12 m-b-10px">
-                        <label class="form-control-label">Pilih Provinsi *</label>
-                        <select name="" class="custom-select form-control" readonly>
-                            <option value="">Pilih Provinsi</option>
-                        </select>
+@foreach($data['village'] as $village)
+    <!-- Modal Delete -->
+    <div id="modal-delete-village-m-{{ $village->id }}" class="modal fade">
+        <form method="post" action="{{url('village-fe/delete')}}" enctype="multipart/form-data">
+            {{csrf_field()}}
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body text-center">
+                        <h2>Hapus Kelurahan</h2>
+                        <p>Apakah anda yakin ingin menghapus data?</p>
                     </div>
-                    <div class="col-xl-12 col-md-12 m-b-10px">
-                        <label class="form-control-label">Pilih Kota *</label>
-                        <select name="" class="custom-select form-control" readonly>
-                            <option value="">Pilih Kota</option>
-                        </select>
-                    </div>
-                    <div class="col-xl-12 col-md-12 m-b-10px">
-                        <label class="form-control-label">Pilih Kecamatan *</label>
-                        <select name="" class="custom-select form-control" readonly>
-                            <option value="">Pilih Kecamatan</option>
-                        </select>
-                    </div>
-                    <div class="col-xl-12 col-md-12 m-b-10px">
-                        <label class="form-control-label">Nama Kelurahan *</label>
-                        <input name="" type="text" value="Gambir" class="form-control">
+                    <input type="hidden" name="id" value="{{ $village->id }}"/>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" data-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-danger">Hapus</button>
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-                <button type="button" class="btn btn-primary">Update</button>
-            </div>
-        </div>
+        </form>
     </div>
-</div>
 
-<!-- Modal Detail -->
-<div id="modal-detail-village-m" class="modal fade">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-body">
-                <h2 class="text-center">Detail Kelurahan</h2>
-                <div class="row">
-                    <div class="col-xl-12 col-md-6 m-b-10px">
-                        <label class="form-control-label">Name Provinsi</label>
-                        <input name="" disabled type="text" value="DKI Jakarta" class="form-control">
+    <!-- Modal Edit -->
+    <div id="modal-edit-village-m-{{ $village->id }}" class="modal fade">
+        <form method="post" action="{{url('village-fe/update')}}" enctype="multipart/form-data">
+            {{csrf_field()}}
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                <div class="modal-body">
+                        <h2 class="text-center">Ubah Kelurahan</h2>
+                        <div class="row">
+                            <div class="col-xl-12 col-md-12 m-b-10px">
+                                <label class="form-control-label">Pilih Provinsi *</label>
+                                <select name="" class="custom-select form-control" readonly>
+                                    <option value="">{{ $village->district->city->province->name }}</option>
+                                </select>
+                            </div>
+                            <div class="col-xl-12 col-md-12 m-b-10px">
+                                <label class="form-control-label">Pilih Kota *</label>
+                                <select name="" class="custom-select form-control" readonly>
+                                    <option value="">{{ $village->district->city->name }}</option>
+                                </select>
+                            </div>
+                            <div class="col-xl-12 col-md-12 m-b-10px">
+                                <label class="form-control-label">Pilih Kecamatan *</label>
+                                <select name="district_id" class="custom-select form-control">
+                                    <option value="{{ $village->district_id }}">{{ $village->district->name }}</option>
+                                </select>
+                            </div>
+                            <div class="col-xl-12 col-md-12 m-b-10px">
+                                <label class="form-control-label">Nama Kelurahan *</label>
+                                <input name="name" type="text" value="{{ $village->name }}" class="form-control" required>
+                            </div>
+                            <input type="hidden" name="id" value="{{ $village->id }}"/>
+                        </div>
                     </div>
-                    <div class="col-xl-12 col-md-6 m-b-10px">
-                        <label class="form-control-label">Nama Kota</label>
-                        <input name="" disabled type="text" value="Jakarta Pusat" class="form-control">
-                    </div>
-                    <div class="col-xl-12 col-md-6 m-b-10px">
-                        <label class="form-control-label">Name Kecamatan</label>
-                        <input name="" disabled type="text" value="Gambir" class="form-control">
-                    </div>
-                    <div class="col-xl-12 col-md-6 m-b-10px">
-                        <label class="form-control-label">Nama Kelurahan</label>
-                        <input name="" disabled type="text" value="Gambir" class="form-control">
-                    </div>
-                    <div class="col-xl-6 col-md-6 m-b-10px">
-                        <label class="form-control-label">Dibuat Pada:</label>
-                        <input name="" disabled type="text" value="01/01/20202 19:00:00" class="form-control">
-                    </div>
-                    <div class="col-xl-6 col-md-6 m-b-10px">
-                        <label class="form-control-label">Dibuat Oleh:</label>
-                        <input name="" disabled type="text" value="admin@gmail.com" class="form-control">
-                    </div>
-                    <div class="col-xl-6 col-md-6 m-b-10px">
-                        <label class="form-control-label">Terakhir Diubah Pada:</label>
-                        <input name="" disabled type="text" value="01/01/20202 20:00:00" class="form-control">
-                    </div>
-                    <div class="col-xl-6 col-md-6 m-b-10px">
-                        <label class="form-control-label">Terakhir Diubah Oleh:</label>
-                        <input name="" disabled type="text" value="admin@gmail.com" class="form-control">
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary">Update</button>
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger float-right w-100" data-dismiss="modal">Tutup</button>
+        </form>
+    </div>
+
+    <!-- Modal Detail -->
+    <div id="modal-detail-village-m-{{ $village->id }}" class="modal fade">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h2 class="text-center">Detail Kelurahan</h2>
+                    <div class="row">
+                        <div class="col-xl-12 col-md-6 m-b-10px">
+                            <label class="form-control-label">Name Provinsi</label>
+                            <input name="" disabled type="text" value="{{ $village->district->city->province->name }}" class="form-control">
+                        </div>
+                        <div class="col-xl-12 col-md-6 m-b-10px">
+                            <label class="form-control-label">Nama Kota</label>
+                            <input name="" disabled type="text" value="{{ $village->district->city->name }}" class="form-control">
+                        </div>
+                        <div class="col-xl-12 col-md-6 m-b-10px">
+                            <label class="form-control-label">Name Kecamatan</label>
+                            <input name="" disabled type="text" value="{{ $village->district->name }}" class="form-control">
+                        </div>
+                        <div class="col-xl-12 col-md-6 m-b-10px">
+                            <label class="form-control-label">Nama Kelurahan</label>
+                            <input name="" disabled type="text" value="{{ $village->name }}" class="form-control">
+                        </div>
+                        <div class="col-xl-6 col-md-6 m-b-10px">
+                            <label class="form-control-label">Dibuat Pada:</label>
+                            <input name="" disabled type="text" value="{{ $village->created_at }}" class="form-control">
+                        </div>
+                        <div class="col-xl-6 col-md-6 m-b-10px">
+                            <label class="form-control-label">Dibuat Oleh:</label>
+                            <input name="" disabled type="text" value="{{ $village->created_by }}" class="form-control">
+                        </div>
+                        <div class="col-xl-6 col-md-6 m-b-10px">
+                            <label class="form-control-label">Terakhir Diubah Pada:</label>
+                            <input name="" disabled type="text" value="{{ $village->updated_at }}" class="form-control">
+                        </div>
+                        <div class="col-xl-6 col-md-6 m-b-10px">
+                            <label class="form-control-label">Terakhir Diubah Oleh:</label>
+                            <input name="" disabled type="text" value="{{ $village->updated_by }}" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger float-right w-100" data-dismiss="modal">Tutup</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
+@endforeach
 
 @endsection
 
@@ -198,6 +228,50 @@
     <script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}"></script>
     <script>   
     $(function () {
+        $('#province-selected').on('change', function() {
+            $('#city-selected').empty().append('<option value="">Pilih Kota</option>');
+            $.ajax({
+                url: "district-fe/get-list-city/"+this.value,
+                method: 'get',
+                success : function(data) {
+                    var parse_data = JSON.parse(data);
+                    if(parse_data.length > 0) {
+                        $('#city-selected').prop('disabled', false);
+                        for(var index in parse_data) {
+                            $("#city-selected").append('<option value="'+ parse_data[index].id +'">'+ parse_data[index].name +'</option>');
+                        }
+                    } else {
+                        $('#city-selected').prop('disabled', true);
+                    }
+                },
+                error : function(err){
+                    $('#city-selected').prop('disabled', true);
+                }
+            });
+        });
+
+        $('#city-selected').on('change', function() {
+            $('#district-selected').empty().append('<option value="">Pilih Kecamatan</option>');
+            $.ajax({
+                url: "village-fe/get-list-district/"+this.value,
+                method: 'get',
+                success : function(data) {
+                    var parse_data = JSON.parse(data);
+                    if(parse_data.length > 0) {
+                        $('#district-selected').prop('disabled', false);
+                        for(var index in parse_data) {
+                            $("#district-selected").append('<option value="'+ parse_data[index].id +'">'+ parse_data[index].name +'</option>');
+                        }
+                    } else {
+                        $('#district-selected').prop('disabled', true);
+                    }
+                },
+                error : function(err){
+                    $('#district-selected').prop('disabled', true);
+                }
+            });
+        });
+
         $('#sorting-table').DataTable( {
             "dom": '<"toolbar">frtip',
             "ordering": false,
@@ -206,6 +280,15 @@
         } );
     
         $("div.toolbar").html('<a class="float-right btn btn-success" href="#" data-toggle="modal" data-target="#modal-tambah-village-m">Tambah</a>');
+
+        var alert = $('div.alert[auto-close]');
+        alert.each(function() {
+            var that = $(this);
+            var time_period = that.attr('auto-close');
+            setTimeout(function() {
+                that.alert('close');
+            }, time_period);
+        });
     });
     </script>
 @endsection

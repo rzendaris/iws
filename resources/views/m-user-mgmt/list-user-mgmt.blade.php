@@ -16,6 +16,18 @@
     </div>
     <div class="row">
         <div class="col-md-12">
+        @if(session()->has('err_message'))
+            <div class="alert alert-danger alert-dismissible" role="alert" auto-close="10000">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                {{ session()->get('err_message') }}
+            </div>
+        @endif
+        @if(session()->has('suc_message'))
+            <div class="alert alert-success alert-dismissible" role="alert" auto-close="10000">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                {{ session()->get('suc_message') }}
+            </div>
+        @endif
             <div class="table-responsive custom--2">
                 <table id="sorting-table" class="table">
                     <thead>
@@ -28,39 +40,19 @@
                         </tr>
                     </thead>
                     <tbody>
+                    @foreach($data['user'] as $user)
                         <tr>
-                            <td>1</td>
-                            <td>Budi 1</td>
-                            <td>budi1@gmail.com</td>
-                            <td>Admin</td>
+                            <td>{{ $user->no }}</td>
+                            <td>{{ $user->name }}</td>
+                            <td>{{ $user->email }}</td>
+                            <td>{{ $user->role->name }}</td>
                             <td class="text-center">
-                                <a href="#" data-toggle="modal" data-target="#modal-detail-user-m"><i class="fa fa-eye fa-lg custom--1"></i></a>
-                                <a href="#" data-toggle="modal" data-target="#modal-edit-user-m"><i class="fa fa-edit fa-lg custom--1"></i></a>
-                                <a href="#" data-toggle="modal" data-target="#modal-delete-user-m"><i class="fa fa-close fa-lg custom--1"></i></a>
+                                <a href="#" data-toggle="modal" data-target="#modal-detail-user-m-{{ $user-> id }}"><i class="fa fa-eye fa-lg custom--1"></i></a>
+                                <a href="#" data-toggle="modal" data-target="#modal-edit-user-m-{{ $user-> id }}"><i class="fa fa-edit fa-lg custom--1"></i></a>
+                                <a href="#" data-toggle="modal" data-target="#modal-delete-user-m-{{ $user-> id }}"><i class="fa fa-close fa-lg custom--1"></i></a>
                             </td>
                         </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Budi 2</td>
-                            <td>budi2@gmail.com</td>
-                            <td>Admin</td>
-                            <td class="text-center">
-                                <a href="#" data-toggle="modal" data-target="#modal-detail-user-m"><i class="fa fa-eye fa-lg custom--1"></i></a>
-                                <a href="#" data-toggle="modal" data-target="#modal-edit-user-m"><i class="fa fa-edit fa-lg custom--1"></i></a>
-                                <a href="#" data-toggle="modal" data-target="#modal-delete-user-m"><i class="fa fa-close fa-lg custom--1"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Budi 3</td>
-                            <td>budi3@gmail.com</td>
-                            <td>Admin</td>
-                            <td class="text-center">
-                                <a href="#" data-toggle="modal" data-target="#modal-detail-user-m"><i class="fa fa-eye fa-lg custom--1"></i></a>
-                                <a href="#" data-toggle="modal" data-target="#modal-edit-user-m"><i class="fa fa-edit fa-lg custom--1"></i></a>
-                                <a href="#" data-toggle="modal" data-target="#modal-delete-user-m"><i class="fa fa-close fa-lg custom--1"></i></a>
-                            </td>
-                        </tr>
+                    @endforeach
                     </tbody>
                 </table>
             </div>
@@ -69,131 +61,152 @@
 
 </div>
 
-<!-- Modal Delete -->
-<div id="modal-delete-user-m" class="modal fade">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-body text-center">
-                <h2>Hapus User</h2>
-                <p>Apakah anda yakin ingin menghapus data?</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal">Batal</button>
-                <button type="button" class="btn btn-danger">Hapus</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 <!-- Modal Tambah -->
 <div id="modal-tambah-user-m" class="modal fade">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-body">
-                <h2 class="text-center">Tambah User</h2>
-                <div class="row">
-                    <div class="col-xl-12 col-md-12 m-b-10px">
-                        <label class="form-control-label">Name *</label>
-                        <input name="" type="text" value="" class="form-control">
-                    </div>
-                    <div class="col-xl-12 col-md-12 m-b-10px">
-                        <label class="form-control-label">Email *</label>
-                        <input name="" type="text" value="" class="form-control">
-                    </div>
-                    <div class="col-xl-12 col-md-12 m-b-10px">
-                        <label class="form-control-label">Pilih Role *</label>
-                        <select name="" class="custom-select form-control">
-                            <option value="">Pilih Role</option>
-                        </select>
+    <form method="post" action="{{url('user-management-fe/insert')}}" enctype="multipart/form-data">
+        {{csrf_field()}}
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h2 class="text-center">Tambah User</h2>
+                    <div class="row">
+                        <div class="col-xl-12 col-md-12 m-b-10px">
+                            <label class="form-control-label">Name *</label>
+                            <input name="name" type="text" value="" class="form-control" required>
+                        </div>
+                        <div class="col-xl-12 col-md-12 m-b-10px">
+                            <label class="form-control-label">Email *</label>
+                            <input name="email" type="email" value="" class="form-control" required>
+                        </div>
+                        <div class="col-xl-12 col-md-12 m-b-10px">
+                            <label class="form-control-label">Pilih Role *</label>
+                            <select name="role_id" class="custom-select form-control" required>
+                                <option value="">Pilih Role</option>
+                                @foreach($data['role'] as $role)
+                                    <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-xl-12 col-md-12 m-b-10px">
+                            <label class="form-control-label">Password *</label>
+                            <input name="password" type="password" value="" class="form-control" required>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-                <button type="button" class="btn btn-primary">Tambah</button>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary">Tambah</button>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Modal Edit -->
-<div id="modal-edit-user-m" class="modal fade">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-body">
-                <h2 class="text-center">Ubah User</h2>
-                <div class="row">
-                    <div class="col-xl-12 col-md-12 m-b-10px">
-                        <label class="form-control-label">Name *</label>
-                        <input name="" type="text" value="Budi 1" class="form-control">
-                    </div>
-                    <div class="col-xl-12 col-md-12 m-b-10px">
-                        <label class="form-control-label">Email *</label>
-                        <input name="" type="text" value="budi1@gmail.com" class="form-control" readonly>
-                    </div>
-                    <div class="col-xl-12 col-md-12 m-b-10px">
-                        <label class="form-control-label">Pilih Role *</label>
-                        <select name="" class="custom-select form-control">
-                            <option value="">Pilih Role</option>
-                        </select>
-                    </div>
-                    <div class="col-xl-12 col-md-12 m-b-10px">
-                        <label class="form-control-label">Password *</label>
-                        <input name="" type="password" value="password" class="form-control">
+@foreach($data['user'] as $user)
+    <!-- Modal Detail -->
+    <div id="modal-detail-user-m-{{ $user->id }}" class="modal fade">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h2 class="text-center">Detail User</h2>
+                    <div class="row">
+                        <div class="col-xl-12 col-md-12 m-b-10px">
+                            <label class="form-control-label">Name</label>
+                            <input name="" disabled type="text" value="{{ $user->name }}" class="form-control">
+                        </div>
+                        <div class="col-xl-12 col-md-12 m-b-10px">
+                            <label class="form-control-label">Email</label>
+                            <input name="" disabled type="text" value="{{ $user->email }}" class="form-control">
+                        </div>
+                        <div class="col-xl-12 col-md-12 m-b-10px">
+                            <label class="form-control-label">Role</label>
+                            <input name="" disabled type="text" value="{{ $user->role->name }}" class="form-control">
+                        </div>
+                        <div class="col-xl-6 col-md-6 m-b-10px">
+                            <label class="form-control-label">Dibuat Pada:</label>
+                            <input name="" disabled type="text" value="{{ $user->created_at }}" class="form-control">
+                        </div>
+                        <div class="col-xl-6 col-md-6 m-b-10px">
+                            <label class="form-control-label">Dibuat Oleh:</label>
+                            <input name="" disabled type="text" value="{{ $user->created_by }}" class="form-control">
+                        </div>
+                        <div class="col-xl-6 col-md-6 m-b-10px">
+                            <label class="form-control-label">Terakhir Diubah Pada:</label>
+                            <input name="" disabled type="text" value="{{ $user->updated_at }}" class="form-control">
+                        </div>
+                        <div class="col-xl-6 col-md-6 m-b-10px">
+                            <label class="form-control-label">Terakhir Diubah Oleh:</label>
+                            <input name="" disabled type="text" value="{{ $user->updated_by }}" class="form-control">
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-                <button type="button" class="btn btn-primary">Update</button>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger float-right w-100" data-dismiss="modal">Tutup</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
+    <!-- Modal Delete -->
+    <div id="modal-delete-user-m-{{ $user->id }}" class="modal fade">
+        <form method="post" action="{{url('user-management-fe/delete')}}" enctype="multipart/form-data">
+            {{csrf_field()}}
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body text-center">
+                        <h2>Hapus {{ $user->email }}</h2>
+                        <p>Apakah anda yakin ingin menghapus data?</p>
+                        <input type="hidden" name="id" value="{{ $user->id }}"/>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" data-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-danger">Hapus</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
 
-<!-- Modal Tambah -->
-<div id="modal-detail-user-m" class="modal fade">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-body">
-                <h2 class="text-center">Detail User</h2>
-                <div class="row">
-                    <div class="col-xl-12 col-md-12 m-b-10px">
-                        <label class="form-control-label">Name</label>
-                        <input name="" disabled type="text" value="Budi 1" class="form-control">
+    <!-- Modal Edit -->
+    <div id="modal-edit-user-m-{{ $user->id }}" class="modal fade">
+        <form method="post" action="{{url('user-management-fe/update')}}" enctype="multipart/form-data">
+            {{csrf_field()}}
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <h2 class="text-center">Ubah User</h2>
+                        <div class="row">
+                            <div class="col-xl-12 col-md-12 m-b-10px">
+                                <label class="form-control-label">Name *</label>
+                                <input name="name" type="text" value="{{ $user->name }}" class="form-control" required>
+                            </div>
+                            <div class="col-xl-12 col-md-12 m-b-10px">
+                                <label class="form-control-label">Email *</label>
+                                <input name="email" type="text" value="{{ $user->email }}" class="form-control" readonly>
+                            </div>
+                            <div class="col-xl-12 col-md-12 m-b-10px">
+                                <label class="form-control-label">Pilih Role *</label>
+                                <select name="role_id" class="custom-select form-control" required>
+                                    <option value="{{ $user->role->id }}">{{ $user->role->name }}</option>
+                                    <option value="1">Admin</option>
+                                    <option value="2">User</option>
+                                </select>
+                            </div>
+                            <div class="col-xl-12 col-md-12 m-b-10px">
+                                <label class="form-control-label">Password *</label>
+                                <input name="password" type="password" value="" class="form-control">
+                            </div>
+                            <input name="id" type="hidden" value="{{ $user->id }}" class="form-control">
+                        </div>
                     </div>
-                    <div class="col-xl-12 col-md-12 m-b-10px">
-                        <label class="form-control-label">Email</label>
-                        <input name="" disabled type="text" value="budi1@gmail.com" class="form-control">
-                    </div>
-                    <div class="col-xl-12 col-md-12 m-b-10px">
-                        <label class="form-control-label">Role</label>
-                        <input name="" disabled type="text" value="Admin" class="form-control">
-                    </div>
-                    <div class="col-xl-6 col-md-6 m-b-10px">
-                        <label class="form-control-label">Dibuat Pada:</label>
-                        <input name="" disabled type="text" value="01/01/20202 19:00:00" class="form-control">
-                    </div>
-                    <div class="col-xl-6 col-md-6 m-b-10px">
-                        <label class="form-control-label">Dibuat Oleh:</label>
-                        <input name="" disabled type="text" value="admin@gmail.com" class="form-control">
-                    </div>
-                    <div class="col-xl-6 col-md-6 m-b-10px">
-                        <label class="form-control-label">Terakhir Diubah Pada:</label>
-                        <input name="" disabled type="text" value="01/01/20202 20:00:00" class="form-control">
-                    </div>
-                    <div class="col-xl-6 col-md-6 m-b-10px">
-                        <label class="form-control-label">Terakhir Diubah Oleh:</label>
-                        <input name="" disabled type="text" value="admin@gmail.com" class="form-control">
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary">Update</button>
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger float-right w-100" data-dismiss="modal">Tutup</button>
-            </div>
-        </div>
+        </form>
     </div>
-</div>
+@endforeach
 
 @endsection
 
@@ -210,6 +223,15 @@
         } );
     
         $("div.toolbar").html('<a class="float-right btn btn-success" href="#" data-toggle="modal" data-target="#modal-tambah-user-m">Tambah</a>');
+
+        var alert = $('div.alert[auto-close]');
+        alert.each(function() {
+            var that = $(this);
+            var time_period = that.attr('auto-close');
+            setTimeout(function() {
+                that.alert('close');
+            }, time_period);
+        });
     });
     </script>
 @endsection

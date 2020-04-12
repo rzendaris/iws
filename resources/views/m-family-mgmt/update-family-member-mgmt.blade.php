@@ -32,7 +32,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="form-control-label">Kecamatan :</label>
-                                    <select name="district_id" id="district-selected" class="custom-select form-control" disabled required>
+                                    <select name="district_id" id="district-selected" class="custom-select form-control" required>
                                         <option value="{{ $data['member']->district->id }}">{{ $data['member']->district->name }}</option>
                                     </select>
                                 </div>
@@ -84,7 +84,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="form-control-label">Kelurahan / Desa :</label>
-                                    <select name="village_id" id="village-selected" class="custom-select form-control" disabled required>
+                                    <select name="village_id" id="village-selected" class="custom-select form-control" required>
                                         <option value="{{ $data['member']->village->id }}">{{ $data['member']->village->name }}</option>
                                     </select>
                                 </div>
@@ -118,7 +118,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="form-control-label">Kota / Kabupaten :</label>
-                                    <select name="city_id" id="city-selected" class="custom-select form-control" disabled required>
+                                    <select name="city_id" id="city-selected" class="custom-select form-control" required>
                                         <option value="{{ $data['member']->city->id }}">{{ $data['member']->city->name }}</option>
                                     </select>
                                 </div>

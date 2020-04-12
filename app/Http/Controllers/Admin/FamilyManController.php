@@ -322,6 +322,41 @@ class FamilyManController extends Controller
     {
         $member = Member::where('id', $request->id)->first();
         if(!empty($member)){
+            Member::where('id', $member->id)
+              ->update([
+                    'full_name' => $request->full_name,
+                    'sur_name' => $request->sur_name,
+                    'nik' => $request->nik,
+                    'birthday' => $request->birthday,
+                    'religion_id' => $request->religion_id,
+                    'province_id' => $request->province_id,
+                    'city_id' => $request->city_id,
+                    'district_id' => $request->district_id,
+                    'village_id' => $request->village_id,
+                    'education_id' => $request->education_id,
+                    'job_id' => $request->job_id,
+                    'marital_id' => $request->marital_id,
+                    'ethnic_id' => $request->ethnic_id,
+                    'title_adat_id' => $request->title_adat_id,
+                    'school_name' => $request->school_name,
+                    'graduation_year' => $request->graduation_year,
+                    'member_status_id' => $request->member_status_id,
+                    'instance_name' => $request->instance_name,
+                    'is_life' => $request->is_life,
+                    'gender_status' => $request->gender_status,
+                    'address' => $request->address,
+                    'phone_number' => $request->phone_number,
+                    'updated_by' => Auth::user()->email,
+                ]);
+
+                $photo = $request->file('photo');
+                if (isset($photo)){
+                    Member::where('id', $member->id)
+                    ->update([
+                            'photo' => $request->nik.".".$photo->getClientOriginalExtension()
+                        ]);
+                    $request->file('photo')->move(public_path("/photo/member"), $member->nik.".".$photo->getClientOriginalExtension());
+                }
             return redirect('family-management/edit/'.$request->family_id)->with('suc_message', 'Data telah Diperbarui!');
         } else {
             return redirect()->back()->with('err_message', 'Data tidak ditemukan!');

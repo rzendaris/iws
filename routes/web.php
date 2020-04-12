@@ -70,6 +70,8 @@ Route::middleware('auth')->group(function() {
     Route::post('family-management/member/update', 'Admin\FamilyManController@FamilyMemberUpdate');
     Route::get('family-management/member/edit/{family_id}/{member_id}', 'Admin\FamilyManController@FamilyMemberEditView');
 
+    Route::get('family-tree', 'Admin\FamilyTreeController@FamilyTreeInit');
+    Route::get('family-tree-detail/{member_id}', 'Admin\FamilyTreeController@FamilyTreeDetail');
     /**
      * End Content Management Routes
      */

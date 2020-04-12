@@ -16,7 +16,7 @@
             </a>
         </li>
         <li class="nav-item  ">
-            <a href="{{ url('family-tree-fe') }}" class="nav-link nav-toggle">
+            <a href="{{ url('family-tree') }}" class="nav-link nav-toggle">
                 <i class="icon-user"></i>
                 <span class="title">Family Tree </span>
             </a>

@@ -51,7 +51,7 @@
                             <td>{{ $family->tlp_no }}</td>
                             <td>100%</td>
                             <td class="text-center">
-                                <a href="#"><i class="fa fa-eye fa-lg custom--1"></i></a>
+                                <a href="#" data-toggle="modal" data-target="#modal-detail-family-{{ $family->id }}"><i class="fa fa-eye fa-lg custom--1"></i></a>
                                 <a href="{{ url('family-management/edit/'.$family->id) }}"><i class="fa fa-edit fa-lg custom--1"></i></a>
                                 <a href="#" data-toggle="modal" data-target="#modal-delete-family-{{ $family->id }}"><i class="fa fa-close fa-lg custom--1"></i></a>
                             </td>
@@ -84,6 +84,74 @@
                 </div>
             </div>
         </form>
+    </div>
+
+    <!-- Modal Detail -->
+    <div id="modal-detail-family-{{ $family->id }}" class="modal fade">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h2 class="text-center">Detail Anggota Keluarga</h2>
+                    <div class="row">
+                        <div class="col-md-12 element">
+                            <div class="box-pencarian-family-tree" style=" background: #fff; ">
+                                <div class="row">
+                                    <div class="col-xl-4 col-md-4 m-b-10px">
+                                        <div class="form-group">
+                                            <label class="form-control-label">No KK :</label>
+                                            <input type="text" name="family_no" value="{{ $family->family_no }}" disabled class="form-control" required/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-control-label">Kota / Kabupaten :</label>
+                                            <input type="text" value="{{ $family->city->name }}" disabled class="form-control" required/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-control-label">Kode POS :</label>
+                                            <input type="text" name="post_code" value="{{ $family->post_code }}" disabled class="form-control" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-control-label">No Telp :</label>
+                                            <input type="text" name="tlp_no" value="{{ $family->tlp_no }}" disabled class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-4 col-md-4 m-b-10px">
+                                        <div class="form-group">
+                                            <label class="form-control-label">No KK Induk :</label>
+                                            <input type="text" name="inherit_no" value="{{ $family->inherit_no }}" disabled class="form-control" required/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-control-label">Kecamatan :</label>
+                                            <input type="text" value="{{ $family->district->name }}" disabled class="form-control" required/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-control-label">Alamat :</label>
+                                            <textarea type="text" name="address_master" value="{{ $family->address }}" disabled class="form-control" rows="5" required></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-4 col-md-4 m-b-10px">
+                                        <div class="form-group">
+                                            <label class="form-control-label">Provinsi :</label>
+                                            <input type="text" value="{{ $family->province->name }}" disabled class="form-control" required/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-control-label">Kelurahan / Desa :</label>
+                                            <input type="text" value="{{ $family->village->name }}" disabled class="form-control" required/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-control-label">Foto Keluarga :</label><br>
+                                            <img src="{{ url('photo/kk/'.$family->photo) }}" alt="Image" width="170px" height="150px"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger float-right w-100" data-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
     </div>
 @endforeach
 

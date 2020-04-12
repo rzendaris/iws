@@ -10,7 +10,7 @@
             </a>
         </li>
         <li class="nav-item  ">
-            <a href="{{ url('family-management-fe') }}" class="nav-link nav-toggle">
+            <a href="{{ url('family-management') }}" class="nav-link nav-toggle">
                 <i class="icon-user"></i>
                 <span class="title">Family Management </span>
             </a>
@@ -29,45 +29,45 @@
             </a>
             <ul class="sub-menu">
                 <li class="nav-item  ">
-                    <a href="{{ url('ethnic-fe') }}" class="nav-link ">
+                    <a href="{{ url('master/ethnic') }}" class="nav-link ">
                         <i class="icon-bar-chart"></i>
                         <span class="title">Etnis</span>
                     </a>
                 </li>
                 <li class="nav-item  ">
-                    <a href="{{ url('degree-fe') }}" class="nav-link ">
+                    <a href="{{ url('master/degree') }}" class="nav-link ">
                         <i class="icon-bar-chart"></i>
                         <span class="title">Gelar</span>
                     </a>
                 </li>
                 <li class="nav-item  ">
-                    <a href="{{ url('job-fe') }}" class="nav-link ">
+                    <a href="{{ url('master/job') }}" class="nav-link ">
                         <i class="icon-bar-chart"></i>
                         <span class="title">Pekerjaan</span>
                     </a>
                 </li>
                 <li class="nav-item  ">
-                    <a href="{{ url('village-fe') }}" class="nav-link ">
+                    <a href="{{ url('master/province') }}" class="nav-link ">
                         <i class="icon-bar-chart"></i>
-                        <span class="title">Kelurahan</span>
+                        <span class="title">Provinsi</span>
                     </a>
                 </li>
                 <li class="nav-item  ">
-                    <a href="{{ url('district-fe') }}" class="nav-link ">
+                    <a href="{{ url('master/city') }}" class="nav-link ">
+                        <i class="icon-bar-chart"></i>
+                        <span class="title">Kota / Kabupaten</span>
+                    </a>
+                </li>
+                <li class="nav-item  ">
+                    <a href="{{ url('master/district') }}" class="nav-link ">
                         <i class="icon-bar-chart"></i>
                         <span class="title">Kecamatan</span>
                     </a>
                 </li>
                 <li class="nav-item  ">
-                    <a href="{{ url('city-fe') }}" class="nav-link ">
+                    <a href="{{ url('master/village') }}" class="nav-link ">
                         <i class="icon-bar-chart"></i>
-                        <span class="title">Kabupaten</span>
-                    </a>
-                </li>
-                <li class="nav-item  ">
-                    <a href="{{ url('province-fe') }}" class="nav-link ">
-                        <i class="icon-bar-chart"></i>
-                        <span class="title">Provinsi</span>
+                        <span class="title">Kelurahan</span>
                     </a>
                 </li>
             </ul>

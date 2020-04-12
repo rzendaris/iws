@@ -21,11 +21,21 @@ class VillageManController extends Controller
      *
      * @return void
      */
-    public function VillageInit()
+    public function VillageInit(Request $request)
     {
-        $village = Village::with(['district', 'district.city', 'district.city.province'])->where('status', 1)->get()->sortBy('district.city.province.name');
+        $paginate = 15;
+        if (isset($request->query()['search'])){
+            $search = $request->query()['search'];
+            $village = Village::where('status', 1)
+                ->where('name', 'like', "%" . $search. "%")
+                ->with(['district', 'district.city', 'district.city.province'])
+                ->simplePaginate($paginate);
+            $village->appends(['search' => $search]);
+        } else {
+            $village = Village::with(['district', 'district.city', 'district.city.province'])->where('status', 1)->simplePaginate($paginate);
+        }
         $province = Province::where('status', 1)->orderBy('name', 'asc')->get();
-        $no = 1;
+        $no = 1 + (($village->currentPage() - 1) * $paginate);
         foreach($village as $data){
             $data->no = $no;
             $no++;
@@ -49,7 +59,7 @@ class VillageManController extends Controller
                     'created_by' => Auth::user()->email,
                     'status' => 1,
                 ]);
-                return redirect('village-fe')->with('suc_message', 'Data baru berhasil ditambahkan!');
+                return redirect('master/village')->with('suc_message', 'Data baru berhasil ditambahkan!');
             } else {
                 return redirect()->back()->with('err_message', 'Kecamatan tidak terdaftar! Tambahkan Kecamatan terlebih dahulu');
             }
@@ -70,7 +80,7 @@ class VillageManController extends Controller
                       'updated_by' => Auth::user()->email,
                       ]
                     );
-                return redirect('village-fe')->with('suc_message', 'Data telah diperbarui!');
+                return redirect('master/village')->with('suc_message', 'Data telah diperbarui!');
             } else {
                 return redirect()->back()->with('err_message', 'Kelurahan di Kecamatan tersebut telah terdaftar!');
             }
@@ -84,7 +94,7 @@ class VillageManController extends Controller
         $village = Village::where('id', $request->id)->first();
         if(!empty($village)){
             Village::where('id', $request->id)->update(['status' => 0]);
-            return redirect('village-fe')->with('suc_message', 'Data telah dihapus!');
+            return redirect('master/village')->with('suc_message', 'Data telah dihapus!');
         } else {
             return redirect()->back()->with('err_message', 'Data tidak ditemukan!');
         }
@@ -92,7 +102,13 @@ class VillageManController extends Controller
 
     public function GetListDistrict($city_id)
     {
-        $district = District::where('city_id', $city_id)->orderBy('name', 'asc')->get();
+        $district = District::where('city_id', $city_id)->where('status', 1)->orderBy('name', 'asc')->get();
         return $district->toJson();
+    }
+
+    public function GetListVillage($district_id)
+    {
+        $village = Village::where('district_id', $district_id)->where('status', 1)->orderBy('name', 'asc')->get();
+        return $village->toJson();
     }
 }

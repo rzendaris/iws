@@ -42,15 +42,10 @@
             </div>
         </div>
         <div class="form-actions">
-            <label class="checkbox">
-                <input type="checkbox" name="remember" value="1" /> Remember me 
-            </label>
             <button type="submit" class="btn green pull-right"> Login </button>
         </div>
         <div class="forget-password">
-            <h4>Forgot your password ?</h4>
-            <p> no worries, click
-                <a href="javascript:;" id="forget-password"> here </a> to reset your password. </p>
+            <a href="javascript:;" id="forget-password" style="color:#000000"><u><b> Lupa Password ? </b></u></a>
         </div>
     </form>
     <!-- END LOGIN FORM -->

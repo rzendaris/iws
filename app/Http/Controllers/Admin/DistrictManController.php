@@ -20,11 +20,21 @@ class DistrictManController extends Controller
      *
      * @return void
      */
-    public function DistrictInit()
+    public function DistrictInit(Request $request)
     {
-        $district = District::with(['city', 'city.province'])->where('status', 1)->get()->sortBy('city.province.name');
+        $paginate = 15;
+        if (isset($request->query()['search'])){
+            $search = $request->query()['search'];
+            $district = District::where('name', 'like', "%" . $search. "%")->where('status', 1)->with(
+                ['city', 'city.province']
+            )->simplePaginate($paginate);
+            $district->appends(['search' => $search]);
+        } else {
+            $district = District::with(['city', 'city.province'])->where('status', 1)->simplePaginate($paginate);
+        }
         $province = Province::where('status', 1)->orderBy('name', 'asc')->get();
-        $no = 1;
+        $no = 1 + (($district->currentPage() - 1) * $paginate);
+
         foreach($district as $data){
             $data->no = $no;
             $no++;
@@ -48,7 +58,7 @@ class DistrictManController extends Controller
                     'created_by' => Auth::user()->email,
                     'status' => 1,
                 ]);
-                return redirect('district-fe')->with('suc_message', 'Data baru berhasil ditambahkan!');
+                return redirect('master/district')->with('suc_message', 'Data baru berhasil ditambahkan!');
             } else {
                 return redirect()->back()->with('err_message', 'Kota tidak terdaftar! Tambahkan Kota terlebih dahulu');
             }
@@ -69,7 +79,7 @@ class DistrictManController extends Controller
                     'updated_by' => Auth::user()->email,
                     ]
                     );
-                return redirect('district-fe')->with('suc_message', 'Data telah diperbarui!');
+                return redirect('master/district')->with('suc_message', 'Data telah diperbarui!');
             } else {
                 return redirect()->back()->with('err_message', 'Kecamatan di Kota tersebut telah terdaftar!');
             }
@@ -83,7 +93,7 @@ class DistrictManController extends Controller
         $district = District::where('id', $request->id)->first();
         if(!empty($district)){
             District::where('id', $request->id)->update(['status' => 0]);
-            return redirect('district-fe')->with('suc_message', 'Data telah dihapus!');
+            return redirect('master/district')->with('suc_message', 'Data telah dihapus!');
         } else {
             return redirect()->back()->with('err_message', 'Data tidak ditemukan!');
         }
@@ -91,7 +101,7 @@ class DistrictManController extends Controller
 
     public function GetListCity($province_id)
     {
-        $city = City::where('province_id', $province_id)->orderBy('name', 'asc')->get();
+        $city = City::where('province_id', $province_id)->where('status', 1)->orderBy('name', 'asc')->get();
         return $city->toJson();
     }
 }

@@ -46,7 +46,7 @@ class CityManController extends Controller
                     'created_by' => Auth::user()->email,
                     'status' => 1,
                 ]);
-                return redirect('city-fe')->with('suc_message', 'Data baru berhasil ditambahkan!');
+                return redirect('master/city')->with('suc_message', 'Data baru berhasil ditambahkan!');
             } else {
                 return redirect()->back()->with('err_message', 'Provinsi tidak terdaftar! Tambahkan Provinsi terlebih dahulu');
             }
@@ -65,7 +65,7 @@ class CityManController extends Controller
                   'updated_by' => Auth::user()->email,
                   ]
                 );
-            return redirect('city-fe')->with('suc_message', 'Data telah diperbarui!');
+            return redirect('master/city')->with('suc_message', 'Data telah diperbarui!');
         } else {
             return redirect()->back()->with('err_message', 'Data tidak ditemukan!');
         }
@@ -76,7 +76,7 @@ class CityManController extends Controller
         $city = City::where('id', $request->id)->first();
         if(!empty($city)){
             City::where('id', $request->id)->update(['status' => 0]);
-            return redirect('city-fe')->with('suc_message', 'Data telah dihapus!');
+            return redirect('master/city')->with('suc_message', 'Data telah dihapus!');
         } else {
             return redirect()->back()->with('err_message', 'Data tidak ditemukan!');
         }

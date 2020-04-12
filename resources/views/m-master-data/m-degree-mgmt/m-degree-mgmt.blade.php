@@ -59,7 +59,7 @@
 
 <!-- Modal Tambah -->
 <div id="modal-tambah-gelar-m" class="modal fade">
-    <form method="post" action="{{url('degree-fe/insert')}}" enctype="multipart/form-data">
+    <form method="post" action="{{url('master/degree/insert')}}" enctype="multipart/form-data">
         {{csrf_field()}}
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -84,7 +84,7 @@
 @foreach($data['degree'] as $degree)
     <!-- Modal Delete -->
     <div id="modal-delete-gelar-m-{{ $degree->id }}" class="modal fade">
-        <form method="post" action="{{url('degree-fe/delete')}}" enctype="multipart/form-data">
+        <form method="post" action="{{url('master/degree/delete')}}" enctype="multipart/form-data">
             {{csrf_field()}}
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -104,7 +104,7 @@
 
     <!-- Modal Edit -->
     <div id="modal-edit-gelar-m-{{ $degree->id }}" class="modal fade">
-        <form method="post" action="{{url('degree-fe/update')}}" enctype="multipart/form-data">
+        <form method="post" action="{{url('master/degree/update')}}" enctype="multipart/form-data">
             {{csrf_field()}}
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">

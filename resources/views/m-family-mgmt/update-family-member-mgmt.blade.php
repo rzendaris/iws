@@ -9,83 +9,11 @@
 @section('content')
 
 <div class="content-body-white">
-    <form method="post" action="{{url('family-management/insert')}}" enctype="multipart/form-data">
+    <form method="post" action="{{url('family-management/member/update')}}" enctype="multipart/form-data">
     {{csrf_field()}}
         <div class="page-head">
             <div class="page-title">
-                <h1>Tambahkan Keluarga</h1>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="box-pencarian-family-tree">
-                    <div class="row">
-                        <div class="col-xl-4 col-md-4 m-b-10px">
-                            <div class="form-group">
-                                <label class="form-control-label">No KK :</label>
-                                <input type="text" name="family_no" class="form-control" required/>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-control-label">Kota / Kabupaten :</label>
-                                <select name="city_id_master" id="city-selected-master" class="custom-select form-control" disabled required>
-                                    <option value="">Pilih Kota / Kabupaten</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-control-label">Kode POS :</label>
-                                <input type="text" name="post_code" class="form-control" />
-                            </div>
-                            <div class="form-group">
-                                <label class="form-control-label">No Telp :</label>
-                                <input type="text" name="tlp_no" class="form-control" />
-                            </div>
-                        </div>
-                        <div class="col-xl-4 col-md-4 m-b-10px">
-                            <div class="form-group">
-                                <label class="form-control-label">No KK Induk :</label>
-                                <input type="text" name="inherit_no" class="form-control" required/>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-control-label">Kecamatan :</label>
-                                <select name="district_id_master" id="district-selected-master" class="custom-select form-control" disabled required>
-                                    <option value="">Pilih Kecamatan</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-control-label">Alamat :</label>
-                                <textarea type="text" name="address_master" class="form-control" rows="5" required></textarea>
-                            </div>
-                        </div>
-                        <div class="col-xl-4 col-md-4 m-b-10px">
-                            <div class="form-group">
-                                <label class="form-control-label">Provinsi :</label>
-                                <select name="province_id_master" id="province-selected-master" class="custom-select form-control" required>
-                                    <option value="">Pilih Provinsi</option>
-                                    @foreach($data['province'] as $province)
-                                        <option value="{{ $province->id }}">{{ $province->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-control-label">Kelurahan / Desa :</label>
-                                <select name="village_id_master" id="village-selected-master" class="custom-select form-control" disabled required>
-                                    <option value="">Pilih Kelurahan / Desa</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-control-label">Foto Keluarga :</label><br>
-                                <img id="blah" alt="your image" width="90" height="90" /><br>
-                                <input id="upload-img" name="photo_master" type="file" onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="page-head">
-            <div class="page-title">
-                <h1>Tambahkan Kepala Keluarga</h1>
+                <h1>Perbarui Data Anggota Keluarga</h1>
             </div>
         </div>
         <div class="wrapper">
@@ -96,22 +24,22 @@
                             <div class="col-xl-4 col-md-4 m-b-10px">
                                 <div class="form-group">
                                     <label class="form-control-label">NIK :</label>
-                                    <input type="text" name="nik" class="form-control" required/>
+                                    <input type="text" name="nik" value="{{ $data['member']->nik }}" class="form-control" required/>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-control-label">Tanggal Lahir :</label>
-                                    <input type="date" name="birthday" class="form-control" required/>
+                                    <input type="date" name="birthday" value="{{ $data['member']->birthday }}" class="form-control" required/>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-control-label">Kecamatan :</label>
                                     <select name="district_id" id="district-selected" class="custom-select form-control" disabled required>
-                                        <option value="">Pilih Kecamatan</option>
+                                        <option value="{{ $data['member']->district->id }}">{{ $data['member']->district->name }}</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-control-label">Jenis Pekerjaan :</label>
                                     <select name="job_id" class="custom-select form-control" required>
-                                        <option value="">Pilih Jenis Pekerjaan</option>
+                                        <option value="{{ $data['member']->job->id }}">{{ $data['member']->job->name }}</option>
                                         @foreach($data['job'] as $job)
                                             <option value="{{ $job->id }}">{{ $job->name }}</option>
                                         @endforeach
@@ -120,7 +48,7 @@
                                 <div class="form-group">
                                     <label class="form-control-label">Pendidikan Terakhir :</label>
                                     <select name="education_id" class="custom-select form-control" required>
-                                        <option value="">Pilih Pendidikan Terakhir</option>
+                                        <option value="{{ $data['member']->education->id }}">{{ $data['member']->education->name }}</option>
                                         @foreach($data['education'] as $education)
                                             <option value="{{ $education->id }}">{{ $education->name }}</option>
                                         @endforeach
@@ -129,7 +57,7 @@
                                 <div class="form-group">
                                     <label class="form-control-label">Suku :</label>
                                     <select name="ethnic_id" class="custom-select form-control" required>
-                                        <option value="">Pilih Suku</option>
+                                        <option value="{{ $data['member']->ethnic->id }}">{{ $data['member']->ethnic->name }}</option>
                                         @foreach($data['ethnic'] as $ethnic)
                                             <option value="{{ $ethnic->id }}">{{ $ethnic->name }}</option>
                                         @endforeach
@@ -137,18 +65,18 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="form-control-label">Alamat :</label>
-                                    <textarea type="text" name="address" class="form-control" rows="5" required></textarea>
+                                    <textarea type="text" name="address" class="form-control" rows="5" required>{{ $data['member']->address }}</textarea>
                                 </div>
                             </div>
                             <div class="col-xl-4 col-md-4 m-b-10px">
                                 <div class="form-group">
                                     <label class="form-control-label">Nama Lengkap :</label>
-                                    <input type="text" name="full_name" class="form-control" required/>
+                                    <input type="text" name="full_name" value="{{ $data['member']->full_name }}" class="form-control" required/>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-control-label">Provinsi :</label>
                                     <select name="province_id" id="province-selected" class="custom-select form-control" required>
-                                        <option value="">Pilih Provinsi</option>
+                                        <option value="{{ $data['member']->province->id }}">{{ $data['member']->province->name }}</option>
                                         @foreach($data['province'] as $province)
                                             <option value="{{ $province->id }}">{{ $province->name }}</option>
                                         @endforeach
@@ -157,21 +85,21 @@
                                 <div class="form-group">
                                     <label class="form-control-label">Kelurahan / Desa :</label>
                                     <select name="village_id" id="village-selected" class="custom-select form-control" disabled required>
-                                        <option value="">Pilih Kelurahan / Desa</option>
+                                        <option value="{{ $data['member']->village->id }}">{{ $data['member']->village->name }}</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-control-label">Nama Instansi/Usaha :</label>
-                                    <input type="text" name="instance_name" class="form-control" required/>
+                                    <input type="text" name="instance_name" value="{{ $data['member']->instance_name }}" class="form-control" required/>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-control-label">Nama Sekolah Terakhir :</label>
-                                    <input type="text" name="school_name" class="form-control" required/>
+                                    <input type="text" name="school_name" value="{{ $data['member']->school_name }}" class="form-control" required/>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-control-label">Gelar Adat :</label>
                                     <select name="title_adat_id" class="custom-select form-control" required>
-                                        <option value="">Pilih Gelar Adat</option>
+                                        <option value="{{ $data['member']->title_adat->id }}">{{ $data['member']->title_adat->name }}</option>
                                         @foreach($data['title_adat'] as $title_adat)
                                             <option value="{{ $title_adat->id }}">{{ $title_adat->name }}</option>
                                         @endforeach
@@ -180,24 +108,28 @@
                                 <div class="form-group">
                                     <label class="form-control-label">Foto Diri :</label><br>
                                     <img id="blah2" alt="your image" width="90" height="90" /><br>
-                                    <input id="upload-img-2" name="photo" type="file" onchange="document.getElementById('blah2').src = window.URL.createObjectURL(this.files[0])" required>
+                                    <input id="upload-img-2" name="photo" type="file" onchange="document.getElementById('blah2').src = window.URL.createObjectURL(this.files[0])">
                                 </div>
                             </div>
                             <div class="col-xl-4 col-md-4 m-b-10px">
                                 <div class="form-group">
                                     <label class="form-control-label">Nama Panggilan :</label>
-                                    <input type="text" name="sur_name" class="form-control" required/>
+                                    <input type="text" name="sur_name" value="{{ $data['member']->sur_name }}" class="form-control" required/>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-control-label">Kota / Kabupaten :</label>
                                     <select name="city_id" id="city-selected" class="custom-select form-control" disabled required>
-                                        <option value="">Pilih Kota / Kabupaten</option>
+                                        <option value="{{ $data['member']->city->id }}">{{ $data['member']->city->name }}</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-control-label">Status Hidup :</label>
                                     <select name="is_life" class="custom-select form-control" required>
-                                        <option value="">Pilih Status Hidup</option>
+                                        @if($data['member']->is_life == 1)
+                                            <option value="1">Hidup</option>
+                                        @else
+                                            <option value="0">Meninggal</option>
+                                        @endif
                                         <option value="1">Hidup</option>
                                         <option value="0">Meninggal</option>
                                     </select>
@@ -205,7 +137,7 @@
                                 <div class="form-group">
                                     <label class="form-control-label">Jenis Kelamin :</label>
                                     <select name="gender_status" class="custom-select form-control" required>
-                                        <option value="">Pilih Jenis Kelamin</option>
+                                        <option value="{{ $data['member']->gender_status }}">{{ $data['member']->gender_status }}</option>
                                         <option value="Laki-Laki">Laki-Laki</option>
                                         <option value="Perempuan">Perempuan</option>
                                     </select>
@@ -213,7 +145,7 @@
                                 <div class="form-group">
                                     <label class="form-control-label">Status Pernikahan :</label>
                                     <select name="marital_id" class="custom-select form-control" required>
-                                        <option value="">Pilih Status Pernikahan</option>
+                                        <option value="{{ $data['member']->marital->id }}">{{ $data['member']->marital->name }}</option>
                                         @foreach($data['marital'] as $marital)
                                             <option value="{{ $marital->id }}">{{ $marital->name }}</option>
                                         @endforeach
@@ -221,19 +153,16 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="form-control-label">Tahun Kelulusan :</label>
-                                    <input type="text" name="graduation_year" class="form-control" required/>
+                                    <input type="text" name="graduation_year" value="{{ $data['member']->graduation_year }}" class="form-control" required/>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-control-label">No Telepon :</label>
-                                    <input type="text" name="phone_number" class="form-control" required/>
+                                    <input type="text" name="phone_number" value="{{ $data['member']->phone_number }}" class="form-control" required/>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-control-label">Status Anggota Keluarga :</label>
                                     <select name="member_status_id" class="custom-select form-control" required>
-                                        <option value="">Pilih Status Anggota Keluarga</option>
-                                        @foreach($data['member_status'] as $member_status)
-                                            <option value="{{ $member_status->id }}">{{ $member_status->name }}</option>
-                                        @endforeach
+                                        <option value="{{ $data['member']->member_status->id }}">{{ $data['member']->member_status->name }}</option>
                                     </select>
                                 </div>               
                             </div>
@@ -247,7 +176,9 @@
 
             <div class="row">
                 <div class="col-xl-12 col-md-12 m-b-10px text-right">
-                    <a href="{{ url('family-management') }}" class="btn btn-primary pull-left">Batal</a>
+                    <input type="hidden" name="id" value="{{ $data['member']->id }}"/>
+                    <input type="hidden" name="family_id" value="{{ $data['family_id'] }}"/>
+                    <a href="{{ url('family-management/edit/'.$data['family_id']) }}" class="btn btn-primary pull-left">Kembali</a>
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
             </div>

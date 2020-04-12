@@ -29,6 +29,14 @@
             </div>
         @endif
             <div class="table-responsive custom--2">
+                <div class="row">
+                    <div class="float-left col-xl-3 col-md-3 m-b-10px">
+                        <input name="name" id="search-value" type="search" value="" placeholder="Cari Kelurahan" class="form-control">
+                    </div>
+                    <div class="float-left col-xl-3 col-md-3 m-b-10px">
+                        <button type="button" id="search-button" class="btn btn-primary">Search <i class="icon-refresh"></i></button>
+                    </div>
+                </div>
                 <table id="sorting-table" class="table">
                     <thead>
                         <tr>
@@ -56,6 +64,11 @@
                         </tr>
                     @endforeach
                     </tbody>
+                    <tfooter>
+                        <tr>
+                            <td>{{ $data['village']->links() }}</td>
+                        </tr>
+                    </tfooter>
                 </table>
             </div>
         </div>
@@ -65,7 +78,7 @@
 
 <!-- Modal Tambah -->
 <div id="modal-tambah-village-m" class="modal fade">
-    <form method="post" action="{{url('village-fe/insert')}}" enctype="multipart/form-data">
+    <form method="post" action="{{url('master/village/insert')}}" enctype="multipart/form-data">
         {{csrf_field()}}
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -111,7 +124,7 @@
 @foreach($data['village'] as $village)
     <!-- Modal Delete -->
     <div id="modal-delete-village-m-{{ $village->id }}" class="modal fade">
-        <form method="post" action="{{url('village-fe/delete')}}" enctype="multipart/form-data">
+        <form method="post" action="{{url('master/village/delete')}}" enctype="multipart/form-data">
             {{csrf_field()}}
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -131,7 +144,7 @@
 
     <!-- Modal Edit -->
     <div id="modal-edit-village-m-{{ $village->id }}" class="modal fade">
-        <form method="post" action="{{url('village-fe/update')}}" enctype="multipart/form-data">
+        <form method="post" action="{{url('master/village/update')}}" enctype="multipart/form-data">
             {{csrf_field()}}
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -152,9 +165,10 @@
                             </div>
                             <div class="col-xl-12 col-md-12 m-b-10px">
                                 <label class="form-control-label">Pilih Kecamatan *</label>
-                                <select name="district_id" class="custom-select form-control">
+                                <select class="custom-select form-control" readonly>
                                     <option value="{{ $village->district_id }}">{{ $village->district->name }}</option>
                                 </select>
+                                <input type="hidden" name="district_id" value="{{ $village->district_id }}"/>
                             </div>
                             <div class="col-xl-12 col-md-12 m-b-10px">
                                 <label class="form-control-label">Nama Kelurahan *</label>
@@ -228,10 +242,19 @@
     <script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}"></script>
     <script>   
     $(function () {
+        $('#search-button').click(function(){
+            var search = $('#search-value').val();
+            if (search == null || search == ""){
+                window.location.href="village";
+            } else {
+                window.location.href="village?search="+search;
+            }
+        });
+
         $('#province-selected').on('change', function() {
             $('#city-selected').empty().append('<option value="">Pilih Kota</option>');
             $.ajax({
-                url: "district-fe/get-list-city/"+this.value,
+                url: "district/get-list-city/"+this.value,
                 method: 'get',
                 success : function(data) {
                     var parse_data = JSON.parse(data);
@@ -253,7 +276,7 @@
         $('#city-selected').on('change', function() {
             $('#district-selected').empty().append('<option value="">Pilih Kecamatan</option>');
             $.ajax({
-                url: "village-fe/get-list-district/"+this.value,
+                url: "village/get-list-district/"+this.value,
                 method: 'get',
                 success : function(data) {
                     var parse_data = JSON.parse(data);
@@ -276,7 +299,8 @@
             "dom": '<"toolbar">frtip',
             "ordering": false,
             "info":     false,
-            language: { search: "", searchPlaceholder: "Pencarian"  },
+            "paging":     false,
+            "searching":     false,
         } );
     
         $("div.toolbar").html('<a class="float-right btn btn-success" href="#" data-toggle="modal" data-target="#modal-tambah-village-m">Tambah</a>');

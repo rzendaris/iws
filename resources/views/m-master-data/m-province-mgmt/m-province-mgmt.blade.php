@@ -59,7 +59,7 @@
 
 <!-- Modal Tambah -->
 <div id="modal-tambah-province-m" class="modal fade">
-    <form method="post" action="{{url('province-fe/insert')}}" enctype="multipart/form-data">
+    <form method="post" action="{{url('master/province/insert')}}" enctype="multipart/form-data">
         {{csrf_field()}}
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -84,7 +84,7 @@
 @foreach($data['province'] as $province)
     <!-- Modal Delete -->
     <div id="modal-delete-province-m-{{ $province->id }}" class="modal fade">
-        <form method="post" action="{{url('province-fe/delete')}}" enctype="multipart/form-data">
+        <form method="post" action="{{url('master/province/delete')}}" enctype="multipart/form-data">
             {{csrf_field()}}
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -104,7 +104,7 @@
 
     <!-- Modal Edit -->
     <div id="modal-edit-province-m-{{ $province->id }}" class="modal fade">
-        <form method="post" action="{{url('province-fe/update')}}" enctype="multipart/form-data">
+        <form method="post" action="{{url('master/province/update')}}" enctype="multipart/form-data">
             {{csrf_field()}}
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">

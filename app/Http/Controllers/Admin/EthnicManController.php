@@ -40,7 +40,7 @@ class EthnicManController extends Controller
                 'created_by' => Auth::user()->email,
                 'status' => 1,
             ]);
-            return redirect('ethnic-fe')->with('suc_message', 'Data baru berhasil ditambahkan!');
+            return redirect('master/ethnic')->with('suc_message', 'Data baru berhasil ditambahkan!');
         } else {
             return redirect()->back()->with('err_message', 'Nama suku telah terdaftar!');
         }
@@ -56,7 +56,7 @@ class EthnicManController extends Controller
                   'updated_by' => Auth::user()->email,
                   ]
                 );
-            return redirect('ethnic-fe')->with('suc_message', 'Data telah diperbarui!');
+            return redirect('master/ethnic')->with('suc_message', 'Data telah diperbarui!');
         } else {
             return redirect()->back()->with('err_message', 'Data tidak ditemukan!');
         }
@@ -67,7 +67,7 @@ class EthnicManController extends Controller
         $ethnic = Ethnic::where('id', $request->id)->first();
         if(!empty($ethnic)){
             Ethnic::where('id', $request->id)->update(['status' => 0]);
-            return redirect('ethnic-fe')->with('suc_message', 'Data telah dihapus!');
+            return redirect('master/ethnic')->with('suc_message', 'Data telah dihapus!');
         } else {
             return redirect()->back()->with('err_message', 'Data tidak ditemukan!');
         }

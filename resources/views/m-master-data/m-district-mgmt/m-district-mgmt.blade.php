@@ -29,6 +29,14 @@
             </div>
         @endif
             <div class="table-responsive custom--2">
+                <div class="row">
+                    <div class="float-left col-xl-3 col-md-3 m-b-10px">
+                        <input name="name" id="search-value" type="search" value="" placeholder="Cari Kecamatan" class="form-control">
+                    </div>
+                    <div class="float-left col-xl-3 col-md-3 m-b-10px">
+                        <button type="button" id="search-button" class="btn btn-primary">Search <i class="icon-refresh"></i></button>
+                    </div>
+                </div>
                 <table id="sorting-table" class="table">
                     <thead>
                         <tr>
@@ -54,6 +62,11 @@
                         </tr>
                     @endforeach
                     </tbody>
+                    <tfooter>
+                        <tr>
+                            <td>{{ $data['district']->links() }}</td>
+                        </tr>
+                    </tfooter>
                 </table>
             </div>
         </div>
@@ -63,7 +76,7 @@
 
 <!-- Modal Tambah -->
 <div id="modal-tambah-district-m" class="modal fade">
-    <form method="post" action="{{url('district-fe/insert')}}" enctype="multipart/form-data">
+    <form method="post" action="{{url('master/district/insert')}}" enctype="multipart/form-data">
         {{csrf_field()}}
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -103,7 +116,7 @@
 @foreach($data['district'] as $district)
     <!-- Modal Delete -->
     <div id="modal-delete-district-m-{{ $district->id }}" class="modal fade">
-        <form method="post" action="{{url('district-fe/delete')}}" enctype="multipart/form-data">
+        <form method="post" action="{{url('master/district/delete')}}" enctype="multipart/form-data">
             {{csrf_field()}}
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -123,7 +136,7 @@
 
     <!-- Modal Edit -->
     <div id="modal-edit-district-m-{{ $district->id }}" class="modal fade">
-        <form method="post" action="{{url('district-fe/update')}}" enctype="multipart/form-data">
+        <form method="post" action="{{url('master/district/update')}}" enctype="multipart/form-data">
             {{csrf_field()}}
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -138,9 +151,10 @@
                             </div>
                             <div class="col-xl-12 col-md-12 m-b-10px">
                                 <label class="form-control-label">Pilih Kota *</label>
-                                <select name="city_id" class="custom-select form-control">
+                                <select class="custom-select form-control" readonly>
                                     <option value="{{ $district->city->id }}">{{ $district->city->name }}</option>
                                 </select>
+                                <input type="hidden" name="city_id" value="{{ $district->city->id }}"/>
                             </div>
                             <div class="col-xl-12 col-md-12 m-b-10px">
                                 <label class="form-control-label">Nama Kecamatan *</label>
@@ -210,10 +224,18 @@
 <script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}"></script>
 <script>
     $(function () {
+        $('#search-button').click(function(){
+            var search = $('#search-value').val();
+            if (search == null || search == ""){
+                window.location.href="district";
+            } else {
+                window.location.href="district?search="+search;
+            }
+        });
         $('#province-selected').on('change', function() {
             $('#city_add').empty().append('<option value="">Pilih Kota</option>');
             $.ajax({
-                url: "district-fe/get-list-city/"+this.value,
+                url: "district/get-list-city/"+this.value,
                 method: 'get',
                 success : function(data) {
                     var parse_data = JSON.parse(data);
@@ -236,7 +258,8 @@
             "dom": '<"toolbar">frtip',
             "ordering": false,
             "info":     false,
-            language: { search: "", searchPlaceholder: "Pencarian"  },
+            "paging":     false,
+            "searching":     false,
         } );
     
         $("div.toolbar").html('<a class="float-right btn btn-success" href="#" data-toggle="modal" data-target="#modal-tambah-district-m">Tambah</a>');

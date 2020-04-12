@@ -59,7 +59,7 @@
 
 <!-- Modal Tambah -->
 <div id="modal-tambah-job-m" class="modal fade">
-    <form method="post" action="{{url('job-fe/insert')}}" enctype="multipart/form-data">
+    <form method="post" action="{{url('master/job/insert')}}" enctype="multipart/form-data">
         {{csrf_field()}}
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -84,7 +84,7 @@
 @foreach($data['job'] as $job)
     <!-- Modal Delete -->
     <div id="modal-delete-job-m-{{ $job->id }}" class="modal fade">
-        <form method="post" action="{{url('job-fe/delete')}}" enctype="multipart/form-data">
+        <form method="post" action="{{url('master/job/delete')}}" enctype="multipart/form-data">
             {{csrf_field()}}
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -104,7 +104,7 @@
 
     <!-- Modal Edit -->
     <div id="modal-edit-job-m-{{ $job->id }}" class="modal fade">
-        <form method="post" action="{{url('job-fe/update')}}" enctype="multipart/form-data">
+        <form method="post" action="{{url('master/job/update')}}" enctype="multipart/form-data">
             {{csrf_field()}}
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">

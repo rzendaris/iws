@@ -55,6 +55,20 @@ return [
             'visibility' => 'public',
         ],
 
+        'public_kk' => [
+            'driver' => 'local',
+            'root'   => public_path() . '/photo/kk',
+            'url' => env('APP_URL').'/public',
+            'visibility' => 'public',
+        ],
+
+        'public_member' => [
+            'driver' => 'local',
+            'root'   => public_path() . '/photo/member',
+            'url' => env('APP_URL').'/public',
+            'visibility' => 'public',
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

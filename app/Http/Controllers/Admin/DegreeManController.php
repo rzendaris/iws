@@ -40,7 +40,7 @@ class DegreeManController extends Controller
                 'created_by' => Auth::user()->email,
                 'status' => 1,
             ]);
-            return redirect('degree-fe')->with('suc_message', 'Data baru berhasil ditambahkan!');
+            return redirect('master/degree')->with('suc_message', 'Data baru berhasil ditambahkan!');
         } else {
             return redirect()->back()->with('err_message', 'Title Adat telah terdaftar!');
         }
@@ -56,7 +56,7 @@ class DegreeManController extends Controller
                   'updated_by' => Auth::user()->email,
                   ]
                 );
-            return redirect('degree-fe')->with('suc_message', 'Data telah diperbarui!');
+            return redirect('master/degree')->with('suc_message', 'Data telah diperbarui!');
         } else {
             return redirect()->back()->with('err_message', 'Data tidak ditemukan!');
         }
@@ -67,7 +67,7 @@ class DegreeManController extends Controller
         $degree = TitleAdat::where('id', $request->id)->first();
         if(!empty($degree)){
             TitleAdat::where('id', $request->id)->update(['status' => 0]);
-            return redirect('degree-fe')->with('suc_message', 'Data telah dihapus!');
+            return redirect('master/degree')->with('suc_message', 'Data telah dihapus!');
         } else {
             return redirect()->back()->with('err_message', 'Data tidak ditemukan!');
         }

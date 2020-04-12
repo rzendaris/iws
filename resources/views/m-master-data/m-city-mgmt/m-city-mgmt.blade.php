@@ -61,7 +61,7 @@
 
 <!-- Modal Tambah -->
 <div id="modal-tambah-city-m" class="modal fade">
-    <form method="post" action="{{url('city-fe/insert')}}" enctype="multipart/form-data">
+    <form method="post" action="{{url('master/city/insert')}}" enctype="multipart/form-data">
         {{csrf_field()}}
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -95,7 +95,7 @@
 @foreach($data['city'] as $city)
     <!-- Modal Delete -->
     <div id="modal-delete-city-m-{{ $city->id }}" class="modal fade">
-        <form method="post" action="{{url('city-fe/delete')}}" enctype="multipart/form-data">
+        <form method="post" action="{{url('master/city/delete')}}" enctype="multipart/form-data">
             {{csrf_field()}}
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -115,7 +115,7 @@
 
     <!-- Modal Edit -->
     <div id="modal-edit-city-m-{{ $city->id }}" class="modal fade">
-        <form method="post" action="{{url('city-fe/update')}}" enctype="multipart/form-data">
+        <form method="post" action="{{url('master/city/update')}}" enctype="multipart/form-data">
             {{csrf_field()}}
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">

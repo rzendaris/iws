@@ -59,7 +59,7 @@
 
 <!-- Modal Tambah -->
 <div id="modal-tambah-ethnic-m" class="modal fade">
-    <form method="post" action="{{url('ethnic-fe/insert')}}" enctype="multipart/form-data">
+    <form method="post" action="{{url('master/ethnic/insert')}}" enctype="multipart/form-data">
         {{csrf_field()}}
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -85,7 +85,7 @@
 @foreach($data['ethnic'] as $ethnic)
     <!-- Modal Delete -->
     <div id="modal-delete-ethnic-m-{{ $ethnic->id }}" class="modal fade">
-        <form method="post" action="{{url('ethnic-fe/delete')}}" enctype="multipart/form-data">
+        <form method="post" action="{{url('master/ethnic/delete')}}" enctype="multipart/form-data">
             {{csrf_field()}}
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -105,7 +105,7 @@
 
     <!-- Modal Edit -->
     <div id="modal-edit-ethnic-m-{{ $ethnic->id }}" class="modal fade">
-        <form method="post" action="{{url('ethnic-fe/update')}}" enctype="multipart/form-data">
+        <form method="post" action="{{url('master/ethnic/update')}}" enctype="multipart/form-data">
             {{csrf_field()}}
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">

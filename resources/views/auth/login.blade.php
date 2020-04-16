@@ -41,6 +41,18 @@
                 <input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="Password" name="password" required/> 
             </div>
         </div>
+        <div class="form-group{{ $errors->has('CaptchaCode') ? ' has-error' : '' }}">
+            <div class="input-icon">
+                {!! captcha_image_html('LoginCaptcha') !!}
+                <input type="text" class="form-control" name="CaptchaCode" id="CaptchaCode">
+
+                @if ($errors->has('CaptchaCode'))
+                    <span class="help-block">
+                        <strong>{{ $errors->first('CaptchaCode') }}</strong>
+                    </span>
+                @endif
+            </div>
+        </div>
         <div class="form-actions">
             <button type="submit" class="btn green pull-right"> Login </button>
         </div>

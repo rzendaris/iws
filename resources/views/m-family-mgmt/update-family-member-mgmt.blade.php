@@ -107,7 +107,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="form-control-label">Foto Diri :</label><br>
-                                    <img id="blah2" alt="your image" width="90" height="90" /><br>
+                                    <img id="blah2" alt="your image" width="90" height="90"  src="{{ url('photo/member/'.$data['member']->photo) }}"/><br>
                                     <input id="upload-img-2" name="photo" type="file" onchange="document.getElementById('blah2').src = window.URL.createObjectURL(this.files[0])">
                                 </div>
                             </div>

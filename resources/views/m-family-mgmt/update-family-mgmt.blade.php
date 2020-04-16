@@ -165,7 +165,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="form-control-label">Foto Diri :</label><br>
-                                    <img id="blah2" alt="your image" width="90" height="90" /><br>
+                                    <img id="blah2" alt="your image" width="90" height="90" src="{{ asset('assets/global/img/no-profile.jpg') }}" /><br>
                                     <input id="upload-img-2" name="photo" type="file" onchange="document.getElementById('blah2').src = window.URL.createObjectURL(this.files[0])" required>
                                 </div>
                             </div>
@@ -267,7 +267,7 @@
 
         <!-- Modal Detail -->
         <div id="modal-detail-family-member-{{ $family_member->member_belongs->id }}" class="modal fade">
-            <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-dialog modal-dialog-centered modal-xl">
                 <div class="modal-content">
                     <div class="modal-body">
                         <h2 class="text-center">Detail Anggota Keluarga</h2>

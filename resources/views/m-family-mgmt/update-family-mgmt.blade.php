@@ -267,7 +267,7 @@
 
         <!-- Modal Detail -->
         <div id="modal-detail-family-member-{{ $family_member->member_belongs->id }}" class="modal fade">
-            <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-dialog modal-dialog-centered modal-xl">
                 <div class="modal-content">
                     <div class="modal-body">
                         <h2 class="text-center">Detail Anggota Keluarga</h2>

@@ -95,4 +95,5 @@ table.dataTable thead th, table.dataTable thead td {
     .page-content-wrapper .page-content {
         padding: 0 0 0 20px;
     }
+    .modal-xl { width: 1140px; }
 }

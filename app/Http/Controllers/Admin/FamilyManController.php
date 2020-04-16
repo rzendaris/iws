@@ -158,8 +158,12 @@ class FamilyManController extends Controller
                 ])
             ->first();
         $no = 1;
+        $status_head_family = 0;
         foreach($family->family_member as $data){
             if (isset($data->member_belongs)){
+                if ($data->member_belongs->member_status_id == 1){
+                    $status_head_family = 1;
+                }
                 $data->no = $no;
                 $no++;
             }
@@ -174,7 +178,7 @@ class FamilyManController extends Controller
         $education = Education::orderBy('id', 'asc')->get();
         $ethnic = Ethnic::where('status', 1)->orderBy('name', 'asc')->get();
         $title_adat = TitleAdat::where('status', 1)->orderBy('name', 'asc')->get();
-        $member_status = MemberStatus::orderBy('id', 'asc')->get();
+        $member_status = MemberStatus::where('id', '!=', $status_head_family)->orderBy('id', 'asc')->get();
         $job = Job::where('status', 1)->orderBy('name', 'asc')->get();
 
         $data = array(
@@ -278,10 +282,28 @@ class FamilyManController extends Controller
 
     public function FamilyMemberEditView($family_id, $member_id)
     {
-        $family = Family::where('id', $family_id)->first();
+        $family = Family::where('id', $family_id)
+            ->where('status', 1)
+            ->with([
+                'family_member', 
+                'family_member.member_belongs' => function ($query) {
+                    $query->where('status', 1);
+                },
+                'family_member.member_belongs.member_status', 
+                'family_member.member_belongs.ethnic'
+                ])
+            ->first();
         if(!empty($family)){
             $member = Member::where('id', $member_id)->first();
             if(!empty($member)){
+                $status_head_family = 0;
+                foreach($family->family_member as $data){
+                    if (isset($data->member_belongs) && $member->member_status_id != 1){
+                        if ($data->member_belongs->member_status_id == 1){
+                            $status_head_family = 1;
+                        }
+                    }
+                }
                 $province = Province::where('status', 1)->orderBy('name', 'asc')->get();
                 $city = City::where('status', 1)->orderBy('name', 'asc')->get();
                 $district = District::where('status', 1)->orderBy('name', 'asc')->get();
@@ -291,7 +313,7 @@ class FamilyManController extends Controller
                 $education = Education::orderBy('id', 'asc')->get();
                 $ethnic = Ethnic::where('status', 1)->orderBy('name', 'asc')->get();
                 $title_adat = TitleAdat::where('status', 1)->orderBy('name', 'asc')->get();
-                $member_status = MemberStatus::orderBy('id', 'asc')->get();
+                $member_status = MemberStatus::where('id', '!=', $status_head_family)->orderBy('id', 'asc')->get();
                 $job = Job::where('status', 1)->orderBy('name', 'asc')->get();
 
                 $data = array(

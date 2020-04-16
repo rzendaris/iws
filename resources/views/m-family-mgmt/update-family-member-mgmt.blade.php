@@ -163,6 +163,9 @@
                                     <label class="form-control-label">Status Anggota Keluarga :</label>
                                     <select name="member_status_id" class="custom-select form-control" required>
                                         <option value="{{ $data['member']->member_status->id }}">{{ $data['member']->member_status->name }}</option>
+                                        @foreach($data['member_status'] as $member_status)
+                                            <option value="{{ $member_status->id }}">{{ $member_status->name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>               
                             </div>

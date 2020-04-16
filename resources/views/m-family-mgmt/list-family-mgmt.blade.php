@@ -29,6 +29,14 @@
                 </div>
             @endif
             <div class="table-responsive custom--2">
+                <div class="row">
+                    <div class="float-left col-xl-3 col-md-3 m-b-10px">
+                        <input name="name" id="search-value" type="search" value="" placeholder="Cari No KK" class="form-control">
+                    </div>
+                    <div class="float-left col-xl-3 col-md-3 m-b-10px">
+                        <button type="button" id="search-button" class="btn btn-primary">Cari</button>
+                    </div>
+                </div>
                 <table id="sorting-table" class="table">
                     <thead>
                         <tr>
@@ -58,6 +66,11 @@
                         </tr>
                     @endforeach
                     </tbody>
+                    <tfooter>
+                        <tr>
+                            <td>{{ $data['family']->links() }}</td>
+                        </tr>
+                    </tfooter>
                 </table>
             </div>
         </div>
@@ -162,11 +175,20 @@
     <script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}"></script>
     <script>   
     $(function () {
+        $('#search-button').click(function(){
+            var search = $('#search-value').val();
+            if (search == null || search == ""){
+                window.location.href="family-management";
+            } else {
+                window.location.href="family-management?search="+search;
+            }
+        });
         $('#sorting-table').DataTable( {
             "dom": '<"toolbar">frtip',
             "ordering": false,
             "info":     false,
-            language: { search: "", searchPlaceholder: "Pencarian"  },
+            "paging":     false,
+            "searching":     false,
         } );
     
         $("div.toolbar").html('<a class="float-right btn btn-success" href="/iws/public/family-management/add">Tambah</a>');

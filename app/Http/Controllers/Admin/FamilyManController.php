@@ -31,9 +31,16 @@ class FamilyManController extends Controller
      *
      * @return void
      */
-    public function FamilyManInit()
+    public function FamilyManInit(Request $request)
     {
-        $family = Family::where('status', 1)->orderBy('family_no', 'asc')->get();
+        $paginate = 15;
+        if (isset($request->query()['search'])){
+            $search = $request->query()['search'];
+            $family = Family::where('family_no', 'like', "%" . $search. "%")->where('status', 1)->orderBy('family_no', 'asc')->simplePaginate($paginate);
+            $family->appends(['search' => $search]);
+        } else {
+            $family = Family::where('status', 1)->orderBy('family_no', 'asc')->simplePaginate($paginate);
+        }
         $no = 1;
         foreach($family as $data){
             $member = FamilyMember::with(['member_belongs' => function ($query) {

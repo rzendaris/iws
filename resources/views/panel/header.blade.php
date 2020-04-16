@@ -12,7 +12,7 @@
     <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse"> </a>
 
     <div class="page-top">
-        <form class="search-form" action="page_general_search_2.html" method="GET">
+        <!-- <form class="search-form" action="page_general_search_2.html" method="GET">
             <div class="input-group">
                 <input type="text" class="form-control input-sm" placeholder="Search..." name="query">
                 <span class="input-group-btn">
@@ -21,7 +21,7 @@
                     </a>
                 </span>
             </div>
-        </form>
+        </form> -->
 
         <div class="top-menu">
             <ul class="nav navbar-nav pull-right">
@@ -30,8 +30,6 @@
                 <li class="dropdown dropdown-user dropdown-dark">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                         <span class="username username-hide-on-mobile">{{ Auth::user()->name }} </span>
-
-                        <img alt="" class="img-circle" src="../assets/layouts/layout4/img/avatar9.jpg" /> 
                     </a>
                     <ul class="dropdown-menu dropdown-menu-default">
                         <li>
@@ -50,11 +48,6 @@
                             </form>
                         </li>
                     </ul>
-                </li>
-
-                <li class="dropdown dropdown-extended quick-sidebar-toggler">
-                    <span class="sr-only">Toggle Quick Sidebar</span>
-                    <i class="icon-logout"></i>
                 </li>
 
             </ul>

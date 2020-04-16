@@ -11,19 +11,19 @@
         </li>
         <li class="nav-item  ">
             <a href="{{ url('family-management') }}" class="nav-link nav-toggle">
-                <i class="icon-user"></i>
+                <i class="icon-user-follow"></i>
                 <span class="title">Family Management </span>
             </a>
         </li>
         <li class="nav-item  ">
             <a href="{{ url('family-tree') }}" class="nav-link nav-toggle">
-                <i class="icon-user"></i>
+                <i class="icon-users"></i>
                 <span class="title">Family Tree </span>
             </a>
         </li>
         <li class="nav-item start active open">
             <a href="javascript:;" class="nav-link nav-toggle">
-                <i class="icon-home"></i>
+                <i class="icon-settings"></i>
                 <span class="title">Master Data</span>
                 <span class="arrow open"></span>
             </a>
@@ -74,7 +74,7 @@
         </li>
         <li class="nav-item  ">
             <a href="{{ url('user-management-fe') }}" class="nav-link nav-toggle">
-                <i class="icon-user"></i>
+                <i class="icon-user-follow"></i>
                 <span class="title">User Management </span>
             </a>
         </li>

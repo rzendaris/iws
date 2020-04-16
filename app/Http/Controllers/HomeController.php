@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -33,7 +33,11 @@ class HomeController extends Controller
      */
     public function main()
     {
-        return redirect('under-construction');
+        if (Auth::user()->role_id == 1){
+            return redirect('dashboard-fe');
+        } else {
+            return redirect('family-tree');
+        }
     }
 
     /**

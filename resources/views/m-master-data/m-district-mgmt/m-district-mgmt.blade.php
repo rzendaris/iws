@@ -34,7 +34,7 @@
                         <input name="name" id="search-value" type="search" value="" placeholder="Cari Kecamatan" class="form-control">
                     </div>
                     <div class="float-left col-xl-3 col-md-3 m-b-10px">
-                        <button type="button" id="search-button" class="btn btn-primary">Search <i class="icon-refresh"></i></button>
+                        <button type="button" id="search-button" class="btn btn-primary">Cari</button>
                     </div>
                 </div>
                 <table id="sorting-table" class="table">

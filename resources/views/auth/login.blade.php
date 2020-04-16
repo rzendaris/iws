@@ -44,7 +44,7 @@
         <div class="form-group{{ $errors->has('CaptchaCode') ? ' has-error' : '' }}">
             <div class="input-icon">
                 {!! captcha_image_html('LoginCaptcha') !!}
-                <input type="text" class="form-control" name="CaptchaCode" id="CaptchaCode">
+                <input type="text" class="form-control" name="CaptchaCode" id="CaptchaCode" required>
 
                 @if ($errors->has('CaptchaCode'))
                     <span class="help-block">
@@ -72,7 +72,7 @@
         </div>
         <div class="form-actions">
             <button type="button" id="back-btn" class="btn red btn-outline">Back </button>
-            <button type="submit" class="btn green pull-right"> Submit </button>
+            <button type="button" class="btn green pull-right"> Submit </button>
         </div>
     </form>
 </div>

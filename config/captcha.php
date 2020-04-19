@@ -6,6 +6,7 @@ return [
   // Captcha configuration for login page
   'LoginCaptcha' => [
     'UserInputID' => 'CaptchaCode',
+    'ImageWidth'=> 150,
     'CodeLength' => CaptchaRandomization::GetRandomCodeLength(4, 6),
     'ImageStyle' => [
       ImageStyle::Radar,

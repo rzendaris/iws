@@ -7,15 +7,51 @@
 @endsection
 
 @section('content')
+<style>
+    .login .content .forget-password {margin-top: 10px;}
+    div#LoginCaptcha_CaptchaDiv { 
+        background: white;
+        width: 100%!important;
+        padding: 10px!important;
+        height: auto!important;
+    }
+    .login-box-- {
+        background: rgba(255, 255, 255, .7);
+        border-radius: 10px!important;
+        box-shadow: 0 0 10px rgba(51, 51, 51, 0.3);
+    }
+    .login-box-- .logo-default-login {
+        margin:auto;
+    }
+    #CaptchaCode {
+        padding-left: 10px;
+    }
+    @media (max-width:767px){
+        .login .content {
+            width:90%;
+            margin-bottom: 60px;
+        }
+        .login .content h3 {
+            font-size: 16px;
+        }
+    }
+</style>
 <div class="logo">
     <!-- <a href="#">
-        <img src="{{ asset('img/logo.png') }}" alt="logo-mina-indonesia" width="100"/> 
+        <img src="{{ asset('assets/global/img/logo.png') }}" alt="logo-mina-indonesia" width="100"/> 
     </a> -->
 </div>
-<div class="content">
+<div class="content login-box--">
     <form class="login-form" method="POST" action="{{ route('login') }}">
     @csrf
-        <h3 class="form-title">Login to your account</h3>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <a href="/" >
+                    <img src="{{ asset('assets/global/img/logo.png') }}" alt="" width="100" class="logo-default-login" />
+                </a>
+                <h3 class="form-title">Login to your account</h3>
+            </div>
+        </div>
         <div class="alert alert-danger display-hide">
             <button class="close" data-close="alert"></button>
             <span> Enter any username and password. </span>
@@ -53,12 +89,19 @@
                 @endif
             </div>
         </div>
-        <div class="form-actions">
-            <button type="submit" class="btn green pull-right"> Login </button>
+        <div class="row">
+            <div class="col-xs-8 col-md-6">
+                <div class="forget-password">
+                    <a href="javascript:;" id="forget-password" style="color:#000000"><b> <i class="fa fa-unlock-alt"></i> Lupa Password ? </b></a>
+                </div>
+            </div>
+            <div class="col-xs-4 col-md-6">
+                <div class="form-actions">
+                    <button type="submit" class="btn green pull-right"> Login </button>
+                </div>
+            </div>
         </div>
-        <div class="forget-password">
-            <a href="javascript:;" id="forget-password" style="color:#000000"><u><b> Lupa Password ? </b></u></a>
-        </div>
+        <br>
     </form>
     <!-- END LOGIN FORM -->
     <!-- BEGIN FORGOT PASSWORD FORM -->

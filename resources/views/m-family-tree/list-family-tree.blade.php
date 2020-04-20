@@ -126,9 +126,9 @@
                             <td>{{ $member->full_name }}</td>
                             <td>{{ $member->member_status->name }}</td>
                             <td>{{ $member->city->name }}</td>
-                            <td>{{ $member->ethnic->name }}</td>
-                            <td>{{ $member->title_adat->name }}</td>
-                            <td>{{ $member->job->name }}</td>
+                            <td>{{ isset($member->ethnic) ? $member->ethnic->name : '-' }}</td>
+                            <td>{{ isset($member->title_adat) ? $member->title_adat->name : '-' }}</td>
+                            <td>{{ isset($member->job) ? $member->job->name : '-' }}</td>
                             <td>{{ $member->marital->name }}</td>
                             <td>Hidup</td>
                             <td class="text-center">

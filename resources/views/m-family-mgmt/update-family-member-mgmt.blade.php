@@ -23,23 +23,23 @@
                         <div class="row">
                             <div class="col-xl-4 col-md-4 m-b-10px">
                                 <div class="form-group">
-                                    <label class="form-control-label">NIK :</label>
+                                    <label class="form-control-label">NIK :*</label>
                                     <input type="text" name="nik" value="{{ $data['member']->nik }}" class="form-control" required/>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-control-label">Tanggal Lahir :</label>
+                                    <label class="form-control-label">Tanggal Lahir :*</label>
                                     <input type="date" name="birthday" value="{{ $data['member']->birthday }}" class="form-control" required/>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-control-label">Kecamatan :</label>
+                                    <label class="form-control-label">Kecamatan :*</label>
                                     <select name="district_id" id="district-selected" class="custom-select form-control" required>
                                         <option value="{{ $data['member']->district->id }}">{{ $data['member']->district->name }}</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-control-label">Jenis Pekerjaan :</label>
-                                    <select name="job_id" class="custom-select form-control" required>
-                                        <option value="{{ $data['member']->job->id }}">{{ $data['member']->job->name }}</option>
+                                    <select name="job_id" class="custom-select form-control">
+                                        <option value="{{ isset($data['member']->job) ? $data['member']->job->id : '' }}">{{ isset($data['member']->job) ? $data['member']->job->name : '-' }}</option>
                                         @foreach($data['job'] as $job)
                                             <option value="{{ $job->id }}">{{ $job->name }}</option>
                                         @endforeach
@@ -47,8 +47,8 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="form-control-label">Pendidikan Terakhir :</label>
-                                    <select name="education_id" class="custom-select form-control" required>
-                                        <option value="{{ $data['member']->education->id }}">{{ $data['member']->education->name }}</option>
+                                    <select name="education_id" class="custom-select form-control">
+                                        <option value="{{ isset($data['member']->education) ? $data['member']->education->id : '' }}">{{ isset($data['member']->education) ? $data['member']->education->name : '-' }}</option>
                                         @foreach($data['education'] as $education)
                                             <option value="{{ $education->id }}">{{ $education->name }}</option>
                                         @endforeach
@@ -56,8 +56,8 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="form-control-label">Suku :</label>
-                                    <select name="ethnic_id" class="custom-select form-control" required>
-                                        <option value="{{ $data['member']->ethnic->id }}">{{ $data['member']->ethnic->name }}</option>
+                                    <select name="ethnic_id" class="custom-select form-control">
+                                        <option value="{{ isset($data['member']->ethnic) ? $data['member']->ethnic->id : '' }}">{{ isset($data['member']->ethnic) ? $data['member']->ethnic->name : '-' }}</option>
                                         @foreach($data['ethnic'] as $ethnic)
                                             <option value="{{ $ethnic->id }}">{{ $ethnic->name }}</option>
                                         @endforeach
@@ -65,7 +65,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="form-control-label">Alamat :</label>
-                                    <textarea type="text" name="address" class="form-control" rows="5" required>{{ $data['member']->address }}</textarea>
+                                    <textarea type="text" name="address" class="form-control" rows="5">{{ $data['member']->address }}</textarea>
                                 </div>
                             </div>
                             <div class="col-xl-4 col-md-4 m-b-10px">
@@ -90,16 +90,16 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="form-control-label">Nama Instansi/Usaha :</label>
-                                    <input type="text" name="instance_name" value="{{ $data['member']->instance_name }}" class="form-control" required/>
+                                    <input type="text" name="instance_name" value="{{ $data['member']->instance_name }}" class="form-control"/>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-control-label">Nama Sekolah Terakhir :</label>
-                                    <input type="text" name="school_name" value="{{ $data['member']->school_name }}" class="form-control" required/>
+                                    <input type="text" name="school_name" value="{{ $data['member']->school_name }}" class="form-control"/>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-control-label">Gelar Adat :</label>
-                                    <select name="title_adat_id" class="custom-select form-control" required>
-                                        <option value="{{ $data['member']->title_adat->id }}">{{ $data['member']->title_adat->name }}</option>
+                                    <select name="title_adat_id" class="custom-select form-control">
+                                        <option value="{{ isset($data['member']->title_adat) ? $data['member']->title_adat->id : '' }}">{{ isset($data['member']->title_adat) ? $data['member']->title_adat->name : '-' }}</option>
                                         @foreach($data['title_adat'] as $title_adat)
                                             <option value="{{ $title_adat->id }}">{{ $title_adat->name }}</option>
                                         @endforeach
@@ -114,16 +114,16 @@
                             <div class="col-xl-4 col-md-4 m-b-10px">
                                 <div class="form-group">
                                     <label class="form-control-label">Nama Panggilan :</label>
-                                    <input type="text" name="sur_name" value="{{ $data['member']->sur_name }}" class="form-control" required/>
+                                    <input type="text" name="sur_name" value="{{ $data['member']->sur_name }}" class="form-control"/>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-control-label">Kota / Kabupaten :</label>
+                                    <label class="form-control-label">Kota / Kabupaten :*</label>
                                     <select name="city_id" id="city-selected" class="custom-select form-control" required>
                                         <option value="{{ $data['member']->city->id }}">{{ $data['member']->city->name }}</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-control-label">Status Hidup :</label>
+                                    <label class="form-control-label">Status Hidup :*</label>
                                     <select name="is_life" class="custom-select form-control" required>
                                         @if($data['member']->is_life == 1)
                                             <option value="1">Hidup</option>
@@ -135,7 +135,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-control-label">Jenis Kelamin :</label>
+                                    <label class="form-control-label">Jenis Kelamin :*</label>
                                     <select name="gender_status" class="custom-select form-control" required>
                                         <option value="{{ $data['member']->gender_status }}">{{ $data['member']->gender_status }}</option>
                                         <option value="Laki-Laki">Laki-Laki</option>
@@ -143,7 +143,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-control-label">Status Pernikahan :</label>
+                                    <label class="form-control-label">Status Pernikahan :*</label>
                                     <select name="marital_id" class="custom-select form-control" required>
                                         <option value="{{ $data['member']->marital->id }}">{{ $data['member']->marital->name }}</option>
                                         @foreach($data['marital'] as $marital)
@@ -153,14 +153,14 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="form-control-label">Tahun Kelulusan :</label>
-                                    <input type="text" name="graduation_year" value="{{ $data['member']->graduation_year }}" class="form-control" required/>
+                                    <input type="text" name="graduation_year" value="{{ $data['member']->graduation_year }}" class="form-control"/>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-control-label">No Telepon :</label>
-                                    <input type="text" name="phone_number" value="{{ $data['member']->phone_number }}" class="form-control" required/>
+                                    <input type="text" name="phone_number" value="{{ $data['member']->phone_number }}" class="form-control"/>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-control-label">Status Anggota Keluarga :</label>
+                                    <label class="form-control-label">Status Anggota Keluarga :*</label>
                                     <select name="member_status_id" class="custom-select form-control" required>
                                         <option value="{{ $data['member']->member_status->id }}">{{ $data['member']->member_status->name }}</option>
                                         @foreach($data['member_status'] as $member_status)

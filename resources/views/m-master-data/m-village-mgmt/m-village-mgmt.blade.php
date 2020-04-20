@@ -30,10 +30,10 @@
         @endif
             <div class="table-responsive custom--2">
                 <div class="row">
-                    <div class="float-left col-xl-3 col-md-3 m-b-10px">
+                    <div class="float-left col-xl-3 col-md-3 col-xs-8 m-b-10px">
                         <input name="name" id="search-value" type="search" value="" placeholder="Cari Kelurahan" class="form-control">
                     </div>
-                    <div class="float-left col-xl-3 col-md-3 m-b-10px">
+                    <div class="float-left col-xl-3 col-md-3 col-xs-4 m-b-10px">
                         <button type="button" id="search-button" class="btn btn-primary">Cari</button>
                     </div>
                 </div>

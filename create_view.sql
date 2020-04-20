@@ -1,0 +1,7 @@
+CREATE VIEW population_per_province AS select count(`m`.`id`) AS `population`,`f`.`province_id` AS `province_id`,`v`.`name` AS `name` from (((`iws`.`member` `m` join `iws`.`family_member` `fm` on(`fm`.`member_id` = `m`.`id`)) join `iws`.`family` `f` on(`fm`.`family_id` = `f`.`id`)) join `iws`.`m_province` `v` on(`f`.`province_id` = `v`.`id`)) where `m`.`is_life` = '1' group by `f`.`province_id`;
+
+CREATE VIEW population_per_city AS select count(`m`.`id`) AS `population`,`f`.`city_id` AS `city_id`,`v`.`name` AS `name` from (((`iws`.`member` `m` join `iws`.`family_member` `fm` on(`fm`.`member_id` = `m`.`id`)) join `iws`.`family` `f` on(`fm`.`family_id` = `f`.`id`)) join `iws`.`m_city` `v` on(`f`.`city_id` = `v`.`id`)) where `m`.`is_life` = '1' group by `f`.`city_id`;
+
+CREATE VIEW population_per_district AS select count(`m`.`id`) AS `population`,`f`.`district_id` AS `district_id`,`v`.`name` AS `name` from (((`iws`.`member` `m` join `iws`.`family_member` `fm` on(`fm`.`member_id` = `m`.`id`)) join `iws`.`family` `f` on(`fm`.`family_id` = `f`.`id`)) join `iws`.`m_district` `v` on(`f`.`district_id` = `v`.`id`)) where `m`.`is_life` = '1' group by `f`.`district_id`;
+
+CREATE VIEW population_per_city AS select count(`m`.`id`) AS `population`,`f`.`village_id` AS `village_id`,`v`.`name` AS `name` from (((`iws`.`member` `m` join `iws`.`family_member` `fm` on(`fm`.`member_id` = `m`.`id`)) join `iws`.`family` `f` on(`fm`.`family_id` = `f`.`id`)) join `iws`.`m_village` `v` on(`f`.`village_id` = `v`.`id`)) where `m`.`is_life` = '1' group by `f`.`village_id`;

@@ -3,8 +3,8 @@
         <li class="heading">
             <h3 class="uppercase">Menu</h3>
         </li>
-        <li class="nav-item {{ Request::is('dashboard-fe')? 'active' : '' }}">
-            <a href="{{ url('dashboard-fe') }}" class="nav-link nav-toggle">
+        <li class="nav-item {{ Request::is('dashboard')? 'active' : '' }}">
+            <a href="{{ url('dashboard') }}" class="nav-link nav-toggle">
                 <i class="icon-home"></i>
                 <span class="title">Dashboard</span>
             </a>

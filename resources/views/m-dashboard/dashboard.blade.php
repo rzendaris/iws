@@ -22,19 +22,19 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <h5>Populasi Per Provinsi</h5>
+            <h5>Populasi Per Kota/Kab</h5>
             <div id="chartkota" style="height: 250px;"></div>
         </div>
     </div>
     <div class="row">
         <div class="col-md-12">
-            <h5>Populasi Per Provinsi</h5>
+            <h5>Populasi Per Kecamatan</h5>
             <div id="chartkecamatan" style="height: 250px;"></div>
         </div>
     </div>
     <div class="row">
         <div class="col-md-12">
-            <h5>Populasi Per Provinsi</h5>
+            <h5>Populasi Per Kelurahan</h5>
             <div id="chartkelurahan" style="height: 250px;"></div>
         </div>
     </div>
@@ -49,46 +49,30 @@
     <script>   
     Morris.Bar({
         element: 'chartprovinsi',
-        data: [
-            { y: '2006', a: 20, b: 90 },
-            { y: '2007', a: 35,  b: 65 },
-            { y: '2008', a: 40,  b: 40 }
-        ],
-        xkey: 'y',
-        ykeys: ['a'],
+        data: <?php echo $data['province']; ?>,
+        xkey: 'name',
+        ykeys: ['population'],
         labels: ['Populasi Per Provinsi']
     });
     Morris.Bar({
         element: 'chartkota',
-        data: [
-            { y: '2006', a: 100, b: 90 },
-            { y: '2007', a: 75,  b: 65 },
-            { y: '2008', a: 50,  b: 40 }
-        ],
-        xkey: 'y',
-        ykeys: ['a'],
-        labels: ['Populasi Per Kota']
+        data: <?php echo $data['city']; ?>,
+        xkey: 'name',
+        ykeys: ['population'],
+        labels: ['Populasi Per Kota/Kab']
     });
     Morris.Bar({
         element: 'chartkecamatan',
-        data: [
-            { y: '2006', a: 40, b: 90 },
-            { y: '2007', a: 15,  b: 65 },
-            { y: '2008', a: 30,  b: 40 }
-        ],
-        xkey: 'y',
-        ykeys: ['a'],
+        data: <?php echo $data['district']; ?>,
+        xkey: 'name',
+        ykeys: ['population'],
         labels: ['Populasi Per Kecamatan']
     });
     Morris.Bar({
         element: 'chartkelurahan',
-        data: [
-            { y: '2006', a: 100, b: 90 },
-            { y: '2007', a: 75,  b: 65 },
-            { y: '2008', a: 50,  b: 40 }
-        ],
-        xkey: 'y',
-        ykeys: ['a'],
+        data: <?php echo $data['village']; ?>,
+        xkey: 'name',
+        ykeys: ['population'],
         labels: ['Populasi Per Kelurahan']
     });
     </script>

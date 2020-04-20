@@ -34,7 +34,7 @@ class HomeController extends Controller
     public function main()
     {
         if (Auth::user()->role_id == 1){
-            return redirect('dashboard-fe');
+            return redirect('dashboard');
         } else {
             return redirect('family-tree');
         }

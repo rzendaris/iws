@@ -15,6 +15,7 @@ Auth::routes();
 Route::middleware('auth')->group(function() {
 
     Route::get('/', 'HomeController@main');
+    Route::get('dashboard', 'Admin\DashboardController@Dashboard');
 
     Route::get('user-management-fe', 'Admin\UserManController@UserMgmtInit');
     Route::post('user-management-fe/insert', 'Admin\UserManController@UserMgmtInsert');
@@ -77,12 +78,3 @@ Route::middleware('auth')->group(function() {
      */
 });
 Route::get('under-construction', 'HomeController@underConstruction');
-
-
-// FE Dummy
-Route::get('dashboard-fe', 'FeController@Dashboard');
-// Route::get('family-management-fe', 'FeController@FamilyManagement');
-    Route::get('add-family-mgmt-fe', 'FeController@AddFamilyMgmt');
-    Route::get('edit-family-mgmt-fe', 'FeController@EditFamilyMgmt');
-Route::get('family-tree-fe', 'FeController@FamilyTree');
-    Route::get('detail-family-tree-fe', 'FeController@DetailFamilyTree');

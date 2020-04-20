@@ -36,7 +36,7 @@
                                 <input type="text" name="post_code" class="form-control" required/>
                             </div>
                             <div class="form-group">
-                                <label class="form-control-label">No Telp :</label>
+                                <label class="form-control-label">No Telp *</label>
                                 <input type="text" name="tlp_no" class="form-control" />
                             </div>
                         </div>
@@ -73,7 +73,7 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label class="form-control-label">Foto Keluarga :</label><br>
+                                <label class="form-control-label">Foto Keluarga *</label><br>
                                 <img id="blah" alt="your image" width="90" height="90" src="{{ asset('assets/global/img/no-profile.jpg') }}" style="margin-bottom:5px;border:solid 1px #c2cad8;" /><br>
                                 <input id="upload-img" name="photo_master" type="file" onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])">
                             </div>
@@ -178,7 +178,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-control-label">Foto Diri :</label><br>
+                                    <label class="form-control-label">Foto Diri *</label><br>
                                     <img id="blah2" style="margin-bottom:5px;border:solid 1px #c2cad8;" width="90" height="90" src="{{ asset('assets/global/img/no-profile.jpg') }}" /><br>
                                     <input id="upload-img-2" name="photo" type="file" onchange="document.getElementById('blah2').src = window.URL.createObjectURL(this.files[0])">
                                 </div>

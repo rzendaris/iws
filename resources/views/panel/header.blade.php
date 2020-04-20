@@ -23,9 +23,9 @@
                 </span>
             </div>
         </form> -->
-
         <div class="top-menu">
             <ul class="nav navbar-nav pull-right">
+                <li class="separator hide"></li>
                 <li class="separator hide"> </li>
                 <li class="separator hide"> </li>
                 <li>
@@ -36,7 +36,6 @@
                         @csrf
                     </form>
                 </li>
-
             </ul>
         </div>
 

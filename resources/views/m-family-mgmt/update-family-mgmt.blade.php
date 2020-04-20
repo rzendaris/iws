@@ -50,7 +50,11 @@
                                 <td>{{ $family_member->member_belongs->nik }}</td>
                                 <td>{{ $family_member->member_belongs->full_name }}</td>
                                 <td>{{ $family_member->member_belongs->birthday }}</td>
-                                <td>{{ $family_member->member_belongs->ethnic->name }}</td>
+                                @if(isset($family_member->member_belongs->ethnic))
+                                    <td>{{ $family_member->member_belongs->ethnic->name }}</td>
+                                @else
+                                    <td>-</td>
+                                @endif
                                 <td>{{ $family_member->member_belongs->member_status->name }}</td>
                                 <td>100%</td>
                                 <td class="text-center">
@@ -81,22 +85,22 @@
                         <div class="row">
                             <div class="col-xl-4 col-md-4 m-b-10px">
                                 <div class="form-group">
-                                    <label class="form-control-label">* NIK :</label>
+                                    <label class="form-control-label">NIK :*</label>
                                     <input type="text" name="nik" class="form-control" required/>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-control-label">* Tanggal Lahir :</label>
+                                    <label class="form-control-label">Tanggal Lahir :*</label>
                                     <input type="date" name="birthday" class="form-control" required/>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-control-label">* Kecamatan :</label>
+                                    <label class="form-control-label">Kecamatan :*</label>
                                     <select name="district_id" id="district-selected" class="custom-select form-control" disabled required>
                                         <option value="">Pilih Kecamatan</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-control-label">* Jenis Pekerjaan :</label>
-                                    <select name="job_id" class="custom-select form-control" required>
+                                    <label class="form-control-label">Jenis Pekerjaan :</label>
+                                    <select name="job_id" class="custom-select form-control">
                                         <option value="">Pilih Jenis Pekerjaan</option>
                                         @foreach($data['job'] as $job)
                                             <option value="{{ $job->id }}">{{ $job->name }}</option>
@@ -104,8 +108,8 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-control-label">* Pendidikan Terakhir :</label>
-                                    <select name="education_id" class="custom-select form-control" required>
+                                    <label class="form-control-label">Pendidikan Terakhir :</label>
+                                    <select name="education_id" class="custom-select form-control">
                                         <option value="">Pilih Pendidikan Terakhir</option>
                                         @foreach($data['education'] as $education)
                                             <option value="{{ $education->id }}">{{ $education->name }}</option>
@@ -113,8 +117,8 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-control-label">* Suku :</label>
-                                    <select name="ethnic_id" class="custom-select form-control" required>
+                                    <label class="form-control-label">Suku :</label>
+                                    <select name="ethnic_id" class="custom-select form-control">
                                         <option value="">Pilih Suku</option>
                                         @foreach($data['ethnic'] as $ethnic)
                                             <option value="{{ $ethnic->id }}">{{ $ethnic->name }}</option>
@@ -122,8 +126,8 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-control-label">* Alamat :</label>
-                                    <textarea type="text" name="address" class="form-control" rows="5" required></textarea>
+                                    <label class="form-control-label">Alamat :</label>
+                                    <textarea type="text" name="address" class="form-control" rows="5"></textarea>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-control-label"><i>Catatan : * (harus diisi)</i></label>
@@ -131,11 +135,11 @@
                             </div>
                             <div class="col-xl-4 col-md-4 m-b-10px">
                                 <div class="form-group">
-                                    <label class="form-control-label">* Nama Lengkap :</label>
+                                    <label class="form-control-label">Nama Lengkap :*</label>
                                     <input type="text" name="full_name" class="form-control" required/>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-control-label">* Provinsi :</label>
+                                    <label class="form-control-label">Provinsi :*</label>
                                     <select name="province_id" id="province-selected" class="custom-select form-control" required>
                                         <option value="">Pilih Provinsi</option>
                                         @foreach($data['province'] as $province)
@@ -144,22 +148,22 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-control-label">* Kelurahan / Desa :</label>
+                                    <label class="form-control-label">Kelurahan / Desa :*</label>
                                     <select name="village_id" id="village-selected" class="custom-select form-control" disabled required>
                                         <option value="">Pilih Kelurahan / Desa</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-control-label">* Nama Instansi/Usaha :</label>
-                                    <input type="text" name="instance_name" class="form-control" required/>
+                                    <label class="form-control-label">Nama Instansi/Usaha :</label>
+                                    <input type="text" name="instance_name" class="form-control"/>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-control-label">* Nama Sekolah Terakhir :</label>
-                                    <input type="text" name="school_name" class="form-control" required/>
+                                    <label class="form-control-label">Nama Sekolah Terakhir :</label>
+                                    <input type="text" name="school_name" class="form-control"/>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-control-label">* Gelar Adat :</label>
-                                    <select name="title_adat_id" class="custom-select form-control" required>
+                                    <label class="form-control-label">Gelar Adat :</label>
+                                    <select name="title_adat_id" class="custom-select form-control">
                                         <option value="">Pilih Gelar Adat</option>
                                         @foreach($data['title_adat'] as $title_adat)
                                             <option value="{{ $title_adat->id }}">{{ $title_adat->name }}</option>
@@ -167,24 +171,24 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-control-label">* Foto Diri :</label><br>
+                                    <label class="form-control-label">Foto Diri :</label><br>
                                     <img id="blah2" alt="your image" width="90" height="90" src="{{ asset('assets/global/img/no-profile.jpg') }}" /><br>
-                                    <input id="upload-img-2" name="photo" type="file" onchange="document.getElementById('blah2').src = window.URL.createObjectURL(this.files[0])" required>
+                                    <input id="upload-img-2" name="photo" type="file" onchange="document.getElementById('blah2').src = window.URL.createObjectURL(this.files[0])">
                                 </div>
                             </div>
                             <div class="col-xl-4 col-md-4 m-b-10px">
                                 <div class="form-group">
-                                    <label class="form-control-label">* Nama Panggilan :</label>
-                                    <input type="text" name="sur_name" class="form-control" required/>
+                                    <label class="form-control-label">Nama Panggilan :</label>
+                                    <input type="text" name="sur_name" class="form-control"/>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-control-label">* Kota / Kabupaten :</label>
+                                    <label class="form-control-label">Kota / Kabupaten :*</label>
                                     <select name="city_id" id="city-selected" class="custom-select form-control" disabled required>
                                         <option value="">Pilih Kota / Kabupaten</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-control-label">* Status Hidup :</label>
+                                    <label class="form-control-label">Status Hidup :*</label>
                                     <select name="is_life" class="custom-select form-control" required>
                                         <option value="">Pilih Status Hidup</option>
                                         <option value="1">Hidup</option>
@@ -192,7 +196,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-control-label">* Jenis Kelamin :</label>
+                                    <label class="form-control-label">Jenis Kelamin :*</label>
                                     <select name="gender_status" class="custom-select form-control" required>
                                         <option value="">Pilih Jenis Kelamin</option>
                                         <option value="Laki-Laki">Laki-Laki</option>
@@ -200,7 +204,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-control-label">* Status Pernikahan :</label>
+                                    <label class="form-control-label">Status Pernikahan :*</label>
                                     <select name="marital_id" class="custom-select form-control" required>
                                         <option value="">Pilih Status Pernikahan</option>
                                         @foreach($data['marital'] as $marital)
@@ -209,15 +213,15 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-control-label">* Tahun Kelulusan :</label>
-                                    <input type="text" name="graduation_year" class="form-control" required/>
+                                    <label class="form-control-label">Tahun Kelulusan :</label>
+                                    <input type="text" name="graduation_year" class="form-control"/>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-control-label">* No Telepon :</label>
-                                    <input type="text" name="phone_number" class="form-control" required/>
+                                    <label class="form-control-label">No Telepon :</label>
+                                    <input type="text" name="phone_number" class="form-control"/>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-control-label">* Status Anggota Keluarga :</label>
+                                    <label class="form-control-label">Status Anggota Keluarga :*</label>
                                     <select name="member_status_id" class="custom-select form-control" required>
                                         <option value="">Pilih Status Anggota Keluarga</option>
                                         @foreach($data['member_status'] as $member_status)
@@ -293,15 +297,15 @@
                                             </div>
                                             <div class="form-group">
                                                 <label class="form-control-label">Jenis Pekerjaan :</label>
-                                                <input type="text" value="{{ $family_member->member_belongs->job->name }}" disabled class="form-control" required/>
+                                                <input type="text" value="{{ isset($family_member->member_belongs->job) ? $family_member->member_belongs->job->name : '-' }}" disabled class="form-control" required/>
                                             </div>
                                             <div class="form-group">
                                                 <label class="form-control-label">Pendidikan Terakhir :</label>
-                                                <input type="text" value="{{ $family_member->member_belongs->education->name }}" disabled class="form-control" required/>
+                                                <input type="text" value="{{ isset($family_member->member_belongs->education) ? $family_member->member_belongs->education->name : '-' }}" disabled class="form-control" required/>
                                             </div>
                                             <div class="form-group">
                                                 <label class="form-control-label">Suku :</label>
-                                                <input type="text" value="{{ $family_member->member_belongs->ethnic->name }}" disabled class="form-control" required/>
+                                                <input type="text" value="{{ isset($family_member->member_belongs->ethnic) ? $family_member->member_belongs->ethnic->name : '-' }}" disabled class="form-control" required/>
                                             </div>
                                             <div class="form-group">
                                                 <label class="form-control-label">Alamat :</label>
@@ -331,7 +335,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label class="form-control-label">Gelar Adat :</label>
-                                                <input type="text" value="{{ $family_member->member_belongs->title_adat->name }}" disabled class="form-control" required/>
+                                                <input type="text" value="{{ isset($family_member->member_belongs->title_adat) ? $family_member->member_belongs->title_adat->name : '-' }}" disabled class="form-control" required/>
                                             </div>
                                             <div class="form-group">
                                                 <label class="form-control-label">Foto Diri :</label><br>

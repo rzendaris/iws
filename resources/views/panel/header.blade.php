@@ -8,6 +8,7 @@
            
         </div>
     </div>
+    
     <a class="logout-on-mobile hidden-md hidden-lg" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="icon-key"></i> Logout</a>
     <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse"> </a>
 
@@ -26,9 +27,10 @@
             <ul class="nav navbar-nav pull-right">
                 <li class="separator hide"></li>
                 <li class="separator hide"> </li>
+                <li class="separator hide"> </li>
                 <li>
                     <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                        <i class="icon-key"></i> Log Out 
+                            <i class="icon-key"></i> Log Out
                     </a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         @csrf

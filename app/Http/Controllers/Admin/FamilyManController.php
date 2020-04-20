@@ -47,7 +47,7 @@ class FamilyManController extends Controller
                 $query->where('member_status_id', 1);
             }])->where('family_id', $data->id)->first();
             $data->no = $no;
-            if(isset($member)){
+            if(isset($member->member_belongs)){
                 $data->kepala_keluarga = $member->member_belongs->full_name;
             } else {
                 $data->kepala_keluarga = "Kepala Keluarga tidak terdaftar!";
@@ -71,7 +71,7 @@ class FamilyManController extends Controller
         $education = Education::orderBy('id', 'asc')->get();
         $ethnic = Ethnic::where('status', 1)->orderBy('name', 'asc')->get();
         $title_adat = TitleAdat::where('status', 1)->orderBy('name', 'asc')->get();
-        $member_status = MemberStatus::orderBy('id', 'asc')->get();
+        $member_status = MemberStatus::where('id', 1)->orderBy('id', 'asc')->get();
         $job = Job::where('status', 1)->orderBy('name', 'asc')->get();
         $data = array(
             'province' => $province,
@@ -104,11 +104,17 @@ class FamilyManController extends Controller
                 'district_id' => $request->district_id_master,
                 'village_id' => $request->village_id_master,
                 'post_code' => $request->post_code,
-                'photo' => $request->family_no.".".$photo_master->getClientOriginalExtension(),
                 'tlp_no' => $request->tlp_no,
                 'created_by' => Auth::user()->email,
                 'status' => 1,
             ]);
+
+            if (isset($photo_master)){
+                Family::where('id', $family->id)->update([
+                    'photo' => $request->family_no.".".$photo_master->getClientOriginalExtension(),
+                ]);
+                $request->file('photo_master')->move(public_path("/photo/kk"), $request->family_no.".".$photo_master->getClientOriginalExtension());
+            }
 
             $member = Member::create([
                 'full_name' => $request->full_name,
@@ -133,7 +139,6 @@ class FamilyManController extends Controller
                 'gender_status' => $request->gender_status,
                 'address' => $request->address,
                 'phone_number' => $request->phone_number,
-                'photo' => $request->nik.".".$photo->getClientOriginalExtension(),
                 'created_by' => Auth::user()->email,
                 'status' => 1,
             ]);
@@ -142,9 +147,12 @@ class FamilyManController extends Controller
                 "family_id" => $family->id,
                 "member_id" => $member->id,
             ]);
-
-            $request->file('photo')->move(public_path("/photo/member"), $member->nik.".".$photo->getClientOriginalExtension());
-            $request->file('photo_master')->move(public_path("/photo/kk"), $request->family_no.".".$photo_master->getClientOriginalExtension());
+            if (isset($photo_master)){
+                Member::where('id', $member->id)->update([
+                    'photo' => $request->nik.".".$photo->getClientOriginalExtension(),
+                ]);
+                $request->file('photo')->move(public_path("/photo/member"), $member->nik.".".$photo->getClientOriginalExtension());
+            }
             return redirect('family-management')->with('suc_message', 'Data baru berhasil ditambahkan!');
         } else {
             return redirect()->back()->with('err_message', 'No KK telah terdaftar!');
@@ -260,7 +268,6 @@ class FamilyManController extends Controller
                 'gender_status' => $request->gender_status,
                 'address' => $request->address,
                 'phone_number' => $request->phone_number,
-                'photo' => $request->nik.".".$photo->getClientOriginalExtension(),
                 'created_by' => Auth::user()->email,
                 'status' => 1,
             ]);
@@ -269,7 +276,12 @@ class FamilyManController extends Controller
                 "family_id" => $family->id,
                 "member_id" => $member->id,
             ]);
-            $request->file('photo')->move(public_path("/photo/member"), $member->nik.".".$photo->getClientOriginalExtension());
+            if (isset($photo)){
+                Member::where('id', $member->id)->update([
+                    'photo' => $request->nik.".".$photo->getClientOriginalExtension()
+                ]);
+                $request->file('photo')->move(public_path("/photo/member"), $member->nik.".".$photo->getClientOriginalExtension());
+            }
             return redirect('family-management/edit/'.$family->id)->with('suc_message', 'Data baru berhasil ditambahkan!');
         } else {
             return redirect()->back()->with('err_message', 'Data Keluarga Tidak Ditemukan!');

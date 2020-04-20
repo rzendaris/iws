@@ -88,15 +88,15 @@
                                 </tr>
                                 <tr>
                                     <th scope="row">Gelar</th>
-                                    <td>{{ $member->member_belongs->title_adat->name }}</td>
+                                    <td>{{ isset($member->member_belongs->title_adat) ? $member->member_belongs->title_adat->name : '-' }} </td>
                                 </tr>
                                 <tr>
                                     <th scope="row">Suku</th>
-                                    <td>{{ $member->member_belongs->ethnic->name }}</td>
+                                    <td>{{ isset($member->member_belongs->ethnic) ? $member->member_belongs->ethnic->name : '-' }}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">Pendidikan</th>
-                                    <td>{{ $member->member_belongs->education->name }}</td>
+                                    <td>{{ isset($member->member_belongs->education) ? $member->member_belongs->education->name : '-' }}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">Nama Sekolah</th>
@@ -108,7 +108,7 @@
                                 </tr>
                                 <tr>
                                     <th scope="row">Jenis Pekerjaan</th>
-                                    <td>{{ $member->member_belongs->job->name }}</td>
+                                    <td>{{ isset($member->member_belongs->job) ? $member->member_belongs->job->name : '-' }}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">Nama Institusi / Usaha</th>
@@ -184,15 +184,15 @@
                                 </tr>
                                 <tr>
                                     <th scope="row">Gelar</th>
-                                    <td>{{ $member->member_belongs->title_adat->name }}</td>
+                                    <td>{{ isset($member->member_belongs->title_adat) ? $member->member_belongs->title_adat->name : '-' }} </td>
                                 </tr>
                                 <tr>
                                     <th scope="row">Suku</th>
-                                    <td>{{ $member->member_belongs->ethnic->name }}</td>
+                                    <td>{{ isset($member->member_belongs->ethnic) ? $member->member_belongs->ethnic->name : '-' }}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">Pendidikan</th>
-                                    <td>{{ $member->member_belongs->education->name }}</td>
+                                    <td>{{ isset($member->member_belongs->education) ? $member->member_belongs->education->name : '-' }}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">Nama Sekolah</th>
@@ -204,7 +204,7 @@
                                 </tr>
                                 <tr>
                                     <th scope="row">Jenis Pekerjaan</th>
-                                    <td>{{ $member->member_belongs->job->name }}</td>
+                                    <td>{{ isset($member->member_belongs->job) ? $member->member_belongs->job->name : '-' }}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">Nama Institusi / Usaha</th>
@@ -273,7 +273,7 @@
                                                 </tr> 
                                                 <tr>
                                                     <th scope="row">Suku</th>
-                                                    <td>{{ $member->member_belongs->ethnic->name }}</td>
+                                                    <td>{{ isset($member->member_belongs->ethnic) ? $member->member_belongs->ethnic->name : '-' }}</td>
                                                 </tr> 
                                                 <tr>
                                                     <th scope="row">Jenis Kelamin</th>
@@ -281,7 +281,7 @@
                                                 </tr> 
                                                 <tr>
                                                     <th scope="row">Gelar</th>
-                                                    <td>{{ $member->member_belongs->title_adat->name }}</td>
+                                                    <td>{{ isset($member->member_belongs->title_adat) ? $member->member_belongs->title_adat->name : '-' }}</td>
                                                 </tr>                       
                                             </tbody>
                                         </table>

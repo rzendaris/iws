@@ -9,13 +9,13 @@
                 <span class="title">Dashboard</span>
             </a>
         </li>
-        <li class="nav-item {{ Request::is('family-management')? 'active' : '' }}">
+        <li class="nav-item {{ Request::is('family-management') || Request::is('family-management/*') ? 'active' : '' }}">
             <a href="{{ url('family-management') }}" class="nav-link nav-toggle">
                 <i class="icon-user-follow"></i>
                 <span class="title">Family Management </span>
             </a>
         </li>
-        <li class="nav-item  {{ Request::is('family-tree')? 'active' : '' }}">
+        <li class="nav-item {{ Request::is('family-tree') || Request::is('family-tree-detail/*') ? 'active' : '' }}">
             <a href="{{ url('family-tree') }}" class="nav-link nav-toggle">
                 <i class="icon-users"></i>
                 <span class="title">Family Tree </span>
@@ -72,7 +72,7 @@
                 </li>
             </ul>
         </li>
-        <li class="nav-item  {{ Request::is('user-management-fe')? 'active' : '' }}">
+        <li class="nav-item {{ Request::is('user-management-fe')? 'active' : '' }}">
             <a href="{{ url('user-management-fe') }}" class="nav-link nav-toggle">
                 <i class="icon-user-follow"></i>
                 <span class="title">User Management </span>

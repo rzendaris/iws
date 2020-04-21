@@ -50,6 +50,18 @@
                     <img src="{{ asset('assets/global/img/logo.png') }}" alt="" width="100" class="logo-default-login" />
                 </a>
                 <h3 class="form-title">Login to your account</h3>
+                @if(session()->has('err_message'))
+                    <div class="alert alert-danger alert-dismissible" role="alert" auto-close="10000">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        {{ session()->get('err_message') }}
+                    </div>
+                @endif
+                @if(session()->has('suc_message'))
+                    <div class="alert alert-success alert-dismissible" role="alert" auto-close="10000">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        {{ session()->get('suc_message') }}
+                    </div>
+                @endif
             </div>
         </div>
         <div class="alert alert-danger display-hide">
@@ -105,17 +117,31 @@
     </form>
     <!-- END LOGIN FORM -->
     <!-- BEGIN FORGOT PASSWORD FORM -->
-    <form class="forget-form" action="index.html" method="post">
+    <form class="forget-form" method="post" action="{{ url('forgot-password-email') }}" enctype="multipart/form-data">
+    {{csrf_field()}}
         <h3>Forget Password ?</h3>
         <p> Enter your e-mail address below to reset your password. </p>
         <div class="form-group">
             <div class="input-icon">
                 <i class="fa fa-envelope"></i>
-                <input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="Email" name="email" /> </div>
+                <input class="form-control placeholder-no-fix" type="email" autocomplete="off" placeholder="Email" name="email" required/> 
+            </div>
+        </div>
+        <div class="form-group{{ $errors->has('CaptchaCode') ? ' has-error' : '' }}">
+            <div class="input-icon">
+                {!! captcha_image_html('ResetPasswordCaptcha') !!}
+                <input type="text" class="form-control" name="CaptchaCode" id="CaptchaCode" required>
+
+                @if ($errors->has('CaptchaCode'))
+                    <span class="help-block">
+                        <strong>{{ $errors->first('CaptchaCode') }}</strong>
+                    </span>
+                @endif
+            </div>
         </div>
         <div class="form-actions">
             <button type="button" id="back-btn" class="btn red btn-outline">Back </button>
-            <button type="button" class="btn green pull-right"> Submit </button>
+            <button type="submit" class="btn green pull-right"> Submit </button>
         </div>
     </form>
 </div>

@@ -78,3 +78,4 @@ Route::middleware('auth')->group(function() {
      */
 });
 Route::get('under-construction', 'HomeController@underConstruction');
+Route::post('forgot-password-email', 'HomeController@forgotPassword');

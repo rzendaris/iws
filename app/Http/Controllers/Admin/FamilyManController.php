@@ -31,6 +31,17 @@ class FamilyManController extends Controller
      *
      * @return void
      */
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            if (Auth::user()->role_id == 3){
+                return redirect('family-tree')->with('access_message', 'Akses untuk Menu Family Management Ditolak!');
+            }
+            return $next($request);
+        });
+        
+    }
+
     public function FamilyManInit(Request $request)
     {
         $paginate = 15;

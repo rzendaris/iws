@@ -17,6 +17,17 @@ class ProvinceManController extends Controller
      *
      * @return void
      */
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            if (Auth::user()->role_id != 1){
+                return redirect('family-tree')->with('access_message', 'Akses untuk Menu Master Data Provinsi Ditolak!');
+            }
+            return $next($request);
+        });
+        
+    }
+    
     public function ProvinceInit()
     {
         $province = Province::where('status', 1)->orderBy('name', 'asc')->get();

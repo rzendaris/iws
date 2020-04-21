@@ -17,6 +17,17 @@ class EthnicManController extends Controller
      *
      * @return void
      */
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            if (Auth::user()->role_id != 1){
+                return redirect('family-tree')->with('access_message', 'Akses untuk Menu Master Data Etnis Ditolak!');
+            }
+            return $next($request);
+        });
+        
+    }
+    
     public function EthnicInit()
     {
         $ethnic = Ethnic::where('status', 1)->get();

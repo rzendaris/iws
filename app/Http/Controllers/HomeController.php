@@ -23,7 +23,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        if (Auth::user()->role_id == 1){
+            return redirect('dashboard');
+        } else {
+            return redirect('family-tree');
+        }
     }
 
     /**
@@ -48,5 +52,15 @@ class HomeController extends Controller
     public function underConstruction()
     {
         return view('under-construction');
+    }
+
+    public function forgotPassword(Request $request)
+    {
+        dd($request);
+        $validate = $request->validate([
+            'email' => 'required|string',
+            'CaptchaCode' => 'required|valid_captcha',
+        ]);
+        return redirect('login')->with('suc_message', 'Periksa email anda!');
     }
 }

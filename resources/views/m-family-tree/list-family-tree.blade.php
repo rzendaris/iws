@@ -144,12 +144,41 @@
 
 </div>
 
+<div class="modal fade" id="userAccessModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal Akses</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      @if(session()->has('access_message'))
+      <div class="modal-body">
+        {{ session()->get('access_message') }}
+      </div>
+      @endif
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Tutup</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 @endsection
 
 @section('myscript')
 
     <script src="{{ asset('assets/global/plugins/select2/js/select2.min.js') }}"></script>
     <script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}"></script>
+    @if(session()->has('access_message'))
+    <script>
+        $(function() {
+            $('#userAccessModal').modal('show');
+        });
+    </script>
+    @endif
+    
     <script>   
     $(function () {
         $('#province-selected').on('change', function() {

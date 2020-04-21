@@ -20,6 +20,17 @@ class DistrictManController extends Controller
      *
      * @return void
      */
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            if (Auth::user()->role_id != 1){
+                return redirect('family-tree')->with('access_message', 'Akses untuk Menu Master Data Kecamatan Ditolak!');
+            }
+            return $next($request);
+        });
+        
+    }
+    
     public function DistrictInit(Request $request)
     {
         $paginate = 15;

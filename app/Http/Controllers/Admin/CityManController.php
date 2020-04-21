@@ -18,6 +18,17 @@ class CityManController extends Controller
      *
      * @return void
      */
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            if (Auth::user()->role_id != 1){
+                return redirect('family-tree')->with('access_message', 'Akses untuk Menu Master Data Kota/Kab Ditolak!');
+            }
+            return $next($request);
+        });
+        
+    }
+    
     public function CityInit()
     {
         $city = City::with(['province'])->where('status', 1)->get()->sortBy('province.name');

@@ -78,4 +78,7 @@ Route::middleware('auth')->group(function() {
      */
 });
 Route::get('under-construction', 'HomeController@underConstruction');
-Route::post('forgot-password-email', 'HomeController@forgotPassword');
+Route::get('forgot-password', 'Auth\ForgotPasswordController@forgotPasswordInit');
+Route::post('forgot-password-send-email', 'Auth\ForgotPasswordController@forgotPassword');
+Route::get('forgot-password-verify/{token}', 'Auth\ForgotPasswordController@forgotPasswordVerify');
+Route::post('change-password', 'Auth\ForgotPasswordController@changePassword');

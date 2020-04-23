@@ -31,4 +31,9 @@ class FamilyMember extends Model
         return $this->belongsTo('App\Model\Tables\Member', 'member_id', 'id');
     }
 
+    public function family()
+    {
+        return $this->belongsTo('App\Model\Tables\Family', 'family_id', 'id');
+    }
+
 }

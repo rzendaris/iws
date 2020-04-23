@@ -104,4 +104,9 @@ class Member extends Model
         return $this->belongsTo('App\Model\Tables\Religion', 'religion_id', 'id');
     }
 
+    public function family_member()
+    {
+        return $this->belongsTo('App\Model\Tables\FamilyMember', 'id', 'member_id');
+    }
+
 }

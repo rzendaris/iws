@@ -78,5 +78,11 @@
                 <span class="title">User Management </span>
             </a>
         </li>
+        <li class="nav-item {{ Request::is('report')? 'active' : '' }}">
+            <a href="{{ url('report') }}" class="nav-link nav-toggle">
+                <i class="icon-book-open"></i>
+                <span class="title">Report </span>
+            </a>
+        </li>
     </ul>
 </div>

@@ -73,6 +73,9 @@ Route::middleware('auth')->group(function() {
 
     Route::get('family-tree', 'Admin\FamilyTreeController@FamilyTreeInit');
     Route::get('family-tree-detail/{member_id}', 'Admin\FamilyTreeController@FamilyTreeDetail');
+
+    Route::get('report', 'Admin\ReportingController@ReportInit');
+    Route::get('report-filter/{type}', 'Admin\ReportingController@ReportFilter');
     /**
      * End Content Management Routes
      */

@@ -102,7 +102,7 @@ class FamilyManController extends Controller
 
     public function FamilyManInsert(Request $request)
     {
-        $family = Family::where('family_no', $request->family_no)->first();
+        $family = Family::where('family_no', $request->family_no)->where('status', 1)->first();
         if(empty($family)){
             $photo_master = $request->file('photo_master');
             $photo = $request->file('photo');
@@ -158,7 +158,7 @@ class FamilyManController extends Controller
                 "family_id" => $family->id,
                 "member_id" => $member->id,
             ]);
-            if (isset($photo_master)){
+            if (isset($photo)){
                 Member::where('id', $member->id)->update([
                     'photo' => $request->nik.".".$photo->getClientOriginalExtension(),
                 ]);

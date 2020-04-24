@@ -47,7 +47,7 @@
         <div class="row">
             <div class="col-md-12 text-center">
                 <a href="/" >
-                    <img src="{{ asset('assets/global/img/logo.png') }}" alt="" width="100" class="logo-default-login" />
+                    <img src="{{ asset('assets/global/img/logo.png') }}" alt="" width="100" style="width:190px; height: 110px" class="logo-default-login" />
                 </a>
                 <h3 class="form-title">Login to your account</h3>
                 @if(session()->has('err_message'))

@@ -93,7 +93,7 @@
                             </select>
                         </div>
                         <div class="col-xl-12 col-md-4 m-b-10px">
-                            <br><button type="submit" id="search-button" class="btn btn-primary">Download Report <i class="icon-refresh"></i></button>
+                            <br><button type="submit" id="search-button" class="btn btn-primary">Download Report</button>
                         </div>
                     </div>
                 </div>

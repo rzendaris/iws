@@ -38,7 +38,6 @@
                             <th>Tanggal Lahir</th>
                             <th>Suku</th>
                             <th>Status Anggota</th>
-                            <th>Kelengkapan</th>
                             <th class="text-center">Action</th>
                         </tr>
                     </thead>
@@ -56,7 +55,6 @@
                                     <td>-</td>
                                 @endif
                                 <td>{{ $family_member->member_belongs->member_status->name }}</td>
-                                <td>100%</td>
                                 <td class="text-center">
                                     <a href="#" data-toggle="modal" data-target="#modal-detail-family-member-{{ $family_member->member_belongs->id }}"><i class="fa fa-eye fa-lg custom--1"></i></a>
                                     <a href="{{ url('family-management/member/edit/'.$data['family']->id.'/'.$family_member->member_belongs->id) }}"><i class="fa fa-edit fa-lg custom--1"></i></a>

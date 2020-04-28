@@ -87,17 +87,17 @@ class ReportingController extends Controller
                 $sheet->cell('M1', function($cell) {$cell->setValue('Kode Pos')->setBorder('thin', 'thin', 'thin', 'thin')->setAlignment('center');   });
                 $sheet->cell('N1', function($cell) {$cell->setValue('Gelar Adat')->setBorder('thin', 'thin', 'thin', 'thin')->setAlignment('center');   });
                 $sheet->cell('O1', function($cell) {$cell->setValue('Suku')->setBorder('thin', 'thin', 'thin', 'thin')->setAlignment('center');   });
-                $sheet->cell('P1', function($cell) {$cell->setValue('Kewarganegaraan')->setBorder('thin', 'thin', 'thin', 'thin')->setAlignment('center');   });
-                $sheet->cell('Q1', function($cell) {$cell->setValue('Jenis Pekerjaan')->setBorder('thin', 'thin', 'thin', 'thin')->setAlignment('center');   });
-                $sheet->cell('R1', function($cell) {$cell->setValue('Nama Instansi/Usaha')->setBorder('thin', 'thin', 'thin', 'thin')->setAlignment('center');   });
-                $sheet->cell('S1', function($cell) {$cell->setValue('Status Pernikahan')->setBorder('thin', 'thin', 'thin', 'thin')->setAlignment('center');   });
-                $sheet->cell('T1', function($cell) {$cell->setValue('Pendidikan')->setBorder('thin', 'thin', 'thin', 'thin')->setAlignment('center');   });
-                $sheet->cell('U1', function($cell) {$cell->setValue('Nama Sekolah')->setBorder('thin', 'thin', 'thin', 'thin')->setAlignment('center');   });
-                $sheet->cell('V1', function($cell) {$cell->setValue('Kelulusan')->setBorder('thin', 'thin', 'thin', 'thin')->setAlignment('center');   });
-                $sheet->cell('W1', function($cell) {$cell->setValue('Status Keluarga')->setBorder('thin', 'thin', 'thin', 'thin')->setAlignment('center');   });
-                $sheet->cell('X1', function($cell) {$cell->setValue('Keberadaan')->setBorder('thin', 'thin', 'thin', 'thin')->setAlignment('center');   });
-                $sheet->cell('Y1', function($cell) {$cell->setValue('No. Telp')->setBorder('thin', 'thin', 'thin', 'thin')->setAlignment('center');   });
-                $sheet->cell('Z1', function($cell) {$cell->setValue('Alamat')->setBorder('thin', 'thin', 'thin', 'thin')->setAlignment('center');   });
+                // $sheet->cell('P1', function($cell) {$cell->setValue('Kewarganegaraan')->setBorder('thin', 'thin', 'thin', 'thin')->setAlignment('center');   });
+                $sheet->cell('P1', function($cell) {$cell->setValue('Jenis Pekerjaan')->setBorder('thin', 'thin', 'thin', 'thin')->setAlignment('center');   });
+                $sheet->cell('Q1', function($cell) {$cell->setValue('Nama Instansi/Usaha')->setBorder('thin', 'thin', 'thin', 'thin')->setAlignment('center');   });
+                $sheet->cell('R1', function($cell) {$cell->setValue('Status Pernikahan')->setBorder('thin', 'thin', 'thin', 'thin')->setAlignment('center');   });
+                $sheet->cell('S1', function($cell) {$cell->setValue('Pendidikan')->setBorder('thin', 'thin', 'thin', 'thin')->setAlignment('center');   });
+                $sheet->cell('T1', function($cell) {$cell->setValue('Nama Sekolah')->setBorder('thin', 'thin', 'thin', 'thin')->setAlignment('center');   });
+                $sheet->cell('U1', function($cell) {$cell->setValue('Kelulusan')->setBorder('thin', 'thin', 'thin', 'thin')->setAlignment('center');   });
+                $sheet->cell('V1', function($cell) {$cell->setValue('Status Keluarga')->setBorder('thin', 'thin', 'thin', 'thin')->setAlignment('center');   });
+                $sheet->cell('W1', function($cell) {$cell->setValue('Keberadaan')->setBorder('thin', 'thin', 'thin', 'thin')->setAlignment('center');   });
+                $sheet->cell('X1', function($cell) {$cell->setValue('No. Telp')->setBorder('thin', 'thin', 'thin', 'thin')->setAlignment('center');   });
+                $sheet->cell('Y1', function($cell) {$cell->setValue('Alamat')->setBorder('thin', 'thin', 'thin', 'thin')->setAlignment('center');   });
                 if (isset($member[0])) {
                     foreach ($member as $key => $value) {
                         $a= $key+2;
@@ -116,17 +116,17 @@ class ReportingController extends Controller
                         $sheet->cell('M'.$a, function($cell) use ($value) {$cell->setValue($value->family_member->family->post_code)->setBorder('thin', 'thin', 'thin', 'thin')->setAlignment('center');   });
                         $sheet->cell('N'.$a, function($cell) use ($value) {$cell->setValue(isset($value->title_adat) ? $value->title_adat->name : '-')->setBorder('thin', 'thin', 'thin', 'thin')->setAlignment('center');   });
                         $sheet->cell('O'.$a, function($cell) use ($value) {$cell->setValue(isset($value->ethnic) ? $value->ethnic->name : '-')->setBorder('thin', 'thin', 'thin', 'thin')->setAlignment('center');   });
-                        $sheet->cell('P'.$a, function($cell) use ($value) {$cell->setValue('Indonesia')->setBorder('thin', 'thin', 'thin', 'thin')->setAlignment('center');   });
-                        $sheet->cell('Q'.$a, function($cell) use ($value) {$cell->setValue(isset($value->job) ? $value->job->name : '-')->setBorder('thin', 'thin', 'thin', 'thin')->setAlignment('center');   });
-                        $sheet->cell('R'.$a, function($cell) use ($value) {$cell->setValue($value->instance_name)->setBorder('thin', 'thin', 'thin', 'thin');   });
-                        $sheet->cell('S'.$a, function($cell) use ($value) {$cell->setValue(isset($value->marital) ? $value->marital->name : '-')->setBorder('thin', 'thin', 'thin', 'thin');   });
-                        $sheet->cell('T'.$a, function($cell) use ($value) {$cell->setValue(isset($value->education) ? $value->education->name : '-')->setBorder('thin', 'thin', 'thin', 'thin')->setAlignment('center');   });
-                        $sheet->cell('U'.$a, function($cell) use ($value) {$cell->setValue($value->school_name)->setBorder('thin', 'thin', 'thin', 'thin');   });
-                        $sheet->cell('V'.$a, function($cell) use ($value) {$cell->setValue($value->graduation_year)->setBorder('thin', 'thin', 'thin', 'thin');   });
-                        $sheet->cell('W'.$a, function($cell) use ($value) {$cell->setValue(isset($value->member_status) ? $value->member_status->name : '-')->setBorder('thin', 'thin', 'thin', 'thin')->setAlignment('center');   });
-                        $sheet->cell('X'.$a, function($cell) use ($value) {$cell->setValue($value->is_life == 1 ? 'Hidup' : 'Mati')->setBorder('thin', 'thin', 'thin', 'thin')->setAlignment('center');   });
-                        $sheet->cell('Y'.$a, function($cell) use ($value) {$cell->setValue($value->phone_number)->setBorder('thin', 'thin', 'thin', 'thin')->setAlignment('center');   });
-                        $sheet->cell('Z'.$a, function($cell) use ($value) {$cell->setValue($value->address)->setBorder('thin', 'thin', 'thin', 'thin');   });
+                        // $sheet->cell('P'.$a, function($cell) use ($value) {$cell->setValue('Indonesia')->setBorder('thin', 'thin', 'thin', 'thin')->setAlignment('center');   });
+                        $sheet->cell('P'.$a, function($cell) use ($value) {$cell->setValue(isset($value->job) ? $value->job->name : '-')->setBorder('thin', 'thin', 'thin', 'thin')->setAlignment('center');   });
+                        $sheet->cell('Q'.$a, function($cell) use ($value) {$cell->setValue($value->instance_name)->setBorder('thin', 'thin', 'thin', 'thin');   });
+                        $sheet->cell('R'.$a, function($cell) use ($value) {$cell->setValue(isset($value->marital) ? $value->marital->name : '-')->setBorder('thin', 'thin', 'thin', 'thin');   });
+                        $sheet->cell('S'.$a, function($cell) use ($value) {$cell->setValue(isset($value->education) ? $value->education->name : '-')->setBorder('thin', 'thin', 'thin', 'thin')->setAlignment('center');   });
+                        $sheet->cell('T'.$a, function($cell) use ($value) {$cell->setValue($value->school_name)->setBorder('thin', 'thin', 'thin', 'thin');   });
+                        $sheet->cell('U'.$a, function($cell) use ($value) {$cell->setValue($value->graduation_year)->setBorder('thin', 'thin', 'thin', 'thin');   });
+                        $sheet->cell('V'.$a, function($cell) use ($value) {$cell->setValue(isset($value->member_status) ? $value->member_status->name : '-')->setBorder('thin', 'thin', 'thin', 'thin')->setAlignment('center');   });
+                        $sheet->cell('W'.$a, function($cell) use ($value) {$cell->setValue($value->is_life == 1 ? 'Hidup' : 'Mati')->setBorder('thin', 'thin', 'thin', 'thin')->setAlignment('center');   });
+                        $sheet->cell('X'.$a, function($cell) use ($value) {$cell->setValue($value->phone_number)->setBorder('thin', 'thin', 'thin', 'thin')->setAlignment('center');   });
+                        $sheet->cell('Y'.$a, function($cell) use ($value) {$cell->setValue($value->address)->setBorder('thin', 'thin', 'thin', 'thin');   });
                     }
                 }
                 

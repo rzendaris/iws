@@ -34,16 +34,20 @@
 
 @section('content')
 
-<div class="content-body-white">
+<div class="content-body-white" id="content">
     
     <!-- Button Download PDF -->
-    <a href="#" class="btn btn-success custom-button-pdf">Download PDF</a>
+    <button class="btn btn-success custom-button-pdf" onclick="window.print()">Download PDF</button>
 
     <div class="row">
         <div class="col-md-offset-4 col-md-4">  
             <h1 class="text-center">IWS Family Tree</h1>
             <div class="box-detail-tre">
-                <img class="img-custom-1" src="{{ url('photo/kk/'.$data['family']->photo) }}" /> 
+                @if($data['family']->photo == NULL)
+                    <img class="img-custom-2" src="{{ asset('assets/global/img/no-profile.jpg') }}" />
+                @else
+                    <img class="img-custom-1" src="{{ url('photo/kk/'.$data['family']->photo) }}" /> 
+                @endif
             </div>
         </div>
     </div>
@@ -54,7 +58,11 @@
                 @if($member->member_belongs->member_status_id == 1)
                 <div class="col-md-6">  
                     <div class="box-detail-tre">
-                        <img class="img-custom-2" src="{{ url('photo/member/'.$member->member_belongs->photo) }}" /> 
+                        @if($member->member_belongs->photo == NULL)
+                            <img class="img-custom-2" src="{{ asset('assets/global/img/no-profile.jpg') }}" />
+                        @else
+                            <img class="img-custom-2" src="{{ url('photo/member/'.$member->member_belongs->photo) }}" />
+                        @endif
                         <hr>
                         <table class="table table-striped"> 
                             <tbody>
@@ -150,7 +158,11 @@
                 @if($member->member_belongs->member_status_id == 2)
                 <div class="col-md-6">  
                     <div class="box-detail-tre">
-                        <img class="img-custom-2" src="{{ url('photo/member/'.$member->member_belongs->photo) }}" /> 
+                        @if($member->member_belongs->photo == NULL)
+                            <img class="img-custom-2" src="{{ asset('assets/global/img/no-profile.jpg') }}" />
+                        @else
+                            <img class="img-custom-2" src="{{ url('photo/member/'.$member->member_belongs->photo) }}" />
+                        @endif
                         <hr>
                         <table class="table table-striped"> 
                             <tbody>
@@ -257,7 +269,11 @@
                             <div class="col-md-6">
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <img class="img-custom-3" src="{{ url('photo/member/'.$member->member_belongs->photo) }}" />
+                                        @if($member->member_belongs->photo == NULL)
+                                            <img class="img-custom-2" src="{{ asset('assets/global/img/no-profile.jpg') }}" />
+                                        @else
+                                            <img class="img-custom-2" src="{{ url('photo/member/'.$member->member_belongs->photo) }}" />
+                                        @endif
                                         <a href="#" class="btn btn-primary custom-button-lihat">Lihat</a>
                                     </div>
                                     <div class="col-md-8">
@@ -303,16 +319,31 @@
 @section('myscript')
 
     <script src="{{ asset('assets/global/plugins/select2/js/select2.min.js') }}"></script>
+    <script src="https://unpkg.com/jspdf@latest/dist/jspdf.min.js"></script>
     <script>   
     $(function () {
-        // $("select").select2();
-        $('#sorting-table').DataTable( {
-            "dom": '<"toolbar">frtip',
-            "ordering": false,
-            "info":     false,
-            language: { search: "", searchPlaceholder: "Nama Member"  },
-        } );
         $("div.toolbar").html('<a class="float-right btn btn-success" href="#">Sembunyikan Detail</a>');
+        var doc = new jsPDF();
+        var specialElementHandlers = {
+            '#sidebarPanel': function (element, renderer) {
+                return true;
+            }
+        };
+        var source = window.document.getElementById("content");
+        console.log("Source " + source);
+        doc.fromHTML(
+            source,
+            15,
+            15,
+            {
+                'width': 180,'elementHandlers': specialElementHandlers
+            }
+        );
+
+        doc.output("dataurlnewwindow");
+        $('#cmd').click(function () {
+            doc.save('sample-file.pdf');
+        });
     });
     </script>
 @endsection

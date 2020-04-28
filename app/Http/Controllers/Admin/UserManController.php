@@ -84,7 +84,7 @@ class UserManController extends Controller
     {
         $user = User::where('id', $request->id)->first();
         if(!empty($user)){
-            User::where('id', $request->id)->update(['status' => 0]);
+            User::where('id', $request->id)->delete();
             return redirect('user-management-fe')->with('suc_message', 'Data telah dihapus!');
         } else {
             return redirect()->back()->with('err_message', 'Data tidak ditemukan!');

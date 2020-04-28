@@ -86,7 +86,7 @@
                             <div class="col-xl-4 col-md-4 m-b-10px">
                                 <div class="form-group">
                                     <label class="form-control-label">NIK :*</label>
-                                    <input type="text" name="nik" class="form-control" required/>
+                                    <input type="tel" name="nik" class="form-control" required/>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-control-label">Tanggal Lahir :*</label>
@@ -214,11 +214,11 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="form-control-label">Tahun Kelulusan :</label>
-                                    <input type="text" name="graduation_year" class="form-control"/>
+                                    <input type="tel" name="graduation_year" class="form-control"/>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-control-label">No Telepon :</label>
-                                    <input type="text" name="phone_number" class="form-control"/>
+                                    <input type="tel" name="phone_number" class="form-control"/>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-control-label">Status Anggota Keluarga :*</label>
@@ -399,4 +399,13 @@
 @section('myscript')
     <script src="{{ asset('assets/global/plugins/select2/js/select2.min.js') }}"></script>
     <script src="{{ asset('js/add-family.js') }}"></script>
+    <script>
+        $('[type=tel]').on('change', function(e) {
+            $(e.target).val($(e.target).val().replace(/[^\d\.]/g, ''))
+        });
+        $('[type=tel]').on('keypress', function(e) {
+            keys = ['0','1','2','3','4','5','6','7','8','9','.']
+            return keys.indexOf(event.key) > -1
+        });
+    </script>
 @endsection

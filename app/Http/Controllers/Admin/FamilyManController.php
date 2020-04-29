@@ -55,14 +55,17 @@ class FamilyManController extends Controller
         $no = 1;
         foreach($family as $data){
             $member = FamilyMember::with(['member_belongs' => function ($query) {
-                $query->where('member_status_id', 1);
-            }])->where('family_id', $data->id)->first();
-            $data->no = $no;
-            if(isset($member->member_belongs)){
-                $data->kepala_keluarga = $member->member_belongs->full_name;
-            } else {
-                $data->kepala_keluarga = "Kepala Keluarga tidak terdaftar!";
+                $query->where('member_status_id', 1)->where('status', 1);
+            }])->where('family_id', $data->id)->get();
+            $data->kepala_keluarga = "Kepala Keluarga tidak terdaftar!";
+            foreach($member as $check_head_family){
+                if(isset($check_head_family->member_belongs)){
+                    $data->kepala_keluarga = $check_head_family->member_belongs->full_name;
+                }
             }
+            $get_family_member = FamilyMember::select('member_id')->where('family_id', $data->id)->get();
+            $data->member = Member::whereIn('id', $get_family_member)->where('status', 1)->orderBy('member_status_id', 'asc')->get();
+            $data->no = $no;
             $no++;
         }
         $data = array(
@@ -107,7 +110,17 @@ class FamilyManController extends Controller
             $check_member_nik = Member::where('nik', $request->nik)->where('status', 1)->first();
             if(empty($check_member_nik)){
                 $photo_master = $request->file('photo_master');
+                if (isset($photo_master)){
+                    if($request->file('photo_master')->getSize() > 1000000){
+                        return redirect()->back()->with('err_message', 'Foto Keluarga lebih besar dari 1 MB!');
+                    }
+                }
                 $photo = $request->file('photo');
+                if (isset($photo)){
+                    if($request->file('photo')->getSize() > 1000000){
+                        return redirect()->back()->with('err_message', 'Foto Anggota lebih besar dari 1 MB!');
+                    }
+                }
                 $family = Family::create([
                     'family_no' => $request->family_no,
                     'inherit_no' => $request->inherit_no,
@@ -188,16 +201,16 @@ class FamilyManController extends Controller
                 'family_member.member_belongs.ethnic'
                 ])
             ->first();
-        $no = 1;
+        $get_family_member = FamilyMember::select('member_id')->where('family_id', $family->id)->get();
+        $family->member = Member::whereIn('id', $get_family_member)->where('status', 1)->orderBy('member_status_id', 'asc')->get();
+        $no_data_member = 1;
         $status_head_family = 0;
-        foreach($family->family_member as $data){
-            if (isset($data->member_belongs)){
-                if ($data->member_belongs->member_status_id == 1){
-                    $status_head_family = 1;
-                }
-                $data->no = $no;
-                $no++;
+        foreach($family->member as $data_member){
+            if($data_member->member_status_id == 1){
+                $status_head_family = 1;
             }
+            $data_member->no = $no_data_member;
+            $no_data_member++;
         }
         
         $province = Province::where('status', 1)->orderBy('name', 'asc')->get();
@@ -229,22 +242,6 @@ class FamilyManController extends Controller
         return view('m-family-mgmt/update-family-mgmt')->with('data', $data);
     }
 
-    public function ProvinceUpdate(Request $request)
-    {
-        $province = Province::where('id', $request->id)->first();
-        if(!empty($province)){
-            Province::where('id', $request->id)
-              ->update([
-                  'name' => $request->name,
-                  'updated_by' => Auth::user()->email,
-                  ]
-                );
-            return redirect('province-fe')->with('suc_message', 'Data telah diperbarui!');
-        } else {
-            return redirect()->back()->with('err_message', 'Data tidak ditemukan!');
-        }
-    }
-
     public function FamilyManDelete(Request $request)
     {
         $family = Family::where('id', $request->id)->first();
@@ -263,6 +260,11 @@ class FamilyManController extends Controller
             $check_member_nik = Member::where('nik', $request->nik)->where('status', 1)->first();
             if(empty($check_member_nik)){
                 $photo = $request->file('photo');
+                if (isset($photo)){
+                    if($request->file('photo')->getSize() > 1000000){
+                        return redirect()->back()->with('err_message', 'Foto Anggota lebih besar dari 1 MB!');
+                    }
+                }
                 $member = Member::create([
                     'full_name' => $request->full_name,
                     'sur_name' => $request->sur_name,
@@ -386,6 +388,18 @@ class FamilyManController extends Controller
         if(!empty($member)){
             $member_check_nik = Member::where('nik', $request->nik)->where('status', 1)->first();
             if(empty($member_check_nik) || $member->id == $member_check_nik->id){
+                $photo = $request->file('photo');
+                if (isset($photo)){
+                    if($request->file('photo')->getSize() > 1000000){
+                        return redirect()->back()->with('err_message', 'Foto lebih besar dari 1 MB!');
+                    } else {
+                        Member::where('id', $member->id)
+                        ->update([
+                                'photo' => $request->nik.".".$photo->getClientOriginalExtension()
+                            ]);
+                        $request->file('photo')->move(public_path("/photo/member"), $member->nik.".".$photo->getClientOriginalExtension());
+                    }
+                }
                 Member::where('id', $member->id)
                   ->update([
                         'full_name' => $request->full_name,
@@ -412,15 +426,6 @@ class FamilyManController extends Controller
                         'phone_number' => $request->phone_number,
                         'updated_by' => Auth::user()->email,
                     ]);
-    
-                    $photo = $request->file('photo');
-                    if (isset($photo)){
-                        Member::where('id', $member->id)
-                        ->update([
-                                'photo' => $request->nik.".".$photo->getClientOriginalExtension()
-                            ]);
-                        $request->file('photo')->move(public_path("/photo/member"), $member->nik.".".$photo->getClientOriginalExtension());
-                    }
                 return redirect('family-management/edit/'.$request->family_id)->with('suc_message', 'Data telah Diperbarui!');
             } else {
                 return redirect()->back()->with('err_message', 'No NIK telah terdaftar di member lain!');

@@ -187,8 +187,9 @@
                                 <label class="form-control-label">Pilih Role *</label>
                                 <select name="role_id" class="custom-select form-control" required>
                                     <option value="{{ $user->role->id }}">{{ $user->role->name }}</option>
-                                    <option value="1">Admin</option>
-                                    <option value="2">User</option>
+                                    @foreach($data['role'] as $role)
+                                        <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="col-xl-12 col-md-12 m-b-10px">

@@ -42,26 +42,24 @@
                         </tr>
                     </thead>
                     <tbody>
-                    @foreach($data['family']->family_member as $family_member)
-                        @if(isset($family_member->member_belongs))
-                            <tr>
-                                <td>{{ $family_member->no }}</td>
-                                <td>{{ $family_member->member_belongs->nik }}</td>
-                                <td>{{ $family_member->member_belongs->full_name }}</td>
-                                <td>{{ $family_member->member_belongs->birthday }}</td>
-                                @if(isset($family_member->member_belongs->ethnic))
-                                    <td>{{ $family_member->member_belongs->ethnic->name }}</td>
-                                @else
-                                    <td>-</td>
-                                @endif
-                                <td>{{ $family_member->member_belongs->member_status->name }}</td>
-                                <td class="text-center">
-                                    <a href="#" data-toggle="modal" data-target="#modal-detail-family-member-{{ $family_member->member_belongs->id }}"><i class="fa fa-eye fa-lg custom--1"></i></a>
-                                    <a href="{{ url('family-management/member/edit/'.$data['family']->id.'/'.$family_member->member_belongs->id) }}"><i class="fa fa-edit fa-lg custom--1"></i></a>
-                                    <a href="#" data-toggle="modal" data-target="#modal-delete-family-member-{{ $family_member->member_belongs->id }}"><i class="fa fa-close fa-lg custom--1"></i></a>
-                                </td>
-                            </tr>
-                        @endif
+                    @foreach($data['family']->member as $family_member)
+                        <tr>
+                            <td>{{ $family_member->no }}</td>
+                            <td>{{ $family_member->nik }}</td>
+                            <td>{{ $family_member->full_name }}</td>
+                            <td>{{ $family_member->birthday }}</td>
+                            @if(isset($family_member->ethnic))
+                                <td>{{ $family_member->ethnic->name }}</td>
+                            @else
+                                <td>-</td>
+                            @endif
+                            <td>{{ $family_member->member_status->name }}</td>
+                            <td class="text-center">
+                                <a href="#" data-toggle="modal" data-target="#modal-detail-family-member-{{ $family_member->id }}"><i class="fa fa-eye fa-lg custom--1"></i></a>
+                                <a href="{{ url('family-management/member/edit/'.$data['family']->id.'/'.$family_member->id) }}"><i class="fa fa-edit fa-lg custom--1"></i></a>
+                                <a href="#" data-toggle="modal" data-target="#modal-delete-family-member-{{ $family_member->id }}"><i class="fa fa-close fa-lg custom--1"></i></a>
+                            </td>
+                        </tr>
                     @endforeach
                     </tbody>
                 </table>

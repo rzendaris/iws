@@ -274,7 +274,7 @@
                                         @else
                                             <img class="img-custom-2" src="{{ url('photo/member/'.$member->member_belongs->photo) }}" />
                                         @endif
-                                        <a href="#" class="btn btn-primary custom-button-lihat">Lihat</a>
+                                        <!-- <a href="#" class="btn btn-primary custom-button-lihat">Lihat</a> -->
                                     </div>
                                     <div class="col-md-8">
                                         <table class="table table-striped"> 
@@ -307,6 +307,46 @@
                         @endif
                     @endif
                 @endforeach
+                @if($data['family']->inherit_family != NULL)
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-4">
+                                @if($data['family']->inherit_family->photo == NULL)
+                                    <img class="img-custom-2" src="{{ asset('assets/global/img/no-profile.jpg') }}" />
+                                @else
+                                    <img class="img-custom-2" src="{{ url('photo/member/'.$data['family']->inherit_family->photo) }}" />
+                                @endif
+                                <a href="{{ url('family-tree-detail/'.$data['family']->inherit_family->id) }}" class="btn btn-primary custom-button-lihat">Lihat</a>
+                            </div>
+                            <div class="col-md-8">
+                                <table class="table table-striped"> 
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">Nama Lengkap</th>
+                                            <td>{{ $data['family']->inherit_family->full_name }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Status</th>
+                                            <td>{{ $data['family']->inherit_family->member_status->name }}</td>
+                                        </tr> 
+                                        <tr>
+                                            <th scope="row">Suku</th>
+                                            <td>{{ isset($data['family']->inherit_family->ethnic) ? $data['family']->inherit_family->ethnic->name : '-' }}</td>
+                                        </tr> 
+                                        <tr>
+                                            <th scope="row">Jenis Kelamin</th>
+                                            <td>{{ $data['family']->inherit_family->gender_status }}</td>
+                                        </tr> 
+                                        <tr>
+                                            <th scope="row">Gelar</th>
+                                            <td>{{ isset($data['family']->inherit_family->title_adat) ? $data['family']->inherit_family->title_adat->name : '-' }}</td>
+                                        </tr>                       
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                @endif
                 </div>
             </div>
         </div>

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Auth;
 use Storage;
+use DB;
 
 use App\User;
 use App\Model\Tables\Family;
@@ -65,6 +66,42 @@ class FamilyManController extends Controller
             }
             $get_family_member = FamilyMember::select('member_id')->where('family_id', $data->id)->get();
             $data->member = Member::whereIn('id', $get_family_member)->where('status', 1)->orderBy('member_status_id', 'asc')->get();
+            $results = DB::select( DB::raw("SELECT
+                    ROUND(
+                        100-
+                        (( 
+                        SUM(ISNULL(f.id))+
+                        SUM(ISNULL(f.inherit_no))+
+                        SUM(ISNULL(f.photo))+
+                        SUM(ISNULL(f.tlp_no))
+                        )/COUNT(m.id)
+                        +
+                        (
+                        SUM(ISNULL(m.job_id))+
+                        SUM(ISNULL(m.education_id))+
+                        SUM(ISNULL(m.ethnic_id))+
+                        SUM(ISNULL(m.address))+
+                        SUM(ISNULL(m.instance_name))+
+                        SUM(ISNULL(m.school_name))+
+                        SUM(ISNULL(m.title_adat_id))+
+                        SUM(ISNULL(m.photo))+
+                        SUM(ISNULL(m.sur_name))+
+                        SUM(ISNULL(m.graduation_year))+
+                        SUM(ISNULL(m.phone_number))
+                        ))
+                        /((COUNT(m.id)*22)+10)*100
+                    , 1) AS completed_percentage
+                FROM 
+                    family AS f
+                INNER JOIN family_member AS fm
+                    ON f.id = fm.family_id
+                INNER JOIN member AS m
+                    ON m.id = fm.member_id
+                WHERE f.family_no = '$data->family_no'") );
+            $data->percentage_fill = 0;
+            if(isset($results)){
+                $data->percentage_fill = $results[0]->completed_percentage;
+            }
             $data->no = $no;
             $no++;
         }

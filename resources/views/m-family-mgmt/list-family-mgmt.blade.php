@@ -45,6 +45,7 @@
                             <th>Kepala Keluarga</th>
                             <th>Kota</th>
                             <th>No. TLP</th>
+                            <th>Kelengkapan</th>
                             <th class="text-center">Action</th>
                         </tr>
                     </thead>
@@ -56,6 +57,7 @@
                             <td>{{ $family->kepala_keluarga }}</td>
                             <td>{{ $family->city->name }}</td>
                             <td>{{ $family->tlp_no }}</td>
+                            <td>{{ $family->percentage_fill }} %</td>
                             <td class="text-center">
                                 <a href="#" data-toggle="modal" data-target="#modal-detail-family-{{ $family->id }}"><i class="fa fa-eye fa-lg custom--1"></i></a>
                                 <a href="{{ url('family-management/edit/'.$family->id) }}"><i class="fa fa-edit fa-lg custom--1"></i></a>

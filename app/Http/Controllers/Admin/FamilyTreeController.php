@@ -73,6 +73,20 @@ class FamilyTreeController extends Controller
         }])->where('family_id', $family_member->family_id)->get();
 
         $family = Family::where('id', $family_member->family_id)->first();
+        $temp_parents = [];
+        if($family->inherit_no != NULL){
+            $inhiret_parents = Family::with(['family_member', 'family_member.member'])->where('family_no', $family->inherit_no)->get();
+            foreach($inhiret_parents as $parents){
+                if(isset($parents->family_member)){
+                    foreach($parents->family_member as $family_member){
+                        if($family_member->member_belongs->member_status_id == 1 || $family_member->member_belongs->member_status_id == 2){
+                            array_push($temp_parents, $family_member->member_belongs);
+                        }
+                    }
+                }
+            }
+        }
+        $family->parents = $temp_parents;
         $inhiret_family = Family::with(['family_member', 'family_member.member'])->where('inherit_no', $family->family_no)->get();
         $family->inherit_family = null;
         foreach($inhiret_family as $inhiret){

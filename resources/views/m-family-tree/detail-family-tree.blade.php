@@ -46,7 +46,7 @@
                 @if($data['family']->photo == NULL)
                     <img class="img-custom-2" src="{{ asset('assets/global/img/no-profile.jpg') }}" />
                 @else
-                    <img class="img-custom-1" src="{{ url('photo/kk/'.$data['family']->photo) }}" /> 
+                    <img class="img-custom-1" src="{{ url('photo/kk/'.$data['family']->photo) }}" onerror="this.src='{{ url('assets/global/img/no-profile.jpg') }}'" /> 
                 @endif
             </div>
         </div>
@@ -61,7 +61,7 @@
                         @if($member->member_belongs->photo == NULL)
                             <img class="img-custom-2" src="{{ asset('assets/global/img/no-profile.jpg') }}" />
                         @else
-                            <img class="img-custom-2" src="{{ url('photo/member/'.$member->member_belongs->photo) }}" />
+                            <img class="img-custom-2" src="{{ url('photo/member/'.$member->member_belongs->photo) }}" onerror="this.src='{{ url('assets/global/img/no-profile.jpg') }}'"/>
                         @endif
                         <hr>
                         <table class="table table-striped"> 
@@ -161,7 +161,7 @@
                         @if($member->member_belongs->photo == NULL)
                             <img class="img-custom-2" src="{{ asset('assets/global/img/no-profile.jpg') }}" />
                         @else
-                            <img class="img-custom-2" src="{{ url('photo/member/'.$member->member_belongs->photo) }}" />
+                            <img class="img-custom-2" src="{{ url('photo/member/'.$member->member_belongs->photo) }}" onerror="this.src='{{ url('assets/global/img/no-profile.jpg') }}'" />
                         @endif
                         <hr>
                         <table class="table table-striped"> 
@@ -259,20 +259,69 @@
         @endforeach
     </div>
     <br>
+
+    <div class="row">
+        <div class="col-md-offset-4 col-md-4">  
+            <h1 class="text-center">Garis Keturunan</h1>
+        </div>
+    </div>
+    <br>
     <div class="row">        
         <div class="col-md-12">  
             <div class="box-detail-tre">
                 <div class="row">
-                @foreach($data['family_member'] as $member)
-                    @if(isset($member->member_belongs))
-                        @if($member->member_belongs->member_status_id != 1 && $member->member_belongs->member_status_id != 2)
-                            <div class="col-md-6">
+                    @if(isset($data['family']->parents))
+                        <div class="col-md-6">
+                            @foreach($data['family']->parents as $parents)
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        @if($parents->photo == NULL)
+                                            <img class="img-custom-2" src="{{ asset('assets/global/img/no-profile.jpg') }}" />
+                                        @else
+                                            <img class="img-custom-2" src="{{ url('photo/member/'.$parents->photo) }}" onerror="this.src='{{ url('assets/global/img/no-profile.jpg') }}'" />
+                                        @endif
+                                        <a href="{{ url('family-tree-detail/'.$parents->id) }}" class="btn btn-primary custom-button-lihat">Lihat</a>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <table class="table table-striped"> 
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="row" style="width:125px">Nama Lengkap</th>
+                                                    <td>{{ $parents->full_name }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">Status</th>
+                                                    <td>Orang Tua / {{ $parents->member_status->name }}</td>
+                                                </tr> 
+                                                <tr>
+                                                    <th scope="row">Suku</th>
+                                                    <td>{{ isset($parents->ethnic) ? $parents->ethnic->name : '-' }}</td>
+                                                </tr> 
+                                                <tr>
+                                                    <th scope="row">Jenis Kelamin</th>
+                                                    <td>{{ $parents->gender_status }}</td>
+                                                </tr> 
+                                                <tr>
+                                                    <th scope="row">Gelar</th>
+                                                    <td>{{ isset($parents->title_adat) ? $parents->title_adat->name : '-' }}</td>
+                                                </tr>                       
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    @endif
+                    <div class="col-md-6">
+                    @foreach($data['family_member'] as $member)
+                        @if(isset($member->member_belongs))
+                            @if($member->member_belongs->member_status_id != 1 && $member->member_belongs->member_status_id != 2)
                                 <div class="row">
                                     <div class="col-md-4">
                                         @if($member->member_belongs->photo == NULL)
                                             <img class="img-custom-2" src="{{ asset('assets/global/img/no-profile.jpg') }}" />
                                         @else
-                                            <img class="img-custom-2" src="{{ url('photo/member/'.$member->member_belongs->photo) }}" />
+                                            <img class="img-custom-2" src="{{ url('photo/member/'.$member->member_belongs->photo) }}" onerror="this.src='{{ url('assets/global/img/no-profile.jpg') }}'" />
                                         @endif
                                         <!-- <a href="#" class="btn btn-primary custom-button-lihat">Lihat</a> -->
                                     </div>
@@ -280,7 +329,7 @@
                                         <table class="table table-striped"> 
                                             <tbody>
                                                 <tr>
-                                                    <th scope="row">Nama Lengkap</th>
+                                                    <th scope="row" style="width:125px">Nama Lengkap</th>
                                                     <td>{{ $member->member_belongs->full_name }}</td>
                                                 </tr>
                                                 <tr>
@@ -303,50 +352,48 @@
                                         </table>
                                     </div>
                                 </div>
-                            </div>
+                            @endif
                         @endif
+                    @endforeach
+                    @if($data['family']->inherit_family != NULL)
+                            <div class="row">
+                                <div class="col-md-4">
+                                    @if($data['family']->inherit_family->photo == NULL)
+                                        <img class="img-custom-2" src="{{ asset('assets/global/img/no-profile.jpg') }}" />
+                                    @else
+                                        <img class="img-custom-2" src="{{ url('photo/member/'.$data['family']->inherit_family->photo) }}" onerror="this.src='{{ url('assets/global/img/no-profile.jpg') }}'" />
+                                    @endif
+                                    <a href="{{ url('family-tree-detail/'.$data['family']->inherit_family->id) }}" class="btn btn-primary custom-button-lihat">Lihat</a>
+                                </div>
+                                <div class="col-md-8">
+                                    <table class="table table-striped"> 
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row" style="width:125px">Nama Lengkap</th>
+                                                <td>{{ $data['family']->inherit_family->full_name }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Status</th>
+                                                <td>Anak / {{ $data['family']->inherit_family->member_status->name }}</td>
+                                            </tr> 
+                                            <tr>
+                                                <th scope="row">Suku</th>
+                                                <td>{{ isset($data['family']->inherit_family->ethnic) ? $data['family']->inherit_family->ethnic->name : '-' }}</td>
+                                            </tr> 
+                                            <tr>
+                                                <th scope="row">Jenis Kelamin</th>
+                                                <td>{{ $data['family']->inherit_family->gender_status }}</td>
+                                            </tr> 
+                                            <tr>
+                                                <th scope="row">Gelar</th>
+                                                <td>{{ isset($data['family']->inherit_family->title_adat) ? $data['family']->inherit_family->title_adat->name : '-' }}</td>
+                                            </tr>                       
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                     @endif
-                @endforeach
-                @if($data['family']->inherit_family != NULL)
-                    <div class="col-md-6">
-                        <div class="row">
-                            <div class="col-md-4">
-                                @if($data['family']->inherit_family->photo == NULL)
-                                    <img class="img-custom-2" src="{{ asset('assets/global/img/no-profile.jpg') }}" />
-                                @else
-                                    <img class="img-custom-2" src="{{ url('photo/member/'.$data['family']->inherit_family->photo) }}" />
-                                @endif
-                                <a href="{{ url('family-tree-detail/'.$data['family']->inherit_family->id) }}" class="btn btn-primary custom-button-lihat">Lihat</a>
-                            </div>
-                            <div class="col-md-8">
-                                <table class="table table-striped"> 
-                                    <tbody>
-                                        <tr>
-                                            <th scope="row">Nama Lengkap</th>
-                                            <td>{{ $data['family']->inherit_family->full_name }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">Status</th>
-                                            <td>{{ $data['family']->inherit_family->member_status->name }}</td>
-                                        </tr> 
-                                        <tr>
-                                            <th scope="row">Suku</th>
-                                            <td>{{ isset($data['family']->inherit_family->ethnic) ? $data['family']->inherit_family->ethnic->name : '-' }}</td>
-                                        </tr> 
-                                        <tr>
-                                            <th scope="row">Jenis Kelamin</th>
-                                            <td>{{ $data['family']->inherit_family->gender_status }}</td>
-                                        </tr> 
-                                        <tr>
-                                            <th scope="row">Gelar</th>
-                                            <td>{{ isset($data['family']->inherit_family->title_adat) ? $data['family']->inherit_family->title_adat->name : '-' }}</td>
-                                        </tr>                       
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                @endif
+                </div>
                 </div>
             </div>
         </div>

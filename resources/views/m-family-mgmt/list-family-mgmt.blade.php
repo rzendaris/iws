@@ -59,6 +59,7 @@
                             <td>{{ $family->tlp_no }}</td>
                             <td>{{ $family->percentage_fill }} %</td>
                             <td class="text-center">
+                                <a href="{{ url('family-management/edit/family/'.$family->id) }}"><i class="fa fa-pencil fa-lg custom--1"></i></a>
                                 <a href="#" data-toggle="modal" data-target="#modal-detail-family-{{ $family->id }}"><i class="fa fa-eye fa-lg custom--1"></i></a>
                                 <a href="{{ url('family-management/edit/'.$family->id) }}"><i class="fa fa-edit fa-lg custom--1"></i></a>
                                 <a href="#" data-toggle="modal" data-target="#modal-delete-family-{{ $family->id }}"><i class="fa fa-close fa-lg custom--1"></i></a>
@@ -220,7 +221,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="form-control-label">Foto Diri :</label><br>
-                                                    <img src="{{ url('photo/member/'.$member->photo) }}" alt="Image" width="170px" height="150px"/>
+                                                    <img src="{{ url('photo/member/'.$member->photo) }}" onerror="this.src='{{ url('assets/global/img/no-profile.jpg') }}'" alt="Image" width="170px" height="150px"/>
                                                 </div>
                                             </div>
                                             <div class="col-xl-4 col-md-4 m-b-10px">

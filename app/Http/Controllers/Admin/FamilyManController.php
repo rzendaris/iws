@@ -105,8 +105,10 @@ class FamilyManController extends Controller
             $data->no = $no;
             $no++;
         }
+        $province = Province::where('status', 1)->orderBy('name', 'asc')->get();
         $data = array(
-            'family' => $family
+            'family' => $family,
+            'province' => $province
         );
         return view('m-family-mgmt/list-family-mgmt')->with('data', $data);
     }
@@ -277,6 +279,96 @@ class FamilyManController extends Controller
             'job' => $job
         );
         return view('m-family-mgmt/update-family-mgmt')->with('data', $data);
+    }
+    
+    public function FamilyManEditFamily($family_id)
+    {
+        $family = Family::where('id', $family_id)
+            ->where('status', 1)
+            ->with([
+                'family_member', 
+                'family_member.member_belongs' => function ($query) {
+                    $query->where('status', 1);
+                },
+                'family_member.member_belongs.member_status', 
+                'family_member.member_belongs.ethnic'
+                ])
+            ->first();
+        $get_family_member = FamilyMember::select('member_id')->where('family_id', $family->id)->get();
+        $family->member = Member::whereIn('id', $get_family_member)->where('status', 1)->orderBy('member_status_id', 'asc')->get();
+        $no_data_member = 1;
+        $status_head_family = 0;
+        foreach($family->member as $data_member){
+            if($data_member->member_status_id == 1){
+                $status_head_family = 1;
+            }
+            $data_member->no = $no_data_member;
+            $no_data_member++;
+        }
+        
+        $province = Province::where('status', 1)->orderBy('name', 'asc')->get();
+        $city = City::where('status', 1)->orderBy('name', 'asc')->get();
+        $district = District::where('status', 1)->orderBy('name', 'asc')->get();
+        $village = Village::where('status', 1)->orderBy('name', 'asc')->get();
+        $marital = Marital::orderBy('id', 'asc')->get();
+        $religion = Religion::orderBy('id', 'asc')->get();
+        $education = Education::orderBy('id', 'asc')->get();
+        $ethnic = Ethnic::where('status', 1)->orderBy('name', 'asc')->get();
+        $title_adat = TitleAdat::where('status', 1)->orderBy('name', 'asc')->get();
+        $member_status = MemberStatus::where('id', '!=', $status_head_family)->orderBy('id', 'asc')->get();
+        $job = Job::where('status', 1)->orderBy('name', 'asc')->get();
+
+        $data = array(
+            'family' => $family,
+            'province' => $province,
+            'city' => $city,
+            'district' => $district,
+            'village' => $village,
+            'marital' => $marital,
+            'religion' => $religion,
+            'education' => $education,
+            'ethnic' => $ethnic,
+            'title_adat' => $title_adat,
+            'member_status' => $member_status,
+            'job' => $job
+        );
+        return view('m-family-mgmt/update-family-data')->with('data', $data);
+    }
+
+    public function FamilyManUpdate(Request $request)
+    {
+        $family = Family::where('id', $request->id)->first();
+        if(!empty($family)){
+            $photo_master = $request->file('photo');
+            if (isset($photo_master)){
+                if($request->file('photo')->getSize() > 1000000){
+                    return redirect()->back()->with('err_message', 'Foto Keluarga lebih besar dari 1 MB!');
+                }
+            }
+            Family::where('id', $family->id)->update([
+                'family_no' => $request->family_no,
+                'inherit_no' => $request->inherit_no,
+                'address' => $request->address,
+                'province_id' => $request->province_id,
+                'city_id' => $request->city_id,
+                'district_id' => $request->district_id,
+                'village_id' => $request->village_id,
+                'post_code' => $request->post_code,
+                'tlp_no' => $request->tlp_no,
+                'updated_by' => Auth::user()->email,
+                'status' => 1,
+            ]);
+
+            if (isset($photo_master)){
+                Family::where('id', $family->id)->update([
+                    'photo' => $request->family_no.".".$photo_master->getClientOriginalExtension(),
+                ]);
+                $request->file('photo')->move(public_path("/photo/kk"), $request->family_no.".".$photo_master->getClientOriginalExtension());
+            }
+            return redirect('family-management')->with('suc_message', 'Data Berhasil Diperbarui!');
+        } else {
+            return redirect()->back()->with('err_message', 'Data tidak ditemukan!');
+        }
     }
 
     public function FamilyManDelete(Request $request)

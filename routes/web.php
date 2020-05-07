@@ -64,6 +64,7 @@ Route::middleware('auth')->group(function() {
     Route::get('family-management/add', 'Admin\FamilyManController@FamilyManAdd');
     Route::post('family-management/insert', 'Admin\FamilyManController@FamilyManInsert');
     Route::get('family-management/edit/{family_id}', 'Admin\FamilyManController@FamilyManEdit');
+    Route::get('family-management/edit/family/{family_id}', 'Admin\FamilyManController@FamilyManEditFamily');
     Route::post('family-management/update', 'Admin\FamilyManController@FamilyManUpdate');
     Route::post('family-management/delete', 'Admin\FamilyManController@FamilyManDelete');
     Route::post('family-management/member/insert', 'Admin\FamilyManController@FamilyMemberInsert');

@@ -355,43 +355,45 @@
                             @endif
                         @endif
                     @endforeach
-                    @if($data['family']->inherit_family != NULL)
+                    @if(isset($data['family']->inherit_family))
+                        @foreach($data['family']->inherit_family as $inherit_family)
                             <div class="row">
                                 <div class="col-md-4">
-                                    @if($data['family']->inherit_family->photo == NULL)
+                                    @if($inherit_family->photo == NULL)
                                         <img class="img-custom-2" src="{{ asset('assets/global/img/no-profile.jpg') }}" />
                                     @else
-                                        <img class="img-custom-2" src="{{ url('photo/member/'.$data['family']->inherit_family->photo) }}" onerror="this.src='{{ url('assets/global/img/no-profile.jpg') }}'" />
+                                        <img class="img-custom-2" src="{{ url('photo/member/'.$inherit_family->photo) }}" onerror="this.src='{{ url('assets/global/img/no-profile.jpg') }}'" />
                                     @endif
-                                    <a href="{{ url('family-tree-detail/'.$data['family']->inherit_family->id) }}" class="btn btn-primary custom-button-lihat">Lihat</a>
+                                    <a href="{{ url('family-tree-detail/'.$inherit_family->id) }}" class="btn btn-primary custom-button-lihat">Lihat</a>
                                 </div>
                                 <div class="col-md-8">
                                     <table class="table table-striped"> 
                                         <tbody>
                                             <tr>
                                                 <th scope="row" style="width:125px">Nama Lengkap</th>
-                                                <td>{{ $data['family']->inherit_family->full_name }}</td>
+                                                <td>{{ $inherit_family->full_name }}</td>
                                             </tr>
                                             <tr>
                                                 <th scope="row">Status</th>
-                                                <td>Anak / {{ $data['family']->inherit_family->member_status->name }}</td>
+                                                <td>Anak / {{ $inherit_family->member_status->name }}</td>
                                             </tr> 
                                             <tr>
                                                 <th scope="row">Suku</th>
-                                                <td>{{ isset($data['family']->inherit_family->ethnic) ? $data['family']->inherit_family->ethnic->name : '-' }}</td>
+                                                <td>{{ isset($inherit_family->ethnic) ? $inherit_family->ethnic->name : '-' }}</td>
                                             </tr> 
                                             <tr>
                                                 <th scope="row">Jenis Kelamin</th>
-                                                <td>{{ $data['family']->inherit_family->gender_status }}</td>
+                                                <td>{{ $inherit_family->gender_status }}</td>
                                             </tr> 
                                             <tr>
                                                 <th scope="row">Gelar</th>
-                                                <td>{{ isset($data['family']->inherit_family->title_adat) ? $data['family']->inherit_family->title_adat->name : '-' }}</td>
+                                                <td>{{ isset($inherit_family->title_adat) ? $inherit_family->title_adat->name : '-' }}</td>
                                             </tr>                       
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
+                        @endforeach
                     @endif
                 </div>
                 </div>

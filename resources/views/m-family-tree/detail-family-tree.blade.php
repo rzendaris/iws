@@ -30,6 +30,11 @@
     position: absolute;
 }
 </style>
+<style type="text/css" media="print">
+#dont-print { 
+    display: none; 
+}
+</style>
 @endsection
 
 @section('content')
@@ -37,7 +42,7 @@
 <div class="content-body-white" id="content">
     
     <!-- Button Download PDF -->
-    <button class="btn btn-success custom-button-pdf" onclick="window.print()">Download PDF</button>
+    <button class="btn btn-success custom-button-pdf" id="dont-print" onclick="window.print()">Download PDF</button>
 
     <div class="row">
         <div class="col-md-offset-4 col-md-4">  
@@ -280,7 +285,7 @@
                                         @else
                                             <img class="img-custom-2" src="{{ url('photo/member/'.$parents->photo) }}" onerror="this.src='{{ url('assets/global/img/no-profile.jpg') }}'" />
                                         @endif
-                                        <a href="{{ url('family-tree-detail/'.$parents->id) }}" class="btn btn-primary custom-button-lihat">Lihat</a>
+                                        <a href="{{ url('family-tree-detail/'.$parents->id) }}" id="dont-print" class="btn btn-primary custom-button-lihat">Lihat</a>
                                     </div>
                                     <div class="col-md-8">
                                         <table class="table table-striped"> 
@@ -364,7 +369,7 @@
                                     @else
                                         <img class="img-custom-2" src="{{ url('photo/member/'.$inherit_family->photo) }}" onerror="this.src='{{ url('assets/global/img/no-profile.jpg') }}'" />
                                     @endif
-                                    <a href="{{ url('family-tree-detail/'.$inherit_family->id) }}" class="btn btn-primary custom-button-lihat">Lihat</a>
+                                    <a href="{{ url('family-tree-detail/'.$inherit_family->id) }}" id="dont-print" class="btn btn-primary custom-button-lihat">Lihat</a>
                                 </div>
                                 <div class="col-md-8">
                                     <table class="table table-striped"> 

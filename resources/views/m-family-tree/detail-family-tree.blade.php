@@ -34,11 +34,9 @@
 
 @section('content')
 
-<div class="content-body-white" id="content">
-    
-    <!-- Button Download PDF -->
-    <button class="btn btn-success custom-button-pdf" onclick="window.print()">Download PDF</button>
-
+<!-- Button Download PDF -->
+<button style=" margin: 10px; " class="btn btn-success custom-button-pdf p-2" onclick="download()">Download PDF</button>
+<div class="content-body-white" id="divContent">    
     <div class="row">
         <div class="col-md-offset-4 col-md-4">  
             <h1 class="text-center">IWS Family Tree</h1>
@@ -406,33 +404,28 @@
 @endsection
 
 @section('myscript')
-
     <script src="{{ asset('assets/global/plugins/select2/js/select2.min.js') }}"></script>
-    <script src="https://unpkg.com/jspdf@latest/dist/jspdf.min.js"></script>
-    <script>   
-    $(function () {
-        $("div.toolbar").html('<a class="float-right btn btn-success" href="#">Sembunyikan Detail</a>');
-        var doc = new jsPDF();
-        var specialElementHandlers = {
-            '#sidebarPanel': function (element, renderer) {
-                return true;
-            }
-        };
-        var source = window.document.getElementById("content");
-        console.log("Source " + source);
-        doc.fromHTML(
-            source,
-            15,
-            15,
-            {
-                'width': 180,'elementHandlers': specialElementHandlers
-            }
-        );
-
-        doc.output("dataurlnewwindow");
-        $('#cmd').click(function () {
-            doc.save('sample-file.pdf');
+    <script src="{{ asset('assets/global/scripts/html2pdf.bundle.js') }}"></script>
+    <script>
+      function download() {
+        // Hide All Button Detail
+        $(".custom-button-lihat").css('display','none');
+        // Get the element.
+        var element = document.getElementById('divContent');
+        html2pdf().from(element).set({
+          margin: 0.2,
+          image: { type: 'jpeg', quality: 1},
+          filename: 'Family-Tree.pdf',
+          html2canvas: { scale: 2 },
+          jsPDF: {orientation: 'portrait', unit: 'in', format: 'letter', compressPDF: true}
+        }).toPdf().get('pdf').then(function (pdf) {
+            pdf.autoPrint();
+            window.open(pdf.output('bloburl'), '_blank');
+            // Show All Button Detail
+            setTimeout(function() {
+                $(".custom-button-lihat").css('display','block');
+            }, 5000);
         });
-    });
+      }
     </script>
 @endsection

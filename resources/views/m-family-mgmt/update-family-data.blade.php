@@ -8,6 +8,13 @@
 
 @section('content')
 
+<!-- Style For Cropping -->
+<link href="{{ asset('css/cropper.min.css') }}" rel="stylesheet" type="text/css" />
+<style rel="stylesheet" type="text/css">
+.page-foto-keluarga , .page-foto-diri {margin: 1em auto;max-width: 768px;display: flex;align-items: flex-start;flex-wrap: wrap;height: 100%;background: #7d7d7d;}.hide {display: none;}img {max-width: 100%;}
+</style>
+<!-- Style For Cropping -->
+
 <div class="content-body-white">
     <div class="page-head">
         <div class="page-title">
@@ -213,6 +220,7 @@
 @section('myscript')
     <script src="{{ asset('assets/global/plugins/select2/js/select2.min.js') }}"></script>
     <script src="{{ asset('js/add-family.js') }}"></script>
+    <script src="{{ asset('js/cropper.min.js') }}"></script>
     <script>
     $(function () {
         var base_url = "http://localhost/iws/public/";
@@ -308,5 +316,41 @@
             keys = ['0','1','2','3','4','5','6','7','8','9','.']
             return keys.indexOf(event.key) > -1
         });
+
+        // FOTO DIRI
+        // =============
+        let resultB = document.querySelector('.result-foto-diri'),
+        img_resultB = document.querySelector('.img-result-foto-diri'),
+        croppedB = document.querySelector('.cropped-foto-diri'),
+        cropperB = '';
+        document.querySelector('#upload-img-2').addEventListener('change', (e) => {
+        if (e.target.files.length) {
+            const readerB = new FileReader();
+            readerB.onload = (e)=> {
+            if(e.target.result){
+                let imgB = document.createElement('img');
+                imgB.id = 'image';
+                imgB.src = e.target.result;
+                resultB.innerHTML = '';
+                resultB.appendChild(imgB);
+                document.querySelector('.save-foto-diri').classList.remove('hide');
+                document.querySelector('.options-foto-diri').classList.remove('hide');
+                cropperB = new Cropper(imgB);
+            }
+            };
+            readerB.readAsDataURL(e.target.files[0]);
+        }
+        });
+        // save crop on click
+        document.querySelector('.save-foto-diri').addEventListener('click',(e)=>{
+            e.preventDefault();
+            let imgSrcB = cropperB.getCroppedCanvas({
+            }).toDataURL();
+            croppedB.src = imgSrcB;
+            // Ganti Value Input=File Foto Diri
+            $('#upload-img-2').val( imgSrcB );
+        });
+        // =============
+        // FOTO DIRI
     </script>
 @endsection

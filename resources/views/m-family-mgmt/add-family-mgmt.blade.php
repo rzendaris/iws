@@ -8,6 +8,13 @@
 
 @section('content')
 
+<!-- Style For Cropping -->
+<link href="{{ asset('css/cropper.min.css') }}" rel="stylesheet" type="text/css" />
+<style rel="stylesheet" type="text/css">
+.page-foto-keluarga , .page-foto-diri {margin: 1em auto;max-width: 768px;display: flex;align-items: flex-start;flex-wrap: wrap;height: 100%;background: #7d7d7d;}.hide {display: none;}img {max-width: 100%;}
+</style>
+<!-- Style For Cropping -->
+
 <div class="content-body-white">
     <form method="post" action="{{url('family-management/insert')}}" enctype="multipart/form-data">
     {{csrf_field()}}
@@ -85,9 +92,20 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label class="form-control-label">Foto Keluarga :</label><br>
-                                <img id="blah" alt="your image" width="90" height="90" src="{{ asset('assets/global/img/no-profile.jpg') }}" style="margin-bottom:5px;border:solid 1px #c2cad8;" /><br>
-                                <input id="upload-img" name="photo_master" type="file" onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])">
+                                <label class="form-control-label">Foto Keluarga :</label>
+                                <div class="img-result-foto-keluarga">
+                                    <img id="blah"  class="cropped-foto-keluarga" style="margin-bottom:5px;border:solid 1px #c2cad8;" width="140" height="90" src="{{ asset('assets/global/img/no-profile.jpg') }}" />
+                                </div>                                    
+                                <input id="upload-img" name="photo" type="file" value="" onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])">
+                                <main class="page-foto-keluarga">
+                                    <div class="box-2-foto-keluarga">
+                                        <div class="result-foto-keluarga"></div>
+                                    </div>
+                                    <div class="options-foto-keluarga hide" style="display:none;">
+                                        <input type="number" class="img-w-foto-keluarga" value="300" min="100" max="1200" />
+                                    </div>
+                                    <button class="btn btn-success save-foto-keluarga hide" style=" width: 100%; ">Save Crop</button>
+                                </main>
                             </div>
                         </div>
                     </div>
@@ -191,8 +209,19 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="form-control-label">Foto Diri :</label><br>
-                                    <img id="blah2" style="margin-bottom:5px;border:solid 1px #c2cad8;" width="90" height="90" src="{{ asset('assets/global/img/no-profile.jpg') }}" /><br>
-                                    <input id="upload-img-2" name="photo" type="file" onchange="document.getElementById('blah2').src = window.URL.createObjectURL(this.files[0])">
+                                    <div class="img-result-foto-diri">
+                                        <img id="blah2"  class="cropped-foto-diri" style="margin-bottom:5px;border:solid 1px #c2cad8;" width="140" height="90" src="{{ asset('assets/global/img/no-profile.jpg') }}" />
+                                    </div>                                    
+                                    <input id="upload-img-2" name="photo" type="file" value="" onchange="document.getElementById('blah2').src = window.URL.createObjectURL(this.files[0])">
+                                    <main class="page-foto-diri">
+                                        <div class="box-2-foto-diri">
+                                            <div class="result-foto-diri"></div>
+                                        </div>
+                                        <div class="options-foto-diri hide" style="display:none;">
+                                            <input type="number" class="img-w-foto-diri" value="300" min="100" max="1200" />
+                                        </div>
+                                        <button class="btn btn-success save-foto-diri hide" style=" width: 100%; ">Save Crop</button>
+                                    </main>
                                 </div>
                             </div>
                             <div class="col-xl-4 col-md-4 m-b-10px">
@@ -273,6 +302,7 @@
 
     <script src="{{ asset('assets/global/plugins/select2/js/select2.min.js') }}"></script>
     <script src="{{ asset('js/add-family.js') }}"></script>
+    <script src="{{ asset('js/cropper.min.js') }}"></script>
     <script>
         $('[type=tel]').on('change', function(e) {
             $(e.target).val($(e.target).val().replace(/[^\d\.]/g, ''))
@@ -281,5 +311,78 @@
             keys = ['0','1','2','3','4','5','6','7','8','9','.']
             return keys.indexOf(event.key) > -1
         });
+
+        // FOTO KELUARGA
+        // =============
+        let resultA = document.querySelector('.result-foto-keluarga'),
+        img_resultA = document.querySelector('.img-result-foto-keluarga'),
+        croppedA = document.querySelector('.cropped-foto-keluarga'),
+        cropperA = '';
+        document.querySelector('#upload-img').addEventListener('change', (e) => {
+        if (e.target.files.length) {
+            const readerA = new FileReader();
+            readerA.onload = (e)=> {
+            if(e.target.result){
+                let imgA = document.createElement('img');
+                imgA.id = 'image';
+                imgA.src = e.target.result;
+                resultA.innerHTML = '';
+                resultA.appendChild(imgA);
+                document.querySelector('.save-foto-keluarga').classList.remove('hide');
+                document.querySelector('.options-foto-keluarga').classList.remove('hide');
+                cropperA = new Cropper(imgA);
+            }
+            };
+            readerA.readAsDataURL(e.target.files[0]);
+        }
+        });
+        // save crop on click
+        document.querySelector('.save-foto-keluarga').addEventListener('click',(e)=>{
+            e.preventDefault();
+            let imgSrcA = cropperA.getCroppedCanvas({
+            }).toDataURL();
+            croppedA.src = imgSrcA;
+            // Ganti Value Input=File Foto Keluarga
+            $('#upload-img').val( imgSrcA );
+        });
+        // =============
+        // FOTO KELUARGA
+
+
+        // FOTO DIRI
+        // =============
+        let resultB = document.querySelector('.result-foto-diri'),
+        img_resultB = document.querySelector('.img-result-foto-diri'),
+        croppedB = document.querySelector('.cropped-foto-diri'),
+        cropperB = '';
+        document.querySelector('#upload-img-2').addEventListener('change', (e) => {
+        if (e.target.files.length) {
+            const readerB = new FileReader();
+            readerB.onload = (e)=> {
+            if(e.target.result){
+                let imgB = document.createElement('img');
+                imgB.id = 'image';
+                imgB.src = e.target.result;
+                resultB.innerHTML = '';
+                resultB.appendChild(imgB);
+                document.querySelector('.save-foto-diri').classList.remove('hide');
+                document.querySelector('.options-foto-diri').classList.remove('hide');
+                cropperB = new Cropper(imgB);
+            }
+            };
+            readerB.readAsDataURL(e.target.files[0]);
+        }
+        });
+        // save crop on click
+        document.querySelector('.save-foto-diri').addEventListener('click',(e)=>{
+            e.preventDefault();
+            let imgSrcB = cropperB.getCroppedCanvas({
+            }).toDataURL();
+            croppedB.src = imgSrcB;
+            // Ganti Value Input=File Foto Diri
+            $('#upload-img-2').val( imgSrcB );
+        });
+        // =============
+        // FOTO DIRI
     </script>
 @endsection

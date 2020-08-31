@@ -126,8 +126,19 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="form-control-label">Foto Diri :</label><br>
-                                    <img id="blah2" alt="your image" width="90" height="90"  src="{{ url('photo/member/'.$data['member']->photo) }}"/><br>
+                                    <div class="img-result-foto-diri">
+                                        <img id="blah2"  class="cropped-foto-diri" style="margin-bottom:5px;border:solid 1px #c2cad8;" width="140" height="90" src="{{ url('photo/member/'.$data['member']->photo) }}" />
+                                    </div>                                    
                                     <input id="upload-img-2" name="photo" type="file" onchange="document.getElementById('blah2').src = window.URL.createObjectURL(this.files[0])">
+                                    <main class="page-foto-diri">
+                                        <div class="box-2-foto-diri">
+                                            <div class="result-foto-diri"></div>
+                                        </div>
+                                        <div class="options-foto-diri hide" style="display:none;">
+                                            <input type="number" class="img-w-foto-diri" value="300" min="100" max="1200" />
+                                        </div>
+                                        <button class="btn btn-success save-foto-diri hide" style=" width: 100%; ">Save Crop</button>
+                                    </main>
                                 </div>
                             </div>
                             <div class="col-xl-4 col-md-4 m-b-10px">

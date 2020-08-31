@@ -80,9 +80,20 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label class="form-control-label">Foto Keluarga :</label><br>
-                                <img id="blah2" alt="your image" width="90" height="90"  src="{{ url('photo/kk/'.$data['family']->photo) }}" onerror="this.src='{{ url('assets/global/img/no-profile.jpg') }}'"/><br>
-                                <input id="upload-img-2" name="photo" type="file" onchange="document.getElementById('blah2').src = window.URL.createObjectURL(this.files[0])">
+                                <label class="form-control-label">Foto Keluarga :</label>
+                                <div class="img-result-foto-keluarga">
+                                    <img id="blah"  class="cropped-foto-keluarga" style="margin-bottom:5px;border:solid 1px #c2cad8;" width="140" height="90" src="{{ url('photo/kk/'.$data['family']->photo) }}" onerror="this.src='{{ url('assets/global/img/no-profile.jpg') }}'"/>
+                                </div>                                    
+                                <input id="upload-img" name="photo" type="file" onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])">
+                                <main class="page-foto-keluarga">
+                                    <div class="box-2-foto-keluarga">
+                                        <div class="result-foto-keluarga"></div>
+                                    </div>
+                                    <div class="options-foto-keluarga hide" style="display:none;">
+                                        <input type="number" class="img-w-foto-keluarga" value="300" min="100" max="1200" />
+                                    </div>
+                                    <button class="btn btn-success save-foto-keluarga hide" style=" width: 100%; ">Save Crop</button>
+                                </main>
                             </div>
                             <input type="hidden" name="id" value="{{ $data['family']->id }}" />
                         </div>
@@ -317,40 +328,40 @@
             return keys.indexOf(event.key) > -1
         });
 
-        // FOTO DIRI
+        // FOTO KELUARGA
         // =============
-        let resultB = document.querySelector('.result-foto-diri'),
-        img_resultB = document.querySelector('.img-result-foto-diri'),
-        croppedB = document.querySelector('.cropped-foto-diri'),
-        cropperB = '';
-        document.querySelector('#upload-img-2').addEventListener('change', (e) => {
+        let resultA = document.querySelector('.result-foto-keluarga'),
+        img_resultA = document.querySelector('.img-result-foto-keluarga'),
+        croppedA = document.querySelector('.cropped-foto-keluarga'),
+        cropperA = '';
+        document.querySelector('#upload-img').addEventListener('change', (e) => {
         if (e.target.files.length) {
-            const readerB = new FileReader();
-            readerB.onload = (e)=> {
+            const readerA = new FileReader();
+            readerA.onload = (e)=> {
             if(e.target.result){
-                let imgB = document.createElement('img');
-                imgB.id = 'image';
-                imgB.src = e.target.result;
-                resultB.innerHTML = '';
-                resultB.appendChild(imgB);
-                document.querySelector('.save-foto-diri').classList.remove('hide');
-                document.querySelector('.options-foto-diri').classList.remove('hide');
-                cropperB = new Cropper(imgB);
+                let imgA = document.createElement('img');
+                imgA.id = 'image';
+                imgA.src = e.target.result;
+                resultA.innerHTML = '';
+                resultA.appendChild(imgA);
+                document.querySelector('.save-foto-keluarga').classList.remove('hide');
+                document.querySelector('.options-foto-keluarga').classList.remove('hide');
+                cropperA = new Cropper(imgA);
             }
             };
-            readerB.readAsDataURL(e.target.files[0]);
+            readerA.readAsDataURL(e.target.files[0]);
         }
         });
         // save crop on click
-        document.querySelector('.save-foto-diri').addEventListener('click',(e)=>{
+        document.querySelector('.save-foto-keluarga').addEventListener('click',(e)=>{
             e.preventDefault();
-            let imgSrcB = cropperB.getCroppedCanvas({
+            let imgSrcA = cropperA.getCroppedCanvas({
             }).toDataURL();
-            croppedB.src = imgSrcB;
-            // Ganti Value Input=File Foto Diri
-            $('#upload-img-2').val( imgSrcB );
+            croppedA.src = imgSrcA;
+            // Ganti Value Input=File Foto Keluarga
+            $('#upload-img').val( imgSrcA );
         });
         // =============
-        // FOTO DIRI
+        // FOTO KELUARGA
     </script>
 @endsection

@@ -343,7 +343,7 @@
             }).toDataURL();
             croppedA.src = imgSrcA;
             // Ganti Value Input=File Foto Keluarga
-            $('#upload-img').val( imgSrcA );
+            $('#upload-img').attr("value", imgSrcA);
         });
         // =============
         // FOTO KELUARGA
@@ -380,7 +380,7 @@
             }).toDataURL();
             croppedB.src = imgSrcB;
             // Ganti Value Input=File Foto Diri
-            $('#upload-img-2').val( imgSrcB );
+            $('#upload-img-2').attr("value", imgSrcB);
         });
         // =============
         // FOTO DIRI

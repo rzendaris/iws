@@ -211,6 +211,7 @@
                 <div class="col-xl-12 col-md-12 m-b-10px text-right">
                     <input type="hidden" name="id" value="{{ $data['member']->id }}"/>
                     <input type="hidden" name="family_id" value="{{ $data['family_id'] }}"/>
+                    <input id="upload-img-text" name="photo_text" type="hidden">
                     <a href="{{ url('family-management/edit/'.$data['family_id']) }}" class="btn btn-primary pull-left">Kembali</a>
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
@@ -267,6 +268,7 @@
             croppedB.src = imgSrcB;
             // Ganti Value Input=File Foto Diri
             $('#upload-img-2').attr("value", imgSrcB);
+            $('#upload-img-text').val(imgSrcB);
         });
         // =============
         // FOTO DIRI

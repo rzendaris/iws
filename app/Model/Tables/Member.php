@@ -41,6 +41,8 @@ class Member extends Model
         'address',
         'phone_number',
         'photo',
+        'data_diagonal',
+        'data_posisi',
         'status',
         'created_at',
         'created_by',

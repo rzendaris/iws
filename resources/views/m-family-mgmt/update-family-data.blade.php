@@ -85,8 +85,8 @@
                                 <div class="img-result-foto-keluarga" style=" visibility: hidden; height: 0; ">
                                     <img id="img-view" src="{{ url('photo/kk/'.$data['family']->photo) }}" style="width:100%;"/>
                                 </div>
-                                <input id="data-satu" type="text" value='{"x":65.65868263473054,"y":0,"width":283.2706586826347,"height":279.1389221556886,"rotate":0,"scaleX":1,"scaleY":1}' />
-                                <input id="data-dua" type="text" value='{"left":0,"top":0,"width":334,"height":334,"naturalWidth":512,"naturalHeight":512}' />
+                                <input id="data-satu" name="data_diagonal" type="hidden" value='' />
+                                <input id="data-dua" name="data_posisi" type="hidden" value='' />
 
                                 <!-- <div class="img-result-foto-keluarga">
                                     <img id="blah"  class="cropped-foto-keluarga" style="margin-bottom:5px;border:solid 1px #c2cad8;" width="140" height="90" src="{{ url('photo/kk/'.$data['family']->photo) }}" onerror="this.src='{{ url('assets/global/img/no-profile.jpg') }}'"/>
@@ -375,8 +375,8 @@
         // FOTO KELUARGA
 
         window.addEventListener('DOMContentLoaded', function () {
-            var datadiagonal = {"x":653.9289857784432,"y":596.4554640718563,"width":305.6724363772455,"height":204.74073727544913,"rotate":0,"scaleX":1,"scaleY":1} ;
-            var dataposisi = {"left":0,"top":0.25,"width":334,"height":250.5,"naturalWidth":1080,"naturalHeight":810} ;
+            var datadiagonal = JSON.parse(<?php echo json_encode($data['family']->data_diagonal); ?>);
+            var dataposisi = JSON.parse(<?php echo json_encode($data['family']->data_posisi); ?>);
             var image = document.querySelector('#img-view');
             var cropper = new Cropper(image, {
                 zoomable: false,

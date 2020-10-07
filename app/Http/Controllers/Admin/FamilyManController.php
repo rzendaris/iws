@@ -328,6 +328,7 @@ class FamilyManController extends Controller
 
     public function FamilyManUpdate(Request $request)
     {
+        // dd($request);
         $family = Family::where('id', $request->id)->first();
         if(!empty($family)){
             Family::where('id', $family->id)->update([
@@ -349,6 +350,8 @@ class FamilyManController extends Controller
                 Image::make(file_get_contents($request->photo_text))->save($path);
                 Family::where('id', $family->id)->update([
                     'photo' => $request->family_no.".png",
+                    'data_diagonal' => $request->data_diagonal,
+                    'data_posisi' => $request->data_posisi,
                 ]);
             }
             return redirect('family-management')->with('suc_message', 'Data Berhasil Diperbarui!');

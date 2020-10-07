@@ -26,6 +26,8 @@ class Family extends Model
         'village_id',
         'post_code',
         'photo',
+        'data_diagonal',
+        'data_posisi',
         'tlp_no',
         'status',
         'created_at',

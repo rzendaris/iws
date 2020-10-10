@@ -3,10 +3,13 @@
 @section('css')
 
 <link href="{{ asset('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('css/cropper.min.css') }}" rel="stylesheet" type="text/css" />
 
 @endsection
 
 @section('content')
+
+<style>.cropper-container.cropper-bg {display: none;} [id*="result-"] img { width: 50%;}</style>
 
 <div class="content-body-white">
     <div class="page-head">
@@ -153,8 +156,30 @@
                                         </div>
                                         <div class="form-group">
                                             <label class="form-control-label">Foto Keluarga :</label><br>
-                                            <img src="{{ url('photo/kk/'.$family->photo) }}" alt="Image" width="170px" height="150px"/>
+                                            <img id="img-view-{{ $family->id }}" src="{{ url('photo/kk/'.$family->photo) }}" alt="Image" />
+                                            <div id="result-{{ $family->id }}"></div>
                                         </div>
+                                        <script>
+                                            window.addEventListener('DOMContentLoaded', function () {
+                                                var datadiagonal = JSON.parse(<?php echo json_encode($family->data_diagonal); ?>);
+                                                var dataposisi = JSON.parse(<?php echo json_encode($family->data_posisi); ?>);
+                                                var image = document.querySelector('#img-view-{{ $family->id }}');
+                                                var cropper = new Cropper(image, {
+                                                    zoomable: false,
+                                                    dragMode: false,
+                                                    movable: false,
+                                                    guides: false,
+                                                    cropBoxResizable: false,
+                                                    ready: function (event) {
+                                                        cropper.setData( datadiagonal );
+                                                        cropper.getCanvasData( dataposisi );                    
+                                                        var imagez = new Image();
+                                                        imagez.src = cropper.getCroppedCanvas({fillColor:'#fff'}).toDataURL('image/jpeg');
+                                                        document.getElementById('result-{{ $family->id }}').appendChild(imagez);
+                                                    }
+                                                });
+                                            });
+                                        </script>
                                     </div>
                                 </div>
                             </div>
@@ -282,6 +307,7 @@
 @section('myscript')
 
     <script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}"></script>
+    <script src="{{ asset('js/cropper.min.js') }}"></script>
     <script>   
     $(function () {
         $('#search-button').click(function(){

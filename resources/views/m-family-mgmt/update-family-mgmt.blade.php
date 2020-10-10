@@ -177,8 +177,12 @@
                                     <label class="form-control-label">Foto Diri :</label><br>
                                     <div class="img-result-foto-diri">
                                         <img id="blah2"  class="cropped-foto-diri" style="margin-bottom:5px;border:solid 1px #c2cad8;" width="140" height="90" src="{{ asset('assets/global/img/no-profile.jpg') }}" />
-                                    </div>                                    
-                                    <input id="upload-img-2" name="photo" type="file" onchange="document.getElementById('blah2').src = window.URL.createObjectURL(this.files[0])">
+                                    </div>              
+                                    <!-- Data Diagonal Dan Posisi -->
+                                    <input id="data-satu" name="data_diagonal" type="hidden" value='' />
+                                    <input id="data-dua" name="data_posisi" type="hidden" value='' />
+                                    <!-- Data Diagonal Dan Posisi -->                      
+                                    <input id="upload-img-2" name="photo_text" type="file" onchange="document.getElementById('blah2').src = window.URL.createObjectURL(this.files[0])">
                                     <main class="page-foto-diri">
                                         <div class="box-2-foto-diri">
                                             <div class="result-foto-diri"></div>
@@ -255,7 +259,7 @@
             <div class="row">
                 <div class="col-xl-12 col-md-12 m-b-10px text-right">
                     <input type="hidden" name="family_id" value="{{ $data['family']->id }}"/>
-                    <input id="upload-img-text" name="photo_text" type="hidden">
+                    <input id="upload-img-text" name="" type="hidden">
                     <a href="{{ url('family-management') }}" class="btn btn-primary pull-left">Kembali</a>
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
@@ -455,8 +459,10 @@
             }).toDataURL();
             croppedB.src = imgSrcB;
             // Ganti Value Input=File Foto Diri
-            $('#upload-img-2').attr("value", imgSrcB);
+            // $('#upload-img-2').attr("value", imgSrcB);
             $('#upload-img-text').val(imgSrcB);
+            document.querySelector('#data-satu').value = JSON.stringify( cropperB.getData() );
+            document.querySelector('#data-dua').value = JSON.stringify( cropperB.getCanvasData() );
         });
         // =============
         // FOTO DIRI

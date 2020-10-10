@@ -125,19 +125,22 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-control-label">Foto Diri :</label><br>
-                                    <div class="img-result-foto-diri">
-                                        <img id="blah2"  class="cropped-foto-diri" style="margin-bottom:5px;border:solid 1px #c2cad8;" width="140" height="90" src="{{ url('photo/member/'.$data['member']->photo) }}" />
-                                    </div>                                    
-                                    <input id="upload-img-2" name="photo" type="file" onchange="document.getElementById('blah2').src = window.URL.createObjectURL(this.files[0])">
-                                    <main class="page-foto-diri">
-                                        <div class="box-2-foto-diri">
-                                            <div class="result-foto-diri"></div>
+                                    <label class="form-control-label">Foto Diri :</label>
+                                    <div id="result"></div>
+                                    <div class="img-result-foto-keluarga" style=" visibility: hidden; height: 0; ">
+                                        <img id="img-view" src="{{ url('photo/member/'.$data['member']->photo) }}" style="width:100%;"/>
+                                    </div>
+                                    <input id="data-satu" name="data_diagonal" type="hidden" value='' />
+                                    <input id="data-dua" name="data_posisi" type="hidden" value='' />
+                                    <input id="upload-img" name="photo_text" type="file" onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])">
+                                    <main class="page-foto-keluarga">
+                                        <div class="box-2-foto-keluarga">
+                                            <div class="result-foto-keluarga"></div>
                                         </div>
-                                        <div class="options-foto-diri hide" style="display:none;">
-                                            <input type="number" class="img-w-foto-diri" value="300" min="100" max="1200" />
+                                        <div class="options-foto-keluarga hide" style="display:none;">
+                                            <input type="number" class="img-w-foto-keluarga" value="300" min="100" max="1200" />
                                         </div>
-                                        <button class="btn btn-success save-foto-diri hide" style=" width: 100%; ">Save Crop</button>
+                                        <button class="btn btn-success save-foto-keluarga hide" style=" width: 100%; ">Save Crop</button>
                                     </main>
                                 </div>
                             </div>
@@ -211,7 +214,7 @@
                 <div class="col-xl-12 col-md-12 m-b-10px text-right">
                     <input type="hidden" name="id" value="{{ $data['member']->id }}"/>
                     <input type="hidden" name="family_id" value="{{ $data['family_id'] }}"/>
-                    <input id="upload-img-text" name="photo_text" type="hidden">
+                    <input id="upload-img-text" name="" type="hidden">
                     <a href="{{ url('family-management/edit/'.$data['family_id']) }}" class="btn btn-primary pull-left">Kembali</a>
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
@@ -236,41 +239,62 @@
             return keys.indexOf(event.key) > -1
         });
 
-        // FOTO DIRI
+        // FOTO KELUARGA
         // =============
-        let resultB = document.querySelector('.result-foto-diri'),
-        img_resultB = document.querySelector('.img-result-foto-diri'),
-        croppedB = document.querySelector('.cropped-foto-diri'),
-        cropperB = '';
-        document.querySelector('#upload-img-2').addEventListener('change', (e) => {
+        let resultA = document.querySelector('.result-foto-keluarga'),
+        img_resultA = document.querySelector('.img-result-foto-keluarga'),
+        croppedA = document.querySelector('.cropped-foto-keluarga'),
+        cropperA = '';
+        document.querySelector('#upload-img').addEventListener('change', (e) => {
         if (e.target.files.length) {
-            const readerB = new FileReader();
-            readerB.onload = (e)=> {
+            const readerA = new FileReader();
+            readerA.onload = (e)=> {
             if(e.target.result){
-                let imgB = document.createElement('img');
-                imgB.id = 'image';
-                imgB.src = e.target.result;
-                resultB.innerHTML = '';
-                resultB.appendChild(imgB);
-                document.querySelector('.save-foto-diri').classList.remove('hide');
-                document.querySelector('.options-foto-diri').classList.remove('hide');
-                cropperB = new Cropper(imgB);
+                let imgA = document.createElement('img');
+                imgA.id = 'image';
+                imgA.src = e.target.result;
+                resultA.innerHTML = '';
+                resultA.appendChild(imgA);
+                document.querySelector('.save-foto-keluarga').classList.remove('hide');
+                document.querySelector('.options-foto-keluarga').classList.remove('hide');
+                cropperA = new Cropper(imgA, { zoomable: false } );
             }
             };
-            readerB.readAsDataURL(e.target.files[0]);
+            readerA.readAsDataURL(e.target.files[0]);
         }
         });
         // save crop on click
-        document.querySelector('.save-foto-diri').addEventListener('click',(e)=>{
+        document.querySelector('.save-foto-keluarga').addEventListener('click',(e)=>{
             e.preventDefault();
-            let imgSrcB = cropperB.getCroppedCanvas({
-            }).toDataURL();
-            croppedB.src = imgSrcB;
-            // Ganti Value Input=File Foto Diri
-            $('#upload-img-2').attr("value", imgSrcB);
-            $('#upload-img-text').val(imgSrcB);
+            let imgSrcA = cropperA.getCroppedCanvas({}).toDataURL();
+            $('#upload-img-text').val(imgSrcA);
+            document.querySelector('#data-satu').value = JSON.stringify( cropperA.getData() );
+            document.querySelector('#data-dua').value = JSON.stringify( cropperA.getCanvasData() );
+            document.querySelector('#result img').src = imgSrcA;
+            document.querySelector('#img-view').src = imgSrcA;
+            document.querySelector('#img-view').cropper.destroy();
         });
         // =============
-        // FOTO DIRI
+        // FOTO KELUARGA
+
+        window.addEventListener('DOMContentLoaded', function () {
+            var datadiagonal = JSON.parse(<?php echo json_encode($data['member']->data_diagonal); ?>);
+            var dataposisi = JSON.parse(<?php echo json_encode($data['member']->data_posisi); ?>);
+            var image = document.querySelector('#img-view');
+            var cropper = new Cropper(image, {
+                zoomable: false,
+                dragMode: false,
+                movable: false,
+                guides: false,
+                cropBoxResizable: false,
+                ready: function (event) {
+                    cropper.setData( datadiagonal );
+                    cropper.getCanvasData( dataposisi );                    
+                    var imagez = new Image();
+                    imagez.src = cropper.getCroppedCanvas({fillColor:'#fff'}).toDataURL('image/jpeg');
+                    document.getElementById('result').appendChild(imagez);
+                }
+            });
+        });
     </script>
 @endsection

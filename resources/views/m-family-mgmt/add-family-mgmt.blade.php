@@ -96,7 +96,11 @@
                                 <div class="img-result-foto-keluarga">
                                     <img id="blah"  class="cropped-foto-keluarga" style="margin-bottom:5px;border:solid 1px #c2cad8;" width="140" height="90" src="{{ asset('assets/global/img/no-profile.jpg') }}" />
                                 </div>                                    
-                                <input id="upload-img" name="photo_master" type="file" value="" onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])">
+                                <input id="upload-img" name="photo_master_text" type="file" value="" onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])">
+                                <!-- Data Diagonal Dan Posisi -->
+                                <input id="data-satu" name="data_diagonal" type="hidden" value='' />
+                                <input id="data-dua" name="data_posisi" type="hidden" value='' />
+                                <!-- Data Diagonal Dan Posisi -->
                                 <main class="page-foto-keluarga">
                                     <div class="box-2-foto-keluarga">
                                         <div class="result-foto-keluarga"></div>
@@ -212,7 +216,11 @@
                                     <div class="img-result-foto-diri">
                                         <img id="blah2"  class="cropped-foto-diri" style="margin-bottom:5px;border:solid 1px #c2cad8;" width="140" height="90" src="{{ asset('assets/global/img/no-profile.jpg') }}" />
                                     </div>                                    
-                                    <input id="upload-img-2" name="photo" type="file" value="" onchange="document.getElementById('blah2').src = window.URL.createObjectURL(this.files[0])">
+                                    <input id="upload-img-2" name="photo_text" type="file" value="" onchange="document.getElementById('blah2').src = window.URL.createObjectURL(this.files[0])">
+                                    <!-- Data Diagonal Dan Posisi -->
+                                    <input id="data-tiga" name="data_diagonal_diri" type="hidden" value='' />
+                                    <input id="data-empat" name="data_posisi_diri" type="hidden" value='' />
+                                    <!-- Data Diagonal Dan Posisi -->
                                     <main class="page-foto-diri">
                                         <div class="box-2-foto-diri">
                                             <div class="result-foto-diri"></div>
@@ -288,8 +296,8 @@
 
             <div class="row">
                 <div class="col-xl-12 col-md-12 m-b-10px text-right">
-                    <input id="upload-img-master-text" name="photo_master_text" type="hidden">
-                    <input id="upload-img-text" name="photo_text" type="hidden">
+                    <input id="upload-img-master-text" name="" type="hidden">
+                    <input id="upload-img-text" name="" type="hidden">
                     <a href="{{ url('family-management') }}" class="btn btn-primary pull-left">Batal</a>
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
@@ -345,8 +353,10 @@
             }).toDataURL();
             croppedA.src = imgSrcA;
             // Ganti Value Input=File Foto Keluarga
-            $('#upload-img').attr("value", imgSrcA);
+            // $('#upload-img').attr("value", imgSrcA);
             $('#upload-img-master-text').val(imgSrcA);
+            document.querySelector('#data-satu').value = JSON.stringify( cropperA.getData() );
+            document.querySelector('#data-dua').value = JSON.stringify( cropperA.getCanvasData() );
         });
         // =============
         // FOTO KELUARGA
@@ -383,8 +393,10 @@
             }).toDataURL();
             croppedB.src = imgSrcB;
             // Ganti Value Input=File Foto Diri
-            $('#upload-img-2').attr("value", imgSrcB);
+            // $('#upload-img-2').attr("value", imgSrcB);
             $('#upload-img-text').val(imgSrcB);
+            document.querySelector('#data-tiga').value = JSON.stringify( cropperB.getData() );
+            document.querySelector('#data-empat').value = JSON.stringify( cropperB.getCanvasData() );
         });
         // =============
         // FOTO DIRI
